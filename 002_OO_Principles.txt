@@ -1,0 +1,192 @@
+============================================================================
+                   OBJECT-ORIENTED DESIGN PRINCIPLES
+============================================================================
+
+MASTER MNEMONIC (The order of all principles):
+"Some Old Libraries Include Dirty Hacks; If Intelligent Devs Know Your Logic, 
+ Clean Software Comes By Principles."
+
+----------------------------------------------------------------------------
+I. THE SOLID FOUNDATION (S-O-L-I-D)
+Mnemonic: "Sturdy Objects Last In Design"
+----------------------------------------------------------------------------
+
+S: Single Responsibility Principle (SRP)
+   A class should have only one reason to change, meaning it should have 
+   only one, specific responsibility. When a class handles too many 
+   concerns, changes to one part of the logic can inadvertently break 
+   another, leading to fragile and rigid software.
+   [Bad]  class User { void login(); void saveToDatabase(); }
+   [Good] class User { void login(); } + class UserRepository { void save(); }
+   [Examples] 
+      - Pattern 11 (Decorator): Each class handles only one ingredient.
+      - Pattern 19 (Command): Each class encapsulates a single action.
+
+O: Open/Closed Principle (OCP)
+   Software entities should be open for extension but closed for 
+   modification. This allows you to add new functionality or change 
+   behavior by adding new code (subclasses/mixins) rather than altering 
+   existing, tested source code, which reduces the risk of regression bugs.
+   [Bad]  void draw(Shape s) { if (s.type == CIRCLE) drawCircle(); }
+   [Good] void draw(Shape s) { s.draw(); } // Shape is an abstract interface
+   [Examples] 
+      - Pattern 02 (Factory Method): Add levels without touching game logic.
+      - Pattern 15 (Mixin): Add features horizontally by adding new classes.
+      - Pattern 26 (Strategy): Add algorithms without changing the context.
+
+L: Liskov Substitution Principle (LSP)
+   Subtypes must be substitutable for their base types without altering 
+   the correctness of the program. If a program expects a base class, it 
+   should be able to use any derived class without knowing the difference 
+   or encountering unexpected behaviors or broken invariants.
+   [Bad]  A Square inheriting from Rectangle where setWidth() changes height.
+   [Good] Both inheriting from a common Shape interface with a draw() method.
+   [Examples] 
+      - Pattern 03 (Abstract Factory): Any environment factory works in the engine.
+      - Pattern 14 (Proxy): The Proxy is indistinguishable from the Real Subject.
+
+I: Interface Segregation Principle (ISP)
+   Clients should not be forced to depend on methods they do not use. 
+   Instead of one large, general-purpose interface, it is better to define 
+   small, specific ones tailored to the needs of particular clients, 
+   minimizing the impact of changes in unrelated parts of the system.
+   [Bad]  interface IMachine { void print(); void fax(); void scan(); }
+   [Good] interface IPrinter { void print(); } + interface IFax { void fax(); }
+   [Examples] 
+      - Pattern 15 (Mixin): Classes only inherit the specific features they need.
+      - Pattern 32 (CRTP): The Cloneable Mixin provides a single, focused capability.
+
+D: Dependency Inversion Principle (DIP)
+   Depend upon abstractions (interfaces) rather than concrete 
+   implementations. High-level modules should not depend on low-level 
+   modules; both should depend on abstractions. This makes the system 
+   flexible and allows swapping components without changing the core logic.
+   [Bad]  class Store { MySQLDatabase db; }; // Store creates its engine.
+   [Good] class Store { IDatabase* db; }; // Store doesn't care about the type.
+   [Examples] 
+      - Pattern 09 (Bridge): Decouples abstraction from implementation.
+      - Pattern 16 (Register): The client depends on the interface, not the creator.
+
+----------------------------------------------------------------------------
+II. THE DELEGATION TRIO (H-I-I)
+Mnemonic: "Hand It In"
+----------------------------------------------------------------------------
+
+H: The Hollywood Principle (THP)
+   "Don't call us, we'll call you." Higher-level components should 
+   control the flow and call lower-level components when necessary, 
+   preventing low-level code from directly calling or managing high-level 
+   orchestration, which keeps the hierarchy clean and unidirectional.
+   [Examples] 
+      - Pattern 27 (Template Method): The base class calls the placeholders.
+      - Pattern 29 (Framework): The framework owns the main loop.
+
+I: Inversion of Control (IoC)
+   A design principle where the flow of execution is transferred from 
+   your custom code to an external framework or container. This 
+   effectively shifts the responsibility of "who calls whom" to the 
+   system rather than the individual programmer, facilitating modularity.
+   [Examples] 
+      - Pattern 17 (ModuleLoader): The host controls the plugin lifecycle.
+      - Pattern 29 (Framework): Application logic is inverted.
+
+I: Dependency Injection (DI)
+   A technique where objects receive their dependencies from an external 
+   source rather than creating them internally. It is the most common 
+   implementation of IoC, allowing for easier testing (mocking) and 
+   greater flexibility in how the system is wired together.
+   [Bad]  class Car { Engine* e = new Engine(); };
+   [Good] class Car { Car(IEngine* e) : engine_(e) {} };
+   [Examples] 
+      - Pattern 22 (Mediator): Colleagues are registered into the mediator.
+      - Pattern 26 (Strategy): The algorithm is injected into the context.
+
+----------------------------------------------------------------------------
+III. PRAGMATIC EFFICIENCY (D-K-Y)
+Mnemonic: "Do Keep Yielding"
+----------------------------------------------------------------------------
+
+D: Don't Repeat Yourself (DRY)
+   Every piece of knowledge or logic must have a single, unambiguous 
+   representation within a system. Minimizing code duplication ensures 
+   that when a logic change is required, it only needs to be updated 
+   in one place, reducing inconsistency and maintenance effort.
+   [Examples] 
+      - Pattern 27 (Template Method): Common logic stays in the base class.
+      - Pattern 32 (CRTP): Automates boilerplate code like polymorphic cloning.
+
+K: Keep It Simple, Stupid (KISS)
+   Systems work best if they are kept simple rather than made 
+   complicated. The goal is to avoid over-engineering; if a simple 
+   solution meets the requirements effectively, do not build complex 
+   abstractions or frameworks that add unnecessary mental overhead.
+   [Examples] 
+      - Pattern 02 (SimpleFactoryMethod): Sometimes a switch is enough.
+      - Pattern 07 (NamedConstructors): Simple static methods for clarity.
+
+Y: You Ain't Gonna Need It (YAGNI)
+   A programmer should not add functionality until it is strictly 
+   necessary. Designing for hypothetical future requirements leads to 
+   bloated, hard-to-maintain code. Focus on what is required for the 
+   current task to keep the codebase lean and purposeful.
+
+----------------------------------------------------------------------------
+IV. ARCHITECTURAL WISDOM (L-C-S-C-B-P)
+Mnemonic: "Logic Creates Solid Clean Better Programs"
+----------------------------------------------------------------------------
+
+L: Law of Demeter (LoD)
+   A module should not know the inner workings of the objects it 
+   manipulates. It should only talk to its "immediate friends" to reduce 
+   coupling. Avoid long chains of method calls that navigate through 
+   different objects to perform a simple task.
+   [Bad]  order.getCustomer().getProfile().getAddress().getZipCode();
+   [Good] order.getShippingZipCode();
+   [Examples] 
+      - Pattern 12 (Facade): Provides a simple entry point to a complex system.
+      - Pattern 22 (Mediator): Objects only talk to the mediator.
+
+C: Composition Over Inheritance (CoI)
+   It is better to achieve polymorphic behavior and code reuse by 
+   composing objects (has-a) rather than inheriting from a root class 
+   (is-a). Composition is more flexible, avoids the "fragile base class" 
+   problem, and allows behaviors to be swapped at runtime.
+   [Examples] 
+      - Pattern 08 (Adapter): Wraps legacy classes to make them compatible.
+      - Pattern 11 (Decorator): Wraps objects instead of subclassing.
+      - Pattern 26 (Strategy): Uses composition for interchangeable logic.
+
+S: Separation of Concerns (SoC)
+   A program should be divided into distinct sections, where each 
+   section addresses a separate concern or aspect of the functionality. 
+   This is the basis for layered architectures, such as keeping the User 
+   Interface logic completely isolated from the Business or Database logic.
+   [Examples] 
+      - Pattern 25 (FSM): Separates the state logic from the context.
+      - Pattern 28 (Visitor): Separates algorithms from data structures.
+
+C: Command-Query Separation (CQS)
+   Every method should either be a command that performs an action 
+   (changes state) or a query that returns data, but never both. 
+   Functions that return a value should not have side effects, making 
+   the system predictable and much easier to debug and reason about.
+   [Examples] 
+      - Pattern 19 (Command): Separates the execution from the result.
+      - Pattern 21 (Iterator): 'operator*' (query) vs 'operator++' (command).
+
+B: Boy Scout Rule (BSR)
+   "Always leave the code cleaner than you found it." This encourages 
+   constant, incremental improvement. If you see a small mess or a 
+   confusing name while fixing a bug, clean it up immediately to prevent 
+   the accumulation of technical debt over time.
+
+P: Principle of Least Astonishment (POLA)
+   A component of a system should behave in a way that the user or 
+   another developer expects it to behave. Avoid "surprises" in your 
+   code logic; if a method is named 'calculateTotal', it should not 
+   unexpectedly modify the database or send an email.
+   [Examples] 
+      - Pattern 14 (Proxy): Works exactly like the original object.
+      - Pattern 30 (NullObject): Prevents crashes by behaving as an animal/logger.
+
+================================================================================ END

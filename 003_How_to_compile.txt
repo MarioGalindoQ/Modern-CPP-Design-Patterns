@@ -1,0 +1,11 @@
+# Compile each program with
+gcc3 program.cpp
+
+# gcc3 is a bash function defined in my ~/.bashrc as:
+# function gcc3
+# {
+#     echo "//--------------------------------------------------------------------- Compiling (Optimized version)"
+#     local name=${1%.*}
+#     rm -f $name
+#     c++ -std=c++2a -O3 -Wfatal-errors -Wall -Wextra -Wpedantic $name.cpp -o $name -pthread && strip $name && ./$name
+# }

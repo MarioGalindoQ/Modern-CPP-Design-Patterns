@@ -1,0 +1,49 @@
+============================================================================
+                         DESIGN PATTERNS INDEX
+============================================================================
+
+I. CREATIONAL PATTERNS (The "How" of Object Creation)
+----------------------------------------------------------------------------
+01_Builder: Separates complex object construction from its representation.
+02_FactoryMethod: Encapsulates object creation in a single specialized method.
+03_AbstractFactoryMethod: Creates families of related or dependent objects.
+04_Prototype: Creates new objects by cloning a prototypical instance.
+05_Singleton: Ensures a class has only one instance with a global access point.
+06_LazyInitialization: Defers object creation until the first time it is needed.
+07_NamedConstructors: Descriptive static methods to control object instantiation.
+
+II. STRUCTURAL PATTERNS (The "How" of Organizing Classes)
+----------------------------------------------------------------------------
+08_Adapter: Translates one interface into another that the client expects.
+09_Bridge: Decouples an abstraction from its implementation.
+10_Composite: Treats individual objects and compositions of objects uniformly.
+11_Decorator: Attaches additional responsibilities to an object dynamically.
+12_Facade: Provides a simplified interface to a complex underlying subsystem.
+13_Flyweight: Minimizes memory usage by sharing common data among many objects.
+14_Proxy: Provides a placeholder for another object to control access to it.
+15_Mixin: Composes behaviors horizontally using Multiple Inheritance.
+16_Register: Centralizes the management and lookup of shared services.
+17_ModuleLoader: Handles the dynamic loading of plugins (.so files) at runtime.
+
+III. BEHAVIORAL PATTERNS (The "How" of Object Interaction)
+----------------------------------------------------------------------------
+18_ChainOfResponsability: Passes a request along a chain of potential handlers.
+19_Command: Encapsulates a request as an object to support queuing and undo.
+20_Interpreter: Defines a grammar for a language and an engine to evaluate it.
+21_Iterator: Accesses elements of a collection sequentially without exposing it.
+22_Mediator: Encapsulates how a set of objects interact to reduce coupling.
+23_Memento: Captures an object's internal state to restore it later (Snapshots).
+24_Observer: A one-to-many notification system for state synchronization.
+25_FiniteStateMachine: Allows an object to change behavior based on its state.
+26_Strategy: Defines a family of interchangeable algorithms selected at runtime.
+27_TemplateMethod: Defines an algorithm's skeleton, deferring steps to subclasses.
+28_Visitor: Adds new operations to a structure without modifying its classes.
+
+IV. C++ SPECIFIC TECHNIQUES & FRAMEWORKS
+----------------------------------------------------------------------------
+29_Framework: Architectural skeleton following the "Hollywood Principle".
+30_NullObject: Provides a "do-nothing" object to eliminate explicit null checks.
+31_Variant: Type-safe unions for non-intrusive polymorphism and modern dispatch.
+32_CRTP: Static polymorphism using the Curiously Recurring Template Pattern.
+
+============================================================================ END

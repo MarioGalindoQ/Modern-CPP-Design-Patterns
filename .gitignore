@@ -1,0 +1,15 @@
+# Ignore executables (no extension in Linux)
+*
+# But don't ignore files with extensions or specific index files
+!*.cpp
+!*.h
+!*.txt
+!*.md
+!*.sh
+!*.png
+!.gitignore
+
+# Ignore shared libraries and object files
+*.so
+*.o
+__tmp_*
