@@ -1,0 +1,51 @@
+============================================================================
+                        ITERATOR PATTERN (BEHAVIORAL)
+============================================================================
+
+Intent:
+To provide a way to access the elements of an aggregate object (a container) 
+sequentially without exposing its underlying representation.
+
+The Problem:
+Containers (collections of data like lists, trees, or graphs) can store 
+their elements in many different ways. If a client object accesses the 
+internal structure directly to traverse the elements, the client becomes 
+tightly coupled to that specific data structure. If you change a Linked List 
+to an Array, all the client's traversal loops will break.
+
+The Solution:
+The Iterator pattern extracts the traversal behavior of a collection into a 
+separate object called an Iterator.
+- The Container provides a public interface to create an Iterator.
+- The Iterator contains methods to navigate through the elements (e.g., 
+  getting the first element, moving to the next, checking if it's done).
+
+Key Benefits:
+1. Encapsulation: The client navigates the collection without knowing how 
+   the data is stored internally (Arrays, Nodes, Trees, etc.).
+2. Multiple Traversals: Because the Iterator is a separate object (not a 
+   cursor inside the container), you can have multiple iterators traversing 
+   the same collection simultaneously without interfering with each other.
+3. Uniformity: Different containers can provide iterators with the same 
+   interface, allowing polymorphic traversal algorithms.
+
+Our Examples (The Book Collection):
+To demonstrate this pattern, we build a custom "Append-Only" Linked List 
+of Books. By only allowing additions at the end, we avoid the complex 
+issue of "Iterator Invalidation" (which happens when elements are deleted 
+while being iterated).
+
+This folder contains two distinct architectural approaches:
+
+1. Iterator_GoF/ (Object-Oriented Approach):
+   Implements the classic Gang of Four pattern using virtual interfaces 
+   (e.g., 'first()', 'next()', 'isDone()'). This is the standard in 
+   languages like Java or C#.
+
+2. Iterator_STL/ (Modern C++ Idiomatic Approach):
+   In C++, iterators rarely use virtual functions due to performance 
+   overhead. Instead, they use "Duck Typing" (Operator Overloading: 
+   'operator++', 'operator*', 'operator!='). This allows our custom 
+   collection to work seamlessly with C++ Range-based for loops 
+   (for (auto b : collection)) and STL algorithms.
+============================================================================

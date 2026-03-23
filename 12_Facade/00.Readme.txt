@@ -1,0 +1,82 @@
+The Facade Pattern makes a complex interface easier to use, using a Facade class. The Facade
+Pattern provides a unified interface to a set of interface in a subsystem. Facade defines a
+higher-level interface that makes the subsystem easier to use.
+
+The Facade unifies the complex low-level interfaces of a subsystem in-order to provide a simple
+way to access that interface. It just provides a layer to the complex interfaces of the sub-system
+which makes it easier to use.
+
+The Facade do not encapsulate the subsystem classes or interfaces; it just provides a simplified
+interface to their functionality. A client can access these classes directly. It still exposes the
+full functionality of the system for the clients who may need it.
+
+A Facade is not just only able to simplify an interface, but it also decouples a client from a
+subsystem. It adheres to the Principle of Least Knowledge, which avoids tight coupling between the
+client and the subsystem. This provides flexibility: suppose in the above problem, the company
+wants to add some more steps to start or stop the Schedule Server, that have their own different
+interfaces. If you coded your client code to the facade rather than the subsystem, your client
+code doesn’t need to be change, just the facade required to be changed, that’s would be delivered
+with a new version to the client.
+
+Clients communicate with the subsystem by sending requests to Facade, which forwards them to the
+appropriate subsystem object(s). Although the subsystem objects perform the actual work, the
+facade may have to do the work of its own to translate its interface to subsystem
+interfaces. Clients that use the facade don’t have to access its subsystem objects directly.
+
+Please note that, a Facade same as an Adapter can wrap multiple classes, but a facade is used to
+an interface to simplify the use of the complex interface, whereas, an adapter is used to convert
+the interface to an interface the client expects.
+
+============================================================================
+                         FACADE PATTERN (STRUCTURAL)
+============================================================================
+
+Intent:
+The Facade pattern provides a simplified interface to a complex subsystem. 
+It hides the internal complexity of the subsystem and makes it easier 
+for clients to interact with the system.
+
+The Facade do not encapsulate the subsystem classes or interfaces; it just
+provides a simplified interface to their functionality. A client can
+access these classes directly. It still exposes the full functionality of
+the system for the clients who may need it.
+
+A Facade is not just only able to simplify an interface, but it also
+decouples a client from a subsystem. It adheres to the Principle of Least
+Knowledge, which avoids tight coupling between the client and the
+subsystem. This provides flexibility: suppose in the above problem, the
+company wants to add some more steps to start or stop the Schedule Server,
+that have their own different interfaces. If you coded your client code to
+the facade rather than the subsystem, your client code doesn’t need to be
+change, just the facade required to be changed, that’s would be delivered
+with a new version to the client.
+
+The Problem:
+When working with a complex subsystem (e.g., a computer, a car engine, a 
+video player), clients must interact with many different classes and 
+interfaces. This can lead to:
+   - Increased complexity for the client.
+   - Tight coupling between the client and the subsystem.
+   - Difficulty in modifying or extending the system.
+
+The Solution:
+Create a "Facade" class that provides a simplified, high-level interface 
+to the subsystem. The Facade:
+1. Knows how to access the subsystem.
+2. Provides a simplified set of methods for the client.
+3. Decouples the client from the internal complexity of the subsystem.
+
+Our Example:
+In this example, we are creating a simplified interface to start a 
+computer:
+- The Facade is the 'ComputerFacade'.
+- The Subsystem consists of 'CPU', 'HardDrive', and 'Memory'.
+- The Client (main) calls 'ComputerFacade::Start()'. The Facade then 
+  manages the steps to boot the computer.
+
+Key Benefits:
+- Simplification: Reduces the complexity for clients.
+- Decoupling: Reduces the dependency between the client and the subsystem.
+- Flexibility: You can change the subsystem without affecting the client, 
+  as long as the Facade's interface remains the same.
+============================================================================

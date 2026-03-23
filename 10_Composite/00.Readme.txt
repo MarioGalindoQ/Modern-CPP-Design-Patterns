@@ -1,0 +1,45 @@
+============================================================================
+                         COMPOSITE PATTERN (STRUCTURAL)
+============================================================================
+
+Intent:
+The Composite pattern allows you to compose objects into tree structures to 
+represent part-whole hierarchies. It lets clients treat individual objects 
+and compositions of objects uniformly.
+
+The Problem:
+Imagine you are building a system to calculate the price or list the parts 
+of a computer. A computer has simple parts (CPU, RAM) and complex parts 
+(Motherboard, which contains a CPU and RAM; or a Box, which contains a 
+Motherboard and a Power Supply). 
+If you treat them as different types, your code becomes full of checks to 
+see if you are dealing with a single component or a container.
+
+The Solution:
+Define a common interface for both simple and complex objects.
+- Component (Equipment): The base interface for all elements.
+- Leaf (CPU, RAM): Simple elements that have no children.
+- Composite (Motherboard, Box): Containers that can hold other Equipment 
+  (both Leaves and other Composites).
+
+Key Components:
+1. Component: Declares the interface for objects in the composition.
+
+2. Leaf: Represents leaf objects in the composition. A leaf has no children.
+
+3. Composite: Defines behavior for components having children and stores 
+              child components.
+
+4. Client: Manipulates objects in the composition through the Component 
+           interface.
+
+Our Example:
+
+A 'Box' is a Composite. It can contain a 'CD' (Leaf), a 'MotherBoard'
+(another Composite) and a DiskRack (another Composite). The 'MotherBoard'
+then contains a 'CPU', the 'RAM' and the DiskRack. Finally, the DiskRack
+contains several SDD disks. When you call 'print()' on the 'Box', it
+recursively prints everything inside it without the client needing to
+know the internal structure.
+
+============================================================================

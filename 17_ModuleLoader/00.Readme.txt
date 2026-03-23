@@ -1,0 +1,99 @@
+============================================================================
+                     MODULE LOADER / PLUGIN PATTERN
+============================================================================
+
+Intent:
+The Module Loader design pattern refers to the architecture and mechanisms 
+for dynamically discovering, loading, linking, and executing separate code 
+units (modules or plugins) at runtime, rather than at compile-time.
+
+The Problem:
+Most C++ applications are statically linked. The compiler knows about all 
+the classes and functions beforehand. However, modern systems (like game 
+engines, audio workstations, or web browsers) need to load "Plugins" 
+(third-party extensions) while the program is already running. 
+
+The C++ Challenge (Name Mangling & The ABI Boundary):
+Loading a pure C library dynamically is easy. But C++ supports function 
+overloading, namespaces, and classes. To make this work, C++ compilers 
+change the names of your functions behind the scenes into complex strings 
+(a process called "Name Mangling"). Because different compilers mangle 
+names differently, you cannot easily search for a C++ class or method 
+inside a compiled Shared Object (.so) or Dynamic Link Library (.dll).
+
+The Solution & The <dlfcn.h> API:
+To solve this, we use the POSIX standard C library `<dlfcn.h>` (Dynamic 
+Linking API), which provides four main functions:
+  - dlopen()  : Loads a dynamic library (.so) into memory.
+  - dlsym()   : Looks up a memory address for a specific symbol (name).
+  - dlclose() : Unloads the library from memory.
+  - dlerror() : Returns human-readable error messages.
+
+Since dlsym() expects standard, unmangled C names, we use a C++ feature 
+called `extern "C"`. We expose simple C functions (factories) from our 
+module that return pointers to our complex C++ objects.
+
+Our Example: The Dynamic Plugin System
+We have separated the project into three distinct parts to demonstrate 
+bidirectional communication across the Application Binary Interface (ABI):
+
+1. The Contract (IModule.h):
+   An abstract C++ interface shared by both the Host and the Plugin.
+
+2. The Plugin (libModule.so / Module.cpp):
+   A compiled shared library containing a concrete C++ class ('Module'). 
+   It exposes two flat C functions via `extern "C"`:
+   - build_module(): Allocates the C++ object and returns it as an IModule*.
+   - destroy_module(): Safely deletes the object.
+
+3. The Host (ModuleLoader.cpp):
+   The main executable. It uses <dlfcn.h> to open 'libModule.so', fetches 
+   the factory functions, creates the object, passes parameters to its 
+   methods (e.g., processData), and finally destroys it.
+
+The Golden Rule of Memory across ABIs:
+Notice that the Host does NOT call `delete` on the module pointer. Instead, 
+it passes the pointer back to the Plugin's `destroy_module()` function. 
+Rule: "He who allocates, deallocates." Memory allocated inside a .so file 
+must be deallocated by the same .so file to prevent heap corruption, 
+especially on Windows or across different compiler versions.
+
+Modern C++ Note:
+In our implementation, we will use modern C++ features (RAII and Smart 
+Pointers with custom deleters) to domesticate the dangerous C API, ensuring 
+that libraries are closed and modules are destroyed perfectly and automatically.
+
+----------------------------------------------------------------------------
+CROSS-PLATFORM CONSIDERATIONS (POSIX vs. Windows)
+----------------------------------------------------------------------------
+Dynamic loading is not currently part of the standard C++ language (up to 
+C++23) because binary executable formats vary drastically between Operating 
+Systems. We must rely on the native OS APIs to load dynamic code.
+
+1. Linux & macOS (POSIX Standard):
+   This example uses the <dlfcn.h> header, which is the standard API for 
+   POSIX-compliant systems. It allows us to load Shared Objects (.so) in 
+   Linux or Dynamic Libraries (.dylib / .bundle) in macOS using functions 
+   like 'dlopen' and 'dlsym'.
+
+2. Windows (Win32 API):
+   Windows is not POSIX-compliant for dynamic linking. To achieve the exact 
+   same pattern on Windows, you must use the <windows.h> API:
+   - 'LoadLibrary'  (equivalent to 'dlopen') to load a .dll file.
+   - 'GetProcAddress' (equivalent to 'dlsym') to find the factory function.
+   - 'FreeLibrary'  (equivalent to 'dlclose') to unload the .dll.
+   Additionally, Windows compilers require explicit symbol exporting using 
+   macros like __declspec(dllexport) and __declspec(dllimport).
+
+3. Industry Solutions:
+   In professional cross-platform C++ development, writing #ifdef _WIN32 
+   blocks to manually switch between 'dlopen' and 'LoadLibrary' is tedious. 
+   Instead, developers usually rely on abstraction frameworks (e.g., 
+   Boost.DLL, Qt's QLibrary, or POCO's SharedLibrary) which wrap these 
+   native OS calls into a single, clean C++ class.
+
+Regardless of the OS or the wrapper library used, the architectural pattern 
+demonstrated here—exporting C-linkage factory functions to instantiate and 
+destroy complex C++ objects across an ABI boundary—remains the universal 
+standard for plugin systems worldwide.
+============================================================================

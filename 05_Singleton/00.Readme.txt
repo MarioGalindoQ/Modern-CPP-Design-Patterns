@@ -1,0 +1,47 @@
+============================================================================
+                        SINGLETON PATTERN (CREATIONAL)
+============================================================================
+
+Intent:
+Ensure that a class has only one instance and provide a global point of 
+access to it.
+
+The Problem:
+There are many objects in an application for which we only need exactly one 
+instance. If we instantiate more than one, we encounter problems such as:
+- Incorrect program behavior.
+- Overuse of system resources (e.g., database connection pools).
+- Inconsistent results or data corruption.
+
+Examples:
+You may require only one object of a class when creating the context of an 
+application, a thread management pool, registry settings, or a driver to 
+connect to an input/output console. More than one object of that type would 
+clearly cause inconsistency.
+
+The Solution:
+The Singleton pattern provides a mechanism to ensure a class has only one 
+instance. Although the Singleton is the simplest in terms of its class 
+diagram (a single class), its implementation is trickier than it looks, 
+especially regarding memory management and thread safety.
+
+Our Examples:
+This folder contains two approaches:
+
+1. Simple_Singleton/:
+   A modern C++11 implementation (Meyers' Singleton). It is thread-safe, 
+   elegant, and memory-safe. It uses a static local variable that is 
+   initialized on first use and automatically cleaned up upon program 
+   termination.
+
+2. Singleton_with_register/:
+   A "Multiton" or Registry approach. It allows managing a collection of 
+   Singletons by name, using a map to register and retrieve instances 
+   automatically via global static initialization.
+
+Key Considerations:
+- Memory Management: In C++, the Singleton can be allocated in the static 
+  segment (Meyers' style) or the heap (using smart pointers). 
+- Global Access: While convenient, it should be used judiciously, as 
+  excessive global state can make code harder to test and maintain.
+============================================================================

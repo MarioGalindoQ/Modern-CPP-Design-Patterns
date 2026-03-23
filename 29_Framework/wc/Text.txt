@@ -1,0 +1,4 @@
+This input has 5 lines,
+20 words and 110 characters.
+The output of ./wc should be:
+lines=5 words=20 chars=110

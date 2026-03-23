@@ -1,6 +1,8 @@
-# Ignore executables (no extension in Linux)
+# Ignorar archivos sin extensión (ejecutables de Linux)
 *
-# But don't ignore files with extensions or specific index files
+# No ignorar carpetas (para poder entrar en ellas)
+!*/
+# No ignorar archivos específicos
 !*.cpp
 !*.h
 !*.txt
@@ -9,7 +11,6 @@
 !*.png
 !.gitignore
 
-# Ignore shared libraries and object files
+# Ignorar objetos y librerías
 *.so
 *.o
-__tmp_*

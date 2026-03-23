@@ -1,0 +1,63 @@
+============================================================================
+                          VISITOR PATTERN (BEHAVIORAL)
+============================================================================
+
+Intent:
+The Visitor pattern represents an operation to be performed on the elements 
+of an object structure. It lets you define a new operation without changing 
+the classes of the elements on which it operates.
+
+The Problem (Double Dispatch):
+In C++, virtual functions only provide "Single Dispatch" (the method called 
+depends on the runtime type of the object). However, some problems require 
+"Double Dispatch", where the operation depends on the runtime types of TWO 
+objects (e.g., detecting a collision between a 'Circle' and a 'Triangle').
+
+The Solution:
+The pattern uses a technique called "Double Dispatch". The element accepts 
+a visitor, and then the visitor "visits" the element. Through this 
+handshake, the program gains knowledge of the concrete types of both 
+participants.
+
+Our Examples:
+This folder illustrates the evolution of the pattern, from classic 
+techniques to modern functional-style C++:
+
+1. Visitor_Simple/:
+   A direct solution to the Double Dispatch problem using Shapes. It shows 
+   how a 'Shape' can interact with another 'Shape' knowing their true 
+   identity via recursive virtual calls.
+
+2. Visitor_GoF/:
+   The classic Gang of Four (GoF) implementation. It uses an 'accept' 
+   mechanism to decouple operations from the object structure. 
+   Note: This version is "Cyclic", meaning adding a new element requires 
+   recompiling all visitors.
+
+3. Visitor_RTTI/:
+   The "Acyclic Visitor" variation. It uses Run-Time Type Information 
+   (dynamic_cast) to allow adding new visited or visitor classes without 
+   recompiling the entire hierarchy.
+
+4. Visitor_Modern_Variant/:
+   The modern C++17/20 approach. It uses 'std::variant' and 'std::visit' 
+   to achieve visitation without inheritance or 'accept' methods. This is 
+   a "non-intrusive" pattern that is usually more efficient and cleaner 
+   than the traditional version.
+
+----------------------------------------------------------------------------
+SEE ALSO: STATIC VISITOR (Pattern 15_Mixin)
+For the compile-time version of this pattern, refer to the 'Advanced Mixin' 
+example. It demonstrates a "Static Visitor" using Variadic Templates and 
+Fold Expressions (C++17) to iterate over components with zero runtime overhead.
+----------------------------------------------------------------------------
+
+Key Benefits:
+- Open/Closed Principle: You can add new operations (visitors) without 
+  modifying the element classes.
+- Single Responsibility Principle: It gathers related operations into 
+  a single visitor class.
+- Flexibility: The Modern Variant allows visiting classes that were not 
+  originally designed to be visited. It can be implemented dynamically
+  (Pattern 28_Visitor) or statically (Pattern 15_Mixin).
+============================================================================

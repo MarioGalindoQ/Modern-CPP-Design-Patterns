@@ -1,0 +1,46 @@
+============================================================================
+                        NULL OBJECT PATTERN (BEHAVIORAL)
+============================================================================
+
+Intent:
+The Null Object pattern provides an object that acts as a substitutable 
+alternative to a real object, offering neutral or "do nothing" behavior. 
+It encapsulates the absence of an object, allowing client code to treat 
+both real objects and null objects uniformly.
+
+The Problem:
+In many systems, objects are expected to handle requests. Often, when an 
+object is missing, we use 'nullptr' or special sentinel values to represent 
+its absence. This forces the client code to constantly check if the object 
+is null before calling its methods:
+
+   if (logger != nullptr) {
+      logger->log("Something happened");
+   }
+
+Scattered throughout a large codebase, these checks increase complexity, 
+decrease readability, and introduce the risk of NullPointerExceptions.
+
+The Solution:
+Instead of using 'null', we provide a concrete class that implements the 
+same interface as the real object but performs no action (a "no-op"). 
+The client code then treats the Null Object exactly like a real one, 
+completely eliminating the need for conditional null-checks.
+
+Our Example: The Logger System
+We simulate an application that requires a 'Logger'. 
+- Logger (Interface): Defines the 'log' method.
+- ConsoleLogger (Real Object): Performs the actual logging to the console.
+- NullLogger (Null Object): Implements the interface but does absolutely 
+  nothing. It is a "silent" logger used when we want to suppress logging.
+
+Key Benefits:
+- Uniformity: Clients can interact with the object without knowing if it 
+  is "real" or "null".
+- Reduced Complexity: Eliminates the need for explicit null checks throughout 
+  the client code.
+- Safety: Greatly reduces the risk of runtime crashes caused by dereferencing 
+  a null pointer.
+- Singleton usage: Since Null Objects usually hold no state, they are 
+  perfect candidates to be implemented as a Singleton.
+============================================================================

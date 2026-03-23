@@ -1,0 +1,66 @@
+============================================================================
+                          MEMENTO PATTERN (BEHAVIORAL)
+============================================================================
+
+Intent:
+Without violating encapsulation, capture and externalize an object's 
+internal state so that the object can be restored to this state later.
+
+The Problem:
+Applications often need to record the internal state of an object to 
+implement features like Undo/Redo mechanisms, checkpoints, or saving games. 
+However, exposing the internal variables of an object to save them externally 
+violates the principle of encapsulation and makes the code fragile.
+
+The Solution:
+The Memento Pattern delegates the creation of the state snapshot to the 
+actual owner of that state. It defines three distinct roles:
+
+1. Originator:
+   - Creates a memento containing a snapshot of its current internal state.
+   - Uses the memento to restore its internal state later.
+
+2. Memento:
+   - Stores the internal state of the Originator object. 
+   - Protects against access by objects other than the originator. Mementos 
+     have effectively two interfaces:
+     a) The Caretaker sees a "narrow" interface—it can only pass the 
+        memento to other objects.
+     b) The Originator sees a "wide" interface, allowing it to access all 
+        the data necessary to restore itself.
+
+3. Caretaker:
+   - Is responsible for the memento's safekeeping (e.g., storing it in a 
+     Stack for Undo operations).
+   - Never operates on or examines the contents of a memento.
+
+Our Examples:
+This folder demonstrates two different architectural approaches:
+
+1. Memento_Classic_GoF/
+   The traditional Gang of Four (GoF) implementation. It uses polymorphic 
+   base classes and nested structs to ensure that only the Originator can 
+   access the Memento's data (strict encapsulation).
+
+2. Memento_String/ (Manual Serialization)
+   A modern, pragmatic approach where the "Memento" is simply a serialized 
+   string (e.g., generated using std::stringstream). The Caretaker just 
+   holds opaque strings. The Originator knows how to pack its variables 
+   into the string and unpack them later.
+
+----------------------------------------------------------------------------
+INDUSTRY NOTE: BOOST & ADVANCED SERIALIZATION
+----------------------------------------------------------------------------
+In this repository, the 'Memento_String' example uses manual string 
+serialization to keep the code pure standard C++ with zero dependencies. 
+
+However, in professional, real-world C++ applications, manual serialization 
+is brittle and error-prone (especially when dealing with pointers, complex 
+collections, or endianness). In the industry, the Memento pattern is almost 
+exclusively implemented using robust serialization libraries such as 
+'boost::serialization', or modern JSON/XML parsers. 
+
+If you ever need to program this pattern for a production environment, 
+strongly consider using Boost or similar frameworks to automatically 
+serialize and deserialize your objects' states.
+============================================================================

@@ -1,0 +1,32 @@
+============================================================================
+                     CHAIN OF RESPONSIBILITY (BEHAVIORAL)
+============================================================================
+
+Intent:
+Avoid coupling the sender of a request to its receiver by giving more than 
+one object a chance to handle the request. Chain the receiving objects and 
+pass the request along the chain until an object handles it.
+
+The Problem:
+When you have a request that can be processed by different handlers, you 
+don't want the client to know exactly which handler will process it. 
+Hardcoding the sequence of handlers creates tight coupling.
+
+The Solution:
+Each handler in the chain contains a reference to the 'next' handler. 
+1. If the current handler can process the request, it does so.
+2. If it cannot, it forwards the request to the 'next' object in the chain.
+This creates a recursive propagation of the request.
+
+Key Components:
+- Handler Interface: Declares the method to handle requests and the 
+  method to set the next successor in the chain.
+- Concrete Handlers: Implement the specific processing logic. If they can't 
+  handle the request, they call the base class implementation to forward it.
+
+Benefits:
+- Decoupling: The sender doesn't need to know the structure of the chain.
+- Flexibility: You can change the order of handlers or add new ones 
+  dynamically at runtime.
+- Responsability: Each handler has a single responsibility.
+============================================================================

@@ -1,0 +1,51 @@
+============================================================================
+                        STRATEGY PATTERN (BEHAVIORAL)
+============================================================================
+
+Intent:
+Define a family of algorithms, encapsulate each one, and make them 
+interchangeable. Strategy lets the algorithm vary independently from the 
+clients that use it.
+
+The Problem:
+When you have a set of related algorithms (e.g., different sorting or 
+printing techniques), hardcoding them inside the context object leads to 
+"spaghetti code" full of conditionals. This makes it difficult to maintain 
+the code and violates the Open/Closed Principle.
+
+The Solution:
+Encapsulate each algorithm in a separate class (Strategy). The context object 
+delegates the work to the Strategy object it currently holds. This allows 
+changing the algorithm at runtime by simply swapping the strategy instance, 
+without modifying the context itself.
+
+Our Examples:
+This folder illustrates three distinct approaches to the Strategy pattern, 
+all centered around the sorting and printing of data:
+
+1. Simple_Strategy/:
+   Focuses on the core pattern: a 'Sort' strategy used by a Context. It 
+   highlights how to decouple the algorithm from the client using simple 
+   polymorphism and smart pointers.
+
+2. Advanced_Strategy/:
+   Shows "Strategy Composition". A single context ('SortAndPrint') uses 
+   multiple independent strategies simultaneously (a 'Sort' strategy AND 
+   a 'Print' strategy). This demonstrates how complex tasks can be built 
+   by composing smaller, interchangeable algorithms.
+
+3. Static_Strategy/:
+   A high-performance C++ implementation using 'templates'. Unlike the 
+   previous versions, this approach has zero virtual function overhead, 
+   as the strategy is selected at compile-time. It is ideal for systems 
+   where the strategy is known upfront and performance is critical.
+
+Key Benefits:
+- Open/Closed Principle: You can introduce new strategies without modifying 
+  the context class.
+- Runtime Flexibility: You can switch behaviors on the fly (in Dynamic 
+  versions).
+- Testability: Strategies can be tested in isolation from the context.
+- Separation of Concerns: The context manages the execution flow, while 
+  the strategies contain the raw algorithmic logic.
+============================================================================

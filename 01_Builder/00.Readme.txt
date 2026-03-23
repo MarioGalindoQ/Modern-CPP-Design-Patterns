@@ -1,0 +1,55 @@
+============================================================================
+                          BUILDER PATTERN (CREATIONAL)
+============================================================================
+
+Intent:
+To separate the construction of a complex object from its representation, 
+so that the same construction process can create different representations.
+
+The Problem:
+Constructing a complex object step-by-step often requires a client to invoke 
+multiple methods. If a client object directly creates an instance of a 
+builder and invokes the required methods, it must be fully aware of the 
+construction logic. Consequently, whenever the construction logic undergoes 
+a change, all client objects need to be modified accordingly. This approach 
+creates tight coupling and violates the open/closed principle.
+
+The Solution:
+The Builder pattern introduces a level of separation to address this problem:
+1. Builders: The different steps in the construction process are declared 
+   as methods of a common interface, to be implemented by different concrete 
+   builders.
+2. The Director: Instead of having clients invoke builder methods directly, 
+   a dedicated object called a "Director" is used. The Director is responsible 
+   for executing the builder methods in the correct sequence to construct 
+   the final object.
+
+Different clients can use the Director object to create the required product. 
+Once the construction process is finished, the client can directly request 
+the fully constructed object from the builder (often facilitated by a 
+'getObject' or 'build' method declared in the Builder interface).
+
+Our Examples:
+This folder illustrates two approaches to implementing the Builder:
+
+1. Static_example/:
+   Shows a "Fluent Builder" where the builder manages a complicated 
+   constructor. It uses a conversion operator (operator Car) and a 
+   .build() method to return the final object by value (on the stack).
+
+2. Dynamic_example/:
+   A similar approach, but the builder is designed to return a 
+   'std::unique_ptr<Car>'. This is the preferred way when the object 
+   is complex, requires polymorphic components, or must live in the heap.
+
+Key Benefits:
+- Encapsulation: Eliminates the need for a client object to deal with the 
+  construction steps. The details of how the object is built are completely 
+  hidden from the client.
+- Modularity: The design becomes highly modular, with each implementation 
+  contained in a different builder object. Adding a new implementation 
+  (a new builder) becomes much easier.
+- Finer Control: The object construction process becomes independent of the 
+  components that make up the object, providing more control over the overall 
+  assembly process.
+============================================================================

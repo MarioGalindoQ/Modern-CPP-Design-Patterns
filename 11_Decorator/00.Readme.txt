@@ -1,0 +1,59 @@
+============================================================================
+                         DECORATOR PATTERN (STRUCTURAL)
+============================================================================
+
+Intent:
+The Decorator pattern is a structural design pattern that allows you to 
+attach additional responsibilities to an object dynamically. Decorators 
+provide a flexible alternative to sub-classing for extending functionality.
+
+The Problem:
+Imagine you have a 'Coffee' class and you want to add ingredients like 
+Milk, Sugar, or Vanilla. If you use inheritance, you would end up with 
+an explosion of classes: 'CoffeeWithMilk', 'CoffeeWithSugar', 
+'CoffeeWithMilkAndSugar', 'TeaWithMilk', etc. This leads to a rigid 
+and unmanageable hierarchy.
+
+The Solution:
+Instead of creating dozens of subclasses, the Decorator pattern "wraps" 
+the core object. In C++, we can achieve this in two ways:
+1. Dynamic (Runtime): The Decorator "is a" component and "has a" component 
+   (composition). This allows adding ingredients while the program is 
+   running.
+2. Static (Compile-time): The Decorator "is a" component via templates 
+   but does NOT "have a" component. The recipe is fixed when the code 
+   is compiled.
+
+Our Examples:
+This folder contains three approaches using the "Coffee Shop" scenario:
+
+1. Simple/:
+   A basic implementation using smart pointers (std::unique_ptr). It shows 
+   the fundamental "wrapper" mechanism and how costs and descriptions are 
+   accumulated through a recursive chain of calls.
+
+2. Advanced/:
+   A sophisticated version where decorators have internal state and logic. 
+   Includes Milk types (Soy, Almond), portions of Sugar/Vanilla, and 
+   Temperature (Hot/Iced). It also features advanced string logic to 
+   build natural sentences like "Coffee with Milk, Sugar and Vanilla".
+
+3. Static/:
+   Demonstrates "Static Decorators" using Mixin Inheritance (Templates). 
+   This approach represents a "Coffee Machine Factory" where recipes are 
+   pre-defined. It provides maximum performance (zero-overhead) because 
+   there are no virtual calls or pointers involved.
+
+Key Benefits:
+- Single Responsibility Principle: Focused classes for each ingredient.
+- Open/Closed Principle: Add new ingredients without touching the base 
+  Coffee or Tea classes.
+- Flexibility: Dynamic decorators allow the user to build their own 
+  drink, while static decorators allow the compiler to optimize 
+  specific recipes.
+
+Cross-Reference: For an alternative approach to extending functionality using "Horizontal
+Composition" (Multiple Inheritance via Variadic Templates) instead of "Vertical Wrapping"
+(Recursive Composition), please refer to Pattern 15_Mixin.
+
+============================================================================

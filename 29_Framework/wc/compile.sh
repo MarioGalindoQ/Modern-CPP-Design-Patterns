@@ -1,0 +1,3 @@
+#!/bin/bash
+# -Wl,-rpath=... Avoid the necesity of puting the library path into LD_LIBRARY_PATH
+c++ -std=c++2a -O3 -Wfatal-errors -Wall -Wextra -Wpedantic -Wl,-rpath=../Framework -L../Framework -lFramework -o wc wc.cpp && strip wc

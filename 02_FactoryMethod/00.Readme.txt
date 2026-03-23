@@ -1,0 +1,50 @@
+============================================================================
+                       FACTORY METHOD PATTERN (CREATIONAL)
+============================================================================
+
+Intent:
+The Factory Method Pattern provides a way to encapsulate the instantiation 
+of concrete types. It defines a designated method (the factory method) 
+responsible for selecting and instantiating an appropriate class from a 
+hierarchy, based on the application context and other influencing factors.
+
+The Solution:
+Instead of forcing client code to handle the varying class selection 
+criteria, the application uses the factory method to access the appropriate 
+class instance. This returns the new instance typed as the parent class, 
+effectively hiding the concrete class details from the client.
+
+Game Concept & Example Overview:
+This is a multi-level space game where the difficulty progressively 
+increases as the player advances. The game generates meteorites that are 
+larger and faster as the player reaches higher levels. 
+
+Our Examples:
+This folder contains two approaches to creating objects:
+
+1. FactoryMethod_GoF/:
+   Demonstrates the classic "Gang of Four" Factory Method. It uses an 
+   abstract factory interface and specific concrete factories for each level. 
+   This follows the Open/Closed Principle: you can add new levels by creating 
+   new factory subclasses without modifying existing game logic.
+
+2. SimpleFactoryMethod/:
+   Demonstrates a "Simple Factory" (Parameterized Factory). It uses a single 
+   factory class with a 'switch' or 'if' statement to instantiate objects 
+   based on an internal state (the current level). While intuitive, it violates 
+   the Open/Closed Principle because adding a new level requires modifying 
+   the factory class itself.
+
+Instead of implementing a full game engine, this program serves as a summary 
+of what would happen in a much longer, complete game. Whenever a meteor is 
+spawned, the program calls its 'showInfo()' method, which prints a text 
+description of the meteor's attributes.
+
+Key Benefits:
+- Encapsulation: The selection and instantiation logic is contained in one 
+  dedicated method.
+- Loose Coupling: Client code interacts only with the abstract interface 
+  (the parent class), not with the specific concrete classes.
+- Extensibility: The Factory Method allows adding new concrete types (e.g., 
+  new levels) without modifying the client code that uses the factory.
+============================================================================

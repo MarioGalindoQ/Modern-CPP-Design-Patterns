@@ -1,0 +1,15 @@
+This file contains some
+simple text to be converted
+into upper case.
+
+Lower case letters:
+abcdefghijklmnopqrstuvwxyz
+
+Numbers:
+0123456789
+
+Upper case letters:
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+
+Symbols:
++×÷=/_€£¥₩!@#$%^&*()-'":;,?

@@ -1,0 +1,43 @@
+============================================================================
+                     LAZY INITIALIZATION PATTERN (CREATIONAL)
+============================================================================
+
+Intent:
+Lazy Initialization is an optimization technique that delays the creation 
+of an object, the calculation of a value, or any other expensive process 
+until the first time it is actually needed. It is a form of lazy evaluation.
+
+The Problem:
+Initializing resources prematurely consumes memory, CPU cycles, and slows down 
+application startup times, especially when dealing with objects that might 
+never be used during the program's lifecycle.
+
+The Solution:
+The core principle involves using a conditional check (often within an 
+accessor method) to determine if the resource has already been created:
+1. Check: When the object is requested, verify if an instance exists.
+2. Initialize: If it does not exist, create it at that exact moment.
+3. Cache/Return: Store the instance and return it to the caller for this 
+   and all subsequent requests.
+
+Our Example:
+We implement a 'Fruit' factory that acts as a Flyweight/Lazy cache. 
+- The factory maintains an internal map of shared 'Fruit' objects.
+- Objects are created only on-demand ('Lazy').
+- Once created, they are stored ('Cached') for future requests.
+
+Memory Management Note:
+We use 'std::shared_ptr' instead of 'std::unique_ptr' because the Flyweight 
+objects (like 'Apple' or 'Banana') are intended to be **shared** among many 
+client objects simultaneously. 
+- 'std::shared_ptr' allows the factory to maintain a cache while letting 
+  multiple clients hold a reference to the same object. 
+- This ensures the object lives as long as at least one client or the 
+  factory needs it, preventing memory leaks or dangling pointers.
+
+Key Benefits:
+- Improved Startup: Avoids heavy initialization at program launch.
+- Memory Efficiency: Defers resource allocation, keeping the footprint low.
+- Performance: Avoids repeated creation of identical objects by caching 
+  the results of previous initializations.
+============================================================================

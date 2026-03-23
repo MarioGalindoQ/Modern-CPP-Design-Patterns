@@ -1,0 +1,2 @@
+To run do:
+./wc < Text.txt

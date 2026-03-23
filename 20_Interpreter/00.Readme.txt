@@ -1,0 +1,90 @@
+============================================================================
+                       INTERPRETER PATTERN (BEHAVIORAL)
+============================================================================
+
+Intent:
+Given a language, define a representation for its grammar along with an 
+interpreter that uses the representation to interpret sentences in the 
+language.
+
+The Problem:
+Sometimes an application needs to process repeated occurrences of similar 
+requests that follow a specific set of rules (a grammar). For example, 
+evaluating mathematical expressions submitted by a user. Instead of hard-
+coding every possible combination, it is better to build a generic engine 
+that understands the "language" of math.
+
+The Solution:
+The Interpreter pattern maps every grammar rule to a specific class. 
+Sentences are parsed into an Abstract Syntax Tree (AST) made of these 
+objects. Evaluating the sentence is as simple as calling an 'evaluate()' 
+method on the root of the tree, which recursively calls its children.
+
+----------------------------------------------------------------------------
+OUR PROJECT: THE 'calc' COMMAND LINE TOOL
+----------------------------------------------------------------------------
+We have built a terminal calculator (calc) that interprets mathematical 
+expressions.
+
+Usage: 
+   ./calc "sin(0.3) + (5 * 2.1)"
+   ./calc -p "sin(0.3) + (5 * 2.1)"
+
+* Note on quotes: Quotes are mandatory. They prevent the Linux shell from 
+  interpreting special characters (like '*' or '()') as shell commands or 
+  wildcards, ensuring the expression is passed correctly to our program.
+
+The '-p' Flag (Print Internals):
+If you pass '-p' as the first argument, the program will print its internal 
+representation of the formula before evaluating it. This is crucial for 
+understanding the architectural differences in this folder.
+
+----------------------------------------------------------------------------
+TWO ARCHITECTURES: OOP vs PERFORMANCE
+----------------------------------------------------------------------------
+This directory contains two sub-folders solving the exact same problem 
+(following the exact same Grammar.txt), but using different paradigms:
+
+1. Interpreter_GoF_AST/
+   The pure Gang of Four pattern. The parser builds an Abstract Syntax 
+   Tree (AST) in memory. Every mathematical operation is a polymorphic 
+   C++ object (e.g., AddNode, SinNode). 
+   - Pro: Highly extensible, clean OOP design (Easy to add a Visitor).
+   - Con: Slower execution due to recursive virtual function calls.
+
+2. Interpreter_Stack_Machine/ (Legacy Implementation)
+   An industrial-style approach. The parser compiles the string into a 
+   linear array of "Bytecode" instructions. A virtual machine uses a Stack 
+   and a giant switch-statement to evaluate the bytecode.
+   - Pro: Blazing fast, cache-friendly, zero virtual overhead.
+   - Con: Harder to extend or manipulate once compiled.
+
+----------------------------------------------------------------------------
+BEYOND INTERPRETATION: THE ROAD TO MACHINE CODE (AOC / JIT)
+----------------------------------------------------------------------------
+While the Interpreter pattern evaluates expressions directly, the GoF AST 
+architecture offers a massive hidden advantage: it is the perfect starting 
+point for building a real compiler that targets native hardware (e.g., x86 
+machine code or LLVM IR).
+
+Why the AST wins here over the Stack Machine:
+Translating a linear bytecode (Stack Machine) into efficient CPU instructions 
+is extremely difficult because the semantic context of the math equation has 
+been lost. The CPU has fast registers (like xmm0, xmm1), and simulating a 
+RAM-based stack is slow. 
+
+The AST, however, retains the full context. By combining the AST with the 
+'Visitor Pattern' (see Pattern 23), you can achieve this leap:
+1. Optimizer Visitor: Traverses the tree to fold constants (e.g., turning 
+   an AddNode(2, 3) directly into a NumberNode(5) before execution).
+2. Register Allocator Visitor: Analyzes the tree to assign specific CPU 
+   registers to each branch.
+3. CodeGen Visitor: Instead of returning a 'double', this visitor emits 
+   raw hexadecimal bytes (machine code) into executable memory, mapping 
+   AddNode to the assembly instruction 'addsd'.
+
+Note: Generating native machine code or JIT compilation falls far beyond 
+the scope of this pattern example. It is mentioned here to illustrate 
+that the Object-Oriented AST approach provides the architectural 
+foundation required for industrial-grade compilers.
+============================================================================

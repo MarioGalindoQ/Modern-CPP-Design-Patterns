@@ -1,0 +1,43 @@
+============================================================================
+                        PROTOTYPE PATTERN (CREATIONAL)
+============================================================================
+
+Intent:
+To specify the kinds of objects to create using a prototypical instance, 
+and create new objects by copying this prototype. This pattern is also 
+frequently referred to as the "Virtual Constructor" idiom in C++.
+
+The Problem:
+Creating a new instance of an object from scratch can be a heavy, resource-
+intensive process. If you already have an object that has been fully 
+configured (e.g., loaded from a file, initialized with complex data), 
+it is often more efficient to copy that object rather than reconstructing 
+it from zero.
+
+The Solution:
+The Prototype pattern suggests copying an existing object (the prototype) 
+rather than creating a new instance. The prototype acts as a template 
+containing the initial state. The newly copied object can then be modified 
+if required. 
+
+This approach is highly effective in scenarios where:
+1. Object creation is a "heavy" or costly process.
+2. You need to create objects at runtime without being bound to their 
+   concrete classes.
+3. You want to avoid the "subclassing" explosion that factories might 
+   sometimes cause.
+
+Implementation Details:
+- Clone Method: The pattern is implemented using a 'clone()' method. 
+- Virtual Constructor: Because C++ does not provide built-in virtual 
+  constructors, the 'clone()' method acts as one, allowing us to duplicate 
+  an object polymorphically through a base class pointer.
+
+Key Benefits:
+- Efficiency: Saves costly resources and time by avoiding redundant 
+  initialization.
+- Dynamic Configuration: You can add or remove products at runtime by 
+  registering prototypes.
+- Decoupling: The client is decoupled from the concrete classes of the 
+  objects it creates.
+============================================================================

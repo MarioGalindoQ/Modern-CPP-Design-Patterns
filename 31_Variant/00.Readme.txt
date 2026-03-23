@@ -1,0 +1,49 @@
+============================================================================
+                   std::variant (MODERN C++17 FEATURE)
+============================================================================
+
+Intent:
+To provide a type-safe union that can hold exactly one value from a predefined 
+set of heterogeneous types, managing the lifecycle of the contained object 
+automatically.
+
+The Problem:
+In older C++, creating heterogeneous collections (e.g., a list containing 
+ints, strings, and custom objects) required either:
+1. Pointers to a common base class (Polymorphism + Heap Allocation).
+2. Unsafe C-style 'union' structures, which cannot safely hold objects with 
+   constructors or destructors (like std::string) without complex manual 
+   management.
+3. 'void*' pointers, which completely destroy type safety.
+
+The Solution:
+C++17 introduced 'std::variant', a standard library feature that acts as a 
+"Sum Type". 
+- It knows exactly which type it currently holds.
+- It is type-safe: you cannot extract a type that is not currently active.
+- It automatically calls the constructor, copy/move operators, and destructor 
+  of the active object, making it safe to use with complex C++ classes.
+- It stores the object "in-place" (on the stack or directly inside the 
+  container), avoiding costly heap allocations (no 'new' or 'delete').
+
+Our Example:
+This program demonstrates how 'std::variant' manages memory and types:
+1. Size Comparison: We print the 'sizeof' each component versus the variant 
+   itself to prove that a variant is roughly the size of its largest member 
+   plus a small tag (index).
+2. Memory Tracking: We use a custom 'Logger' class implementing the "Rule of
+   Seven" (The Gang of Seven) (1 DC: Default Constructor, 2 CC: Copy
+   Constructor, 3 MC: Move Constructor, 4 CA: Copy Assigment, 5 MA: Move
+   Assigment, 6 De: Destructor and 7 PC: Particular Constructor) to visually
+   trace how the variant safely moves and destroys objects behind the scenes.
+3. The Modern Visitor: We build a 'std::stack' of variants and process it 
+   using a Functor (a struct with overloaded operator()), demonstrating 
+   that we can have stateful visitors (counting occurrences) without 
+   virtual inheritance.
+
+Relation to Design Patterns:
+While not a GoF pattern itself, 'std::variant' is the modern foundation for:
+- The Modern Visitor Pattern (see 23_Visitor/Modern_Variant).
+- State Machines (representing different states as variant types).
+- Error Handling (returning a variant containing either a Result or an Error).
+============================================================================

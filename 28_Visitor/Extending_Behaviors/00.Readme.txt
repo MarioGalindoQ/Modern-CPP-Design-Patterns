@@ -1,0 +1,43 @@
+============================================================================
+                     VISITOR PATTERN: EXTENDING BEHAVIORS
+============================================================================
+
+Intent:
+While the "Double Dispatch" examples focus on the mechanical handshake between 
+types, the true power of the Visitor Pattern lies in separating algorithms 
+(operations) from object structures.
+
+The Problem:
+In many applications, we have a stable collection of objects (like elements 
+in a document) but a growing need for new operations (Export to HTML, 
+Export to Plain Text, Encrypt, Validate, etc.). Modifying every single 
+object class every time we add a new operation violates the Open/Closed 
+Principle.
+
+The Solution:
+Instead of forcing the object classes to implement every possible operation, 
+we move the operation logic into a separate "Visitor" class. 
+- Elements are now "dumb" or "stable" data structures.
+- Visitors hold the specific logic, performing operations on the elements.
+
+Our Example:
+We simulate a Document structure consisting of Paragraphs, Images, and 
+Hyperlinks. We want to be able to apply different operations to this 
+document (e.g., HTML Export, Plain Text Extraction) without ever modifying 
+the document's core classes.
+
+This folder contains two versions:
+1. Visitor_Traditional_GoF/:
+   Uses the classic Gang of Four implementation with an 'accept' method.
+   
+2. Visitor_Modern/:
+   Uses C++17 'std::variant' and 'std::visit' to achieve the same result. 
+   This modern approach is "non-intrusive", as it does not require 
+   inheritance or the 'accept' method in the elements.
+
+Key Benefits:
+- Open/Closed Principle: Add new operations (Visitors) without modifying 
+  the Visitable elements.
+- Clean Code: Keeps the data classes clean and focused solely on their 
+  representation, while the Visitor classes handle the business logic.
+============================================================================

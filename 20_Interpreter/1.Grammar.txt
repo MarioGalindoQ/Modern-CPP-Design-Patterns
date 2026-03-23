@@ -1,0 +1,47 @@
+============================================================================
+                        CALC - LANGUAGE GRAMMAR
+============================================================================
+This document defines the Context-Free Grammar (CFG) for our mathematical 
+interpreter. Both implementations (AST and Stack Machine) implement a 
+Recursive Descent Parser that strictly follows these rules.
+
+The grammar is defined using Extended Backus-Naur Form (EBNF) and 
+naturally enforces standard operator precedence (BODMAS/PEMDAS).
+
+<number> ::= 
+      [0-9]+ ('.' [0-9]+)?      // Positive real numbers
+
+<function_name> ::= 
+      "sin" | "cos" | "tan" | 
+      "asin" | "acos" | "atan" | 
+      "sqrt" | "ln" | "log" | 
+      "exp"
+
+<primary_expression> ::= 
+      <number> 
+    | "(" <expression> ")"
+    | <function_name> "(" <expression> ")"
+
+<signed_expression> ::= 
+      <primary_expression>
+    | "+" <primary_expression>
+    | "-" <primary_expression>
+
+<exponent_expression> ::= 
+      <signed_expression>
+    | <exponent_expression> "^" <signed_expression>
+
+<multiplicative_expression> ::= 
+      <exponent_expression>
+    | <multiplicative_expression> "*" <exponent_expression>
+    | <multiplicative_expression> "/" <exponent_expression>
+
+<additive_expression> ::= 
+      <multiplicative_expression>
+    | <additive_expression> "+" <multiplicative_expression>
+    | <additive_expression> "-" <multiplicative_expression>
+
+<expression> ::= 
+      <additive_expression>
+
+============================================================================

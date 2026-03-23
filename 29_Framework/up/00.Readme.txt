@@ -1,0 +1,3 @@
+To run do:
+up
+Text.txt

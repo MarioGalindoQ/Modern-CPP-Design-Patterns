@@ -1,0 +1,46 @@
+============================================================================
+                    NAMED CONSTRUCTOR IDIOM (CREATIONAL)
+============================================================================
+
+Intent:
+To provide more intuitive and descriptive ways to create objects, overcoming 
+the limitations of standard C++ constructors. It also provides a mechanism 
+to strictly control how and where an object is allocated in memory.
+
+The Problem:
+Standard C++ constructors have two major limitations:
+1. They must have the same name as the class. You cannot name them based 
+   on what they do.
+2. They cannot be overloaded if the parameter types are identical, even if 
+   the parameters represent completely different concepts (e.g., creating a 
+   Point using X,Y vs Radius,Angle; both take two floats).
+Additionally, standard constructors do not prevent a user from creating 
+objects on the stack when your architecture might require them to exclusively 
+live on the heap.
+
+The Solution:
+Make all constructors 'private' or 'protected'. Then, provide 'public static' 
+methods that act as factories. Because these are standard methods, they can 
+have descriptive names (Named Constructors).
+
+Our Examples:
+This folder demonstrates two distinct use cases for this idiom:
+
+1. SameParameters/:
+   Demonstrates how to solve the constructor overloading ambiguity. A 'Point' 
+   class offers 'rectangular(x, y)' and 'polar(radius, angle)' named 
+   constructors. The client code becomes infinitely more readable.
+
+2. CreatedOnlyWithNew/:
+   Demonstrates memory allocation control. By keeping the constructors 
+   private, the client cannot allocate the object on the stack (e.g., 
+   'Fred f;'). They are forced to use 'Fred::create()', which allocates 
+   the object on the heap and returns a smart pointer (std::unique_ptr), 
+   guaranteeing proper lifecycle management.
+
+Key Benefits:
+- Readability: Creation methods describe exactly what kind of object is 
+  being built.
+- Overload Resolution: Bypasses the restriction of identical parameter types.
+- Memory Control: Enforces heap-only or pool-only allocation policies.
+============================================================================

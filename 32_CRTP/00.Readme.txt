@@ -1,0 +1,90 @@
+============================================================================
+           CURIOUSLY RECURRING TEMPLATE PATTERN (CRTP) - C++ IDIOM
+============================================================================
+
+Intent:
+The Curiously Recurring Template Pattern (CRTP) is a C++ idiom in which a 
+class 'X' derives from a class template instantiation using 'X' itself as 
+the template argument. It is a powerful technique for achieving static 
+polymorphism and code reuse without the runtime cost of virtual functions.
+
+The Concept & Basic Syntax:
+In traditional polymorphism, a base class uses 'virtual' methods to call 
+overridden methods in a derived class at runtime. In CRTP, the base class 
+is a template that knows the exact type of the derived class at compile-time.
+
+Here is a minimal, non-compilable example of the CRTP structure:
+
+    // 1. The Base class is a template expecting the Derived type 'T'
+    template <class T>
+    class Base 
+    {
+    public:
+       void interfaceMethod() 
+       {
+          // 2. We safely downcast 'this' to the Derived type 'T' at compile-time
+          static_cast<T*>(this)->implementationMethod();
+       }
+    };
+
+    // 3. The Derived class inherits from the Base, passing ITSELF as the argument
+    class Derived : public Base<Derived> 
+    {
+    public:
+       void implementationMethod() { /* Actual work */ }
+    };
+
+    // 4. The Client Code (Generic wrapper)
+    template <class T>
+    void execute(Base<T>* basePtr) 
+    {
+       // Calling the base method actually executes the Derived method!
+       basePtr->interfaceMethod(); 
+    }
+
+    // 5. Main logic (The "Static" polymorphic transition)
+    int main() 
+    {
+       Derived* d = new Derived();     // Create specific object
+       Base<Derived>* b = d;           // Upcast to Base pointer (Static transition)
+       execute(b);                     // Logic executed through Base interface
+    }
+
+How it acts like Polymorphism:
+As seen in point 5, the program uses a pointer to the Base class ('b'). When 
+'interfaceMethod' is called through this base pointer, the code inside 'Base' 
+performs a static downcast back to 'Derived' and executes its specific logic. 
+This achieves polymorphic behavior but completely bypasses virtual tables 
+(vtables), resolving the exact function call at compile-time.
+
+Why it works:
+Since 'Derived' inherits from 'Base<Derived>', the 'static_cast' in the 
+base class is 100% safe. The compiler knows the exact types involved during 
+compilation, allowing it to inline the function calls (Zero-Overhead Principle).
+
+Our Examples:
+This folder is divided into three classic industry use cases for CRTP:
+
+1. 01_StaticPolymorphism/:
+   Demonstrates how to emulate virtual function calls at compile-time. 
+   Ideal for performance-critical systems that need polymorphic flexibility.
+
+2. 02_ObjectCounter/:
+   Shows how to inject static state into unrelated classes. It tracks how 
+   many instances of a specific derived class are alive without sharing 
+   the count between different types.
+
+3. 03_PolymorphicClone/:
+   Automates the 'clone()' method (Prototype pattern). Using CRTP, we write 
+   the cloning logic once in the base class, and it automatically handles 
+   the correct return types for every subclass.
+
+Other Examples:
+   See: 19_Observer/02_CRTP_Basic and 19_Observer/03_CRTP_Topics
+
+Key Benefits:
+- Zero Runtime Overhead: No virtual tables, enabling aggressive inlining.
+- Code Reusability: Automatically injects specialized behavior into 
+  derived classes.
+- Type Safety: Errors are caught at compile-time rather than at runtime.
+============================================================================

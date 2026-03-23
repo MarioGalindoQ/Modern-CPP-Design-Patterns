@@ -1,0 +1,69 @@
+============================================================================
+                        OBSERVER PATTERN (BEHAVIORAL)
+============================================================================
+
+Intent:
+The Observer Pattern defines a one-to-many dependency between objects so
+that when one object the Observable (also called Subject) changes state, all
+its dependents (Observers) are notified and updated automatically.
+
+The Problem:
+In many systems, you have a set of objects that need to react to changes in 
+another object's state. If the "Observable" object is tightly coupled to 
+every possible "Observer", the code becomes rigid and hard to extend. 
+Adding a new type of observer would require modifying the observable code.
+
+The Solution:
+The pattern defines an interface for Observers. The Observable object 
+maintains a list of these observers and simply broadcasts a notification 
+whenever its state changes. This decouples the Observable from the 
+specific implementation of the Observers, adhering to the Open/Closed Principle.
+
+Key Participants:
+- Observable (Subject): Keeps a list of observers and provides methods to 
+                        attach/detach and notify them.
+- Observer: An interface with an 'update' method, which gets called when the
+            Observable’s state changes.
+- Concrete Observable: Stores the state of interest and sends 
+                       notifications when state changes.
+- Concrete Observer: Implements the Observer interface to synchronize 
+                     its state with the Observable.
+
+Our Examples:
+This folder contains four implementations to illustrate the pattern's 
+evolution from classic design to high-performance C++ techniques:
+
+1. 01_Classic_GoF/:
+   The classic Gang of Four implementation using base interface pointers. 
+   It demonstrates the fundamental "handshake" between Observable and 
+   Observer. It relies on runtime type-checking (casting) to retrieve 
+   the concrete observable state, serving as the baseline implementation 
+   for this pattern.
+
+2. 02_CRTP_Basic/:
+   A high-performance implementation using the Curiously Recurring Template 
+   Pattern (CRTP) (See Pattern 32_CRTP). By injecting the concrete type at
+   compile-time, it eliminates the need for dynamic casts or virtual interface
+   lookups. Due to the use of CRTP, it supports multiple Observables for each
+   Observer.
+
+3. 03_CRTP_Topics/:
+   An advanced implementation using "Topics" (Events). Observers subscribe 
+   only to specific events (e.g., Value changes vs. Color changes), allowing 
+   for granular notifications. It also leverages CRTP to maintain type safety 
+   and support multiple Observables per Observer efficiently.
+
+4. 04_Using_libsic++/:
+   A historical reference implementation using the 'gtkmm' (C++) library, 
+   which provides built-in signal/slot mechanisms. While highly relevant for 
+   GUI development, such external libraries fall outside the scope of this 
+   pattern-learning project and are provided only as a reference for 
+   industrial-grade event handling.
+
+Key Benefits:
+- Loose Coupling: Observables and Observers can vary independently.
+- Broadcast Communication: The Observable doesn't need to specify the 
+  receivers; the notification is broadcast automatically.
+- Extensibility: You can add new Observer classes without modifying the 
+  Observable's code.
+============================================================================

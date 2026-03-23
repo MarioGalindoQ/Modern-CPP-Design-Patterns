@@ -1,0 +1,94 @@
+============================================================================
+                        REGISTRY PATTERN (STRUCTURAL)
+============================================================================
+
+Intent:
+To centralize the creation, management, and lookup of shared objects or 
+services, providing a single, globally accessible point of access. It 
+minimizes redundant instantiation and decouples service producers from 
+consumers.
+
+The Problem:
+In complex applications, creating and managing services (like database 
+connections, device drivers, or plugins) can lead to fragmented code. If 
+every component is responsible for creating its own dependencies, the 
+system becomes tightly coupled, hard to configure, and difficult to test.
+
+The Solution:
+The Registry pattern acts as a central repository (often a map or dictionary) 
+that stores object references or factory functions. Instead of hardcoding 
+dependencies, parts of the system "look up" the objects they need by a key 
+(typically a string or enum).
+
+Key Participants:
+- Registry: The central repository that manages object lifecycles and provides 
+  a lookup service.
+- Service/Resource: The object being managed or accessed through the registry.
+- Client: The code that queries the registry to obtain an instance or 
+  functionality.
+
+Our Example: A Dynamic Plugin System
+We implement a "Plugin Registry" for an image processing application.
+- The Problem in the example: The application needs to support multiple 
+  image processors (e.g., Grayscale, Blur, Sepia). Hardcoding these would 
+  require modifying the main engine every time a new processor is created.
+- The Solution: Each processor registers itself into a global 'ProcessorRegistry' 
+  at startup. The main engine simply asks the registry for a "Grayscale" 
+  processor, making the system extensible without modifying core code.
+
+Key Benefits:
+- Centralized Control: Simplifies resource management and lifecycle tracking.
+- Decoupling: Decouples service creation from service usage.
+- Scalability: Facilitates dynamic service discovery (e.g., in microservices 
+  or modular plugin systems).
+- Open/Closed Principle: New services can be added to the system just by 
+  including their files, as they register themselves automatically.
+
+Cross-Reference:
+This pattern is often used to implement the underlying mechanics of other 
+patterns in this repository:
+- 03_AbstractFactoryMethod: Registry-based factories replace switch-cases.
+- 05_Singleton/Singleton_with_register/: A registry for Singleton instances.
+- 25_FiniteStateMachine/: Dynamic state registration for modular machines.
+
+----------------------------------------------------------------------------
+STRATEGY CONFIGURATION (Singleton vs. Prototype)
+----------------------------------------------------------------------------
+In 'Register.h', you can choose how the Registry instantiates your services:
+
+1. REGISTRY_SINGLETON:
+   Uses 'static std::shared_ptr' inside the registry logic. Every time 
+   the client requests a processor by name, the Registry returns the 
+   EXACT SAME instance. Use this when the object is heavy, stateless, 
+   or represents a shared global resource.
+
+2. REGISTRY_PROTOTYPE:
+   Uses 'std::make_shared' every time 'create' is called. The Registry 
+   returns a FRESH instance for every request. Use this when you need 
+   the object to maintain its own unique state or when the object 
+   is lightweight.
+
+To configure, uncomment one of these lines at the very top of 'Register.h':
+   //#define REGISTRY_SINGLETON
+   //#define REGISTRY_PROTOTYPE
+
+----------------------------------------------------------------------------
+THE POWER OF std::function AND LAZY INITIALIZATION
+----------------------------------------------------------------------------
+The Registry does not store ready-made objects; it stores 'Creator' objects 
+defined as 'std::function<std::shared_ptr<Processor>()>'. 
+
+Why this approach:
+1. Lazy Initialization: Objects are only instantiated the very first time 
+   Registry::create() is called. This avoids allocating memory for services 
+   that might never be requested during the application's runtime.
+   
+2. Flexibility: By storing 'std::function' instead of raw instances, the 
+   Registry can decide at compile-time (via #define) whether to wrap the 
+   creation in a Singleton logic or to execute a fresh 'std::make_shared' 
+   call for every request.
+
+3. Decoupling: The Registry remains completely agnostic of the specific 
+   constructor parameters or instantiation requirements of the 'Processor' 
+   classes. It simply executes the stored function when needed.
+============================================================================

@@ -1,0 +1,34 @@
+============================================================================
+                         COMMAND PATTERN (BEHAVIORAL)
+============================================================================
+
+Intent:
+Encapsulate a request as an object, thereby letting you parameterize clients 
+with different requests, queue or log requests, and support undoable 
+operations.
+
+The Problem:
+In many applications, we need to issue requests to objects without knowing 
+anything about the operation being requested or the receiver of the request. 
+Hardcoding these calls leads to tight coupling.
+
+The Solution:
+The Command pattern turns a request into a stand-alone object that contains 
+all information about the request (the receiver, the method to call, and 
+any parameters). This transformation lets you:
+1. Pass commands as method arguments.
+2. Store commands in a collection (queue, undo stack).
+3. Execute commands at a later time (deferred execution).
+
+Key Components:
+- Command Interface: Declares an 'execute' method.
+- Concrete Commands: Bind a receiver object with an action.
+- Receiver: The object that performs the actual business logic.
+- Invoker: Asks the command to carry out the request. It does not know 
+  the concrete command class, only the interface.
+
+Key Benefits:
+- Decoupling: The Invoker is separated from the Receiver.
+- Extensibility: Adding new commands doesn't require changing existing code.
+- Composability: Commands can be assembled into 'MacroCommands' (composite).
+============================================================================

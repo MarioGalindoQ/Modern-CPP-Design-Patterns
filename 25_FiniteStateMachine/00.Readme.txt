@@ -1,0 +1,75 @@
+============================================================================
+                     FINITE STATE MACHINE (BEHAVIORAL)
+============================================================================
+
+Intent:
+The State pattern allows an object to alter its behavior when its internal 
+state changes. The object will appear to change its class.
+
+The Problem:
+When an object has many states and its behavior changes drastically depending 
+on the current state, a standard implementation would involve a massive amount 
+of 'if-else' or 'switch-case' statements scattered throughout the class. 
+This is not only hard to maintain but also error-prone, as adding a new 
+state requires modifying every single conditional branch.
+
+The Solution:
+The pattern suggests moving the state-specific behavior out of the Context 
+class into a set of separate "State" classes. 
+- Context: Defines the interface for clients and maintains a reference to 
+  the current State object.
+- State: Defines the interface for encapsulating behavior associated with 
+  a particular state.
+- Concrete State: Each subclass implements the behavior associated with a 
+  specific state of the Context.
+
+Our Examples:
+This folder illustrates the State pattern through two different levels 
+of complexity:
+
+1. SimpleExample/:
+   A theoretical implementation showing the basic "handshake" between a 
+   Context (FSM) and its States (State_A, State_B). It demonstrates how 
+   transition actions and entry/exit behaviors are triggered during 
+   state changes.
+
+2. BigExample (CD Player):
+   A realistic scenario simulating a CD Player. This version showcases how 
+   complex systems (with states like 'Playing', 'Paused', 'Closed_with_CD') 
+   can be managed cleanly. By encapsulating logic in separate files for 
+   each state, we avoid a "God Object" anti-pattern and make the machine 
+   logic modular and easy to extend.
+
+Key Benefits:
+- Single Responsibility Principle: State-specific logic is localized in 
+  its own class.
+- Open/Closed Principle: You can introduce new states without changing the 
+  Context class or existing state implementations.
+- Complexity Reduction: Eliminates large conditional statements, making 
+  the system flow easier to understand.
+
+----------------------------------------------------------------------------
+NOTE ON AUTO-REGISTRATION TECHNIQUES
+----------------------------------------------------------------------------
+In our modern implementations, we use a technique to register states 
+automatically when the program starts. You may encounter two ways to do this:
+
+1. Direct initialization:
+   static inline auto something = FSM::registerState<T>("Name");
+   This is the simplest form, but it requires 'registerState' to return 
+   a value that can be assigned.
+
+2. Lambda-based initialization (Used here):
+   static inline bool registered_ = []() {
+      FSM::registerState<T>("Name");
+      return true;
+   }();
+   This is preferred for two reasons:
+   - Memory Efficiency: We only store a 'bool' (1 byte) in the static segment, 
+     instead of instantiating the entire state object in the heap or static 
+     memory before the main starts.
+   - Encapsulation: The registration logic is defined outside the class 
+     definition, ensuring the compiler has full knowledge of the type 'T' 
+     before it attempts to instantiate it, thus avoiding "incomplete type" 
+     errors during compilation.
+============================================================================
