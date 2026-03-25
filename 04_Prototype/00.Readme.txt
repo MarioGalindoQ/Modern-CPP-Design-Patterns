@@ -18,7 +18,7 @@ rather than creating a new instance. The prototype acts as a template
 containing the initial state. The newly copied object can then be modified 
 if required. 
 
-## This approach is highly effective in scenarios where
+This approach is highly effective in scenarios where
 1. Object creation is a "heavy" or costly process.
 2. You need to create objects at runtime without being bound to their 
 concrete classes.
