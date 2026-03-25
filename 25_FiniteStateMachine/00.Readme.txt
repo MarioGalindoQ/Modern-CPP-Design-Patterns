@@ -59,9 +59,10 @@ a value that can be assigned.
 
 2. Lambda-based initialization (Used here):
 static inline bool registered_ = []() {
-## FSM:registerState<T>("Name");
-return true;
+   FSM:registerState<T>("Name");
+   return true;
 }();
+
 ## This is preferred for two reasons
 - Memory Efficiency: We only store a 'bool' (1 byte) in the static segment, 
 instead of instantiating the entire state object in the heap or static 
