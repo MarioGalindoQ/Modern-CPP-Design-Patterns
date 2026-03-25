@@ -5,7 +5,7 @@ The Visitor pattern represents an operation to be performed on the elements
 of an object structure. It lets you define a new operation without changing 
 the classes of the elements on which it operates.
 
-The Problem (Double Dispatch):
+## The Problem (Double Dispatch):
 In C++, virtual functions only provide "Single Dispatch" (the method called 
 depends on the runtime type of the object). However, some problems require 
 "Double Dispatch", where the operation depends on the runtime types of TWO 
@@ -43,12 +43,10 @@ to achieve visitation without inheritance or 'accept' methods. This is
 a "non-intrusive" pattern that is usually more efficient and cleaner 
 than the traditional version.
 
----
 ## SEE ALSO STATIC VISITOR (Pattern 15_Mixin)
 For the compile-time version of this pattern, refer to the 'Advanced Mixin' 
 example. It demonstrates a "Static Visitor" using Variadic Templates and 
 Fold Expressions (C++17) to iterate over components with zero runtime overhead.
----
 
 ## Key Benefits
 - Open/Closed Principle: You can add new operations (visitors) without 

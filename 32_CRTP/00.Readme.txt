@@ -80,7 +80,7 @@ the cloning logic once in the base class, and it automatically handles
 the correct return types for every subclass.
 
 ## Other Examples
-See 19_Observer/02_CRTP_Basic and 19_Observer/03_CRTP_Topics
+See 24_Observer/02_CRTP_Basic and 32_Observer/03_CRTP_Topics
 
 ## Key Benefits
 - Zero Runtime Overhead: No virtual tables, enabling aggressive inlining.
