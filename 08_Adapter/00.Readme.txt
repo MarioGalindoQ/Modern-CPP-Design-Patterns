@@ -17,21 +17,22 @@ incompatibility gap.
 Scenario: We are developing a modern Graphic Design application.
 1. The Target Interface (ModernRectangle): 
 Our system expects to draw rectangles by providing two points 
-the Top-Left corner (x1, y1) and the Bottom-Right corner (x2, y2).
+the Top-Left corner `(x1, y1)` and the Bottom-Right corner `(x2, y2)`.
 
 2. The Adaptee (LegacyRectangle): 
 We have a powerful legacy library, but it uses a different coordinate 
-system. It requires the Top-Left corner (x, y), followed by the Width 
+system. It requires the Top-Left corner `(x, y)`, followed by the Width 
 and the Height of the rectangle.
 
 ## The Solution
 Instead of changing our modern code or hacking the legacy library, we 
 introduce the 'RectangleAdapter'. 
 This adapter implements our 'Modern' interface but internally holds an 
-instance of the 'Legacy' class. When our system calls 'draw(x1, y1, x2, y2)', 
+instance of the 'Legacy' class. When our system calls `draw(x1, y1, x2, y2)`, 
 the adapter performs the necessary mathematical translation:
 - width  = x2 - x1
 - height = y2 - y1
+
 Then, it redirects the call to the legacy method: 
 - legacy->oldDraw(x1, y1, width, height).
 
