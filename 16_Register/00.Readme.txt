@@ -78,7 +78,7 @@ defined as 'std::function<std::shared_ptr<Processor>()>'.
 
 ## Why this approach
 1. Lazy Initialization: Objects are only instantiated the very first time 
-## Registry:create() is called. This avoids allocating memory for services 
+Registry:create() is called. This avoids allocating memory for services 
 that might never be requested during the application's runtime.
 
 2. Flexibility: By storing 'std::function' instead of raw instances, the 

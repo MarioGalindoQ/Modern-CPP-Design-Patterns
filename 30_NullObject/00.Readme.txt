@@ -13,7 +13,7 @@ its absence. This forces the client code to constantly check if the object
 is null before calling its methods:
 
 if (logger != nullptr) {
-logger->log("Something happened");
+   logger->log("Something happened");
 }
 
 Scattered throughout a large codebase, these checks increase complexity, 

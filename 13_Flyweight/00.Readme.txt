@@ -42,7 +42,7 @@ all instances.
 - Separation of Concerns: Clearly distinguishes between what is common 
 (intrinsic) and what is specific (extrinsic).
 
-Trade-offs:
+## Trade-offs:
 - Complexity: The code becomes slightly more complex as you need to manage 
 a factory and ensure that extrinsic state is passed correctly.
 - Performance: There might be a slight CPU cost to look up the shared 

@@ -37,7 +37,7 @@ dependencies externally.
 - Page Object Model (POM): A specific pattern for UI/automation frameworks. 
 
 ## Our Example The 'App' Framework
----
+
 We have built a concrete framework (libFramework.so) that provides the 
 execution skeleton for console-based applications. It handles the lifecycle 
 of the application, leaving the specific logic to the user:

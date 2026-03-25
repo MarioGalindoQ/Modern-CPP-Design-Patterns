@@ -33,7 +33,7 @@ Stack for Undo operations).
 - Never operates on or examines the contents of a memento.
 
 ## Our Examples
-## This folder demonstrates two different architectural approaches
+This folder demonstrates two different architectural approaches
 
 1. Memento_Classic_GoF/
 The traditional Gang of Four (GoF) implementation. It uses polymorphic 

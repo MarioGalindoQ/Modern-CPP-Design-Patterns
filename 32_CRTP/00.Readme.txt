@@ -20,32 +20,32 @@ class Base
 public:
 void interfaceMethod() 
 {
-// 2. We safely downcast 'this' to the Derived type 'T' at compile-time
-static_cast<T*>(this)->implementationMethod();
-}
+   // 2. We safely downcast 'this' to the Derived type 'T' at compile-time
+   static_cast<T*>(this)->implementationMethod();
+   }
 };
 
 // 3. The Derived class inherits from the Base, passing ITSELF as the argument
 class Derived : public Base<Derived> 
 {
 public:
-void implementationMethod() { /* Actual work */ }
+   void implementationMethod() { /* Actual work */ }
 };
 
 // 4. The Client Code (Generic wrapper)
 template <class T>
 void execute(Base<T>* basePtr) 
 {
-// Calling the base method actually executes the Derived method!
-basePtr->interfaceMethod(); 
+   // Calling the base method actually executes the Derived method!
+   basePtr->interfaceMethod(); 
 }
 
 // 5. Main logic (The "Static" polymorphic transition)
 int main() 
 {
-Derived* d = new Derived();     // Create specific object
-Base<Derived>* b = d;           // Upcast to Base pointer (Static transition)
-execute(b);                     // Logic executed through Base interface
+   Derived* d = new Derived();     // Create specific object
+   Base<Derived>* b = d;           // Upcast to Base pointer (Static transition)
+   execute(b);                     // Logic executed through Base interface
 }
 
 ## How it acts like Polymorphism
@@ -61,7 +61,7 @@ base class is 100% safe. The compiler knows the exact types involved during
 compilation, allowing it to inline the function calls (Zero-Overhead Principle).
 
 ## Our Examples
-## This folder is divided into three classic industry use cases for CRTP
+This folder is divided into three classic industry use cases for CRTP
 
 1. 01_StaticPolymorphism/:
 Demonstrates how to emulate virtual function calls at compile-time. 
