@@ -39,8 +39,8 @@ implementation secrets.
 ## Key Benefits
 - **Independence**: You can modify the abstraction without touching the
 - **implementation and vice versa.  Improved Compilation**: Specifically with the
-- **Pimpl idiom, changes in private members do not trigger full project
+- **Pimpl idiom**: changes in private members do not trigger full project
 - **recompilations.  Runtime Flexibility**: The implementation can be swapped
-- **dynamically at runtime by simply reassigning the bridge pointer.
+- **dynamically**: at runtime by simply reassigning the bridge pointer.
 
 ---
