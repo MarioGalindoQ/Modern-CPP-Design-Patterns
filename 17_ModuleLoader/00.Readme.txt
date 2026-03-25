@@ -1,4 +1,4 @@
-MODULE LOADER / PLUGIN PATTERN
+# MODULE LOADER / PLUGIN PATTERN
 
 ## Intent
 The Module Loader design pattern refers to the architecture and mechanisms 

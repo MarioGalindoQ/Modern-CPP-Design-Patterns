@@ -1,4 +1,4 @@
-## VISITOR PATTERN TRADITIONAL GOF
+# VISITOR PATTERN TRADITIONAL GOF
 
 ## Intent
 This implementation follows the classic Gang of Four (GoF) approach to the 

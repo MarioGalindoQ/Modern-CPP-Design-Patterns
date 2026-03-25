@@ -54,5 +54,4 @@ Cross-Reference: For an alternative approach to extending functionality using "H
 Composition" (Multiple Inheritance via Variadic Templates) instead of "Vertical Wrapping"
 (Recursive Composition), please refer to Pattern 15_Mixin.
 
-
 ---

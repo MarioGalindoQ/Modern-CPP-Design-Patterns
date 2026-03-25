@@ -1,4 +1,4 @@
-## BRIDGE PATTERN PIMPL IDIOM (STRUCTURAL)
+# BRIDGE PATTERN PIMPL IDIOM (STRUCTURAL)
 
 ## Intent
 This is a C++ specific implementation of the Bridge pattern, commonly 
@@ -18,7 +18,7 @@ dependencies (like <vector> or complex third-party headers).
 - Pimpl Bridge: Decouples the interface from the implementation to 
 optimize compilation and hide secrets.
 
-Modern C++ Note:
+## Modern C++ Note:
 We use 'std::unique_ptr' to manage the lifetime of the implementation 
 object, following RAII principles and avoiding manual 'delete' calls.
 

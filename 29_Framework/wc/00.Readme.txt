@@ -1,4 +1,2 @@
-## To run do
+# To run do
 ./wc < Text.txt
-
----

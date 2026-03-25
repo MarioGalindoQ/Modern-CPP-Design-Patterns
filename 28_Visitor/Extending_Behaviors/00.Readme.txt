@@ -1,4 +1,4 @@
-## VISITOR PATTERN EXTENDING BEHAVIORS
+# VISITOR PATTERN EXTENDING BEHAVIORS
 
 ## Intent
 While the "Double Dispatch" examples focus on the mechanical handshake between 
