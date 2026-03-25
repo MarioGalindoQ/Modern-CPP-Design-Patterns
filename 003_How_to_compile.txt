@@ -9,3 +9,6 @@ gcc3 program.cpp
 #     rm -f $name
 #     c++ -std=c++23 -O3 -Wfatal-errors -Wall -Wextra -Wpedantic $name.cpp -o $name -pthread && strip $name && ./$name
 # }
+
+Note:
+When the program has several .cpp files, a compile.sh script has been placed to compile.

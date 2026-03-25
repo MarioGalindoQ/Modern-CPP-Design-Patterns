@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Compile the Module library:
-c++ -std=c++2a -O3 -Wfatal-errors -Wall -Wextra -Wpedantic -c -fpic -o Module.o Module.cpp && \
+c++ -std=c++23 -O3 -Wfatal-errors -Wall -Wextra -Wpedantic -c -fpic -o Module.o Module.cpp && \
 
 # Create the Module library:
 gcc -shared -o libModule.so Module.o && \
