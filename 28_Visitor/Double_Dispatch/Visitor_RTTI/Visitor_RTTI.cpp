@@ -98,7 +98,6 @@ int main()
    dispatchAllCombinations(colors, shapes);
 
    std::cout << "\n=== SIMULATION COMPLETED ===" << std::endl;
-   return 0;
 }
 
 //================================================================================ END

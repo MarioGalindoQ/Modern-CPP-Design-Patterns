@@ -201,7 +201,6 @@ int main()
    airplane.fly();
 
    std::cout << "\n=== SIMULATION COMPLETED ===\n";
-   return 0;
 }
 
 //================================================================================ END

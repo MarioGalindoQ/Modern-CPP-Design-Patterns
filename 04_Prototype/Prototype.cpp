@@ -1,6 +1,3 @@
-#include <iostream>
-#include <memory>
-
 /**
  * Prototype Pattern (Virtual Constructor)
  * 
@@ -9,10 +6,11 @@
  * automatically managed.
  */
 
+#include <iostream>
+#include <memory>
+
 struct Base
 {
-   // Virtual destructor is mandatory to allow safe deletion of Derived objects 
-   // through a Base pointer.
    virtual ~Base() 
    {
       std::cout << " [Cleanup] Base object destroyed.\n";
@@ -32,7 +30,6 @@ struct Base
 
 struct Derived : Base
 {
-   // Destructor specifically for Derived class
    ~Derived() override 
    {
       std::cout << " [Cleanup] Derived object destroyed.\n";
@@ -96,7 +93,6 @@ int main()
    } // Destructors are called automatically here
 
    std::cout << "\n=== END OF SIMULATION ===\n";
-   return 0;
 }
 
 //================================================================================ END

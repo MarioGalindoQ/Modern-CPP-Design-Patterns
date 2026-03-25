@@ -139,8 +139,6 @@ int main() {
     playLevel(std::make_unique<FactoryLevel3>());
 
     std::cout << "=== CONGRATULATIONS! YOU WIN! ===\n";
-
-    return 0;
 }
 
 //================================================================================ END

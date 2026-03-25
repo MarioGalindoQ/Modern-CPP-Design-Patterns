@@ -163,8 +163,6 @@ int main() {
     playLevel(gameFactory);
 
     std::cout << "=== CONGRATULATIONS! YOU WIN! ===\n";
-
-    return 0;
 }
 
 //================================================================================ END

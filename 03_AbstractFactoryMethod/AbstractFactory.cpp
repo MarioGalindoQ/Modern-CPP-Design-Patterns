@@ -195,8 +195,6 @@ int main() {
     runEnvironment(std::make_unique<UnderwaterEnvironment>());
 
     std::cout << "\n=== SYSTEM SHUTDOWN COMPLETE ===" << std::endl;
-
-    return 0;
 }
 
 //================================================================================ END

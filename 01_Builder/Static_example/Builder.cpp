@@ -1,4 +1,28 @@
 #include <string>
+/**
+ * ============================================================================
+ * File: Builder.cpp (Static Version)
+ * 
+ * --- DESIGN OVERVIEW:
+ * This program demonstrates the Static Builder pattern, optimized for 
+ * objects that are allocated on the stack. It separates the multi-step 
+ * construction of a 'Car' from its final representation.
+ * 
+ * --- STACK ALLOCATION & EFFICIENCY:
+ * Unlike the dynamic version, this implementation returns the final object 
+ * by value. This avoids the overhead of heap allocation (new/delete) and 
+ * is ideal for objects whose lifetime is tied to the local scope.
+ * 
+ * --- ADVANCED C++ FEATURES:
+ * 1. Fluent Interface: Setter methods return a reference to the builder 
+ *    (*this), allowing for elegant method chaining.
+ * 2. Conversion Operator: The implementation includes 'operator Car()', 
+ *    enabling implicit conversion from the Builder to the Product.
+ * 3. Explicit Build: A '.build()' method is provided for cases where 
+ *    explicit object finalization is preferred for clarity.
+ * ============================================================================
+ */
+
 #include <memory>
 #include <vector>
 #include <iostream>

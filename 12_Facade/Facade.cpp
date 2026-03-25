@@ -79,7 +79,6 @@ int main()
    computer.start();
 
    std::cout << "\n=== END OF DEMONSTRATION ===\n";
-   return 0;
 }
 
 //================================================================================ END

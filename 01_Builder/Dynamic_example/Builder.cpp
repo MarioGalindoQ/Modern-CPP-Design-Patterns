@@ -1,3 +1,26 @@
+/**
+ * ============================================================================
+ * File: Builder.cpp (Dynamic Version)
+ * 
+ * --- DESIGN OVERVIEW:
+ * This program demonstrates the Builder pattern in a dynamic context. 
+ * The main goal is to separate the construction of a complex object (Car) 
+ * from its internal representation. 
+ * 
+ * --- DYNAMIC ALLOCATION & SMART POINTERS:
+ * In this version, the Builder creates the final object in the Heap and 
+ * returns a 'std::unique_ptr<Car>'. This is the preferred approach when:
+ * 1. The object is too large for the stack.
+ * 2. The object contains polymorphic components (e.g., different types 
+ *    of Engines or Wheels) that require pointer stability.
+ * 3. The object's lifetime needs to be managed across different scopes.
+ * 
+ * --- FLUENT INTERFACE:
+ * The Builder uses method chaining (setters returning *this) to allow 
+ * a readable and expressive construction process in a single statement.
+ * ============================================================================
+ */
+
 #include <string>
 #include <memory>
 #include <vector>

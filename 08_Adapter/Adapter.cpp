@@ -82,8 +82,6 @@ int main()
    render(*myRectangle);
 
    std::cout << "\n=== SIMULATION COMPLETED ===" << std::endl;
-
-   return 0;
 }
 
 //================================================================================ END

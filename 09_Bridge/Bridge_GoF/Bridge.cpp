@@ -141,8 +141,6 @@ int main()
    square->draw();
 
    std::cout << "\n=== SIMULATION COMPLETED ===" << std::endl;
-
-   return 0;
 }
 
 //================================================================================ END
