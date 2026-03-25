@@ -45,6 +45,9 @@ compile-time, replacing virtual tables with static dispatch
 - Efficiency: Demonstrates how to handle a pack of base classes 
 statically without losing the ability to process them as a group.
 
+## Other Example
+See: 11_Decorator/Static_Mixin/
+
 ## Key Benefits
 - Granular Reusability: Small, focused classes (Mixins) can be combined 
 in infinite ways.

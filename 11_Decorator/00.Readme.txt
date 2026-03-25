@@ -50,7 +50,8 @@ Coffee or Tea classes.
 drink, while static decorators allow the compiler to optimize 
 specific recipes.
 
-## Cross-Reference: For an alternative approach to extending functionality using "Horizontal
+## Cross-Reference:
+For an alternative approach to extending functionality using "Horizontal
 Composition" (Multiple Inheritance via Variadic Templates) instead of "Vertical Wrapping"
 (Recursive Composition), please refer to Pattern 15_Mixin.
 

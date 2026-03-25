@@ -13,8 +13,8 @@ legacy code that we cannot modify. If their method signatures or data
 requirements do not match our modern system's architecture, we face an 
 incompatibility gap.
 
-## Our Example Scenario
-We are developing a modern Graphic Design application.
+## Our Example
+Scenario: We are developing a modern Graphic Design application.
 1. The Target Interface (ModernRectangle): 
 Our system expects to draw rectangles by providing two points 
 the Top-Left corner (x1, y1) and the Bottom-Right corner (x2, y2).

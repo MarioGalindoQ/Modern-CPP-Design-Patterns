@@ -22,7 +22,8 @@ two independent dimensions:
 
 The Abstraction contains a reference (the "Bridge") to an Implementer object.
 
-## Our Example Scenario
+## Our Example
+Scenario:
 - Abstraction: 'Shape' (Circle, Square). It knows about its size or radius.
 - Implementer: 'Renderer' (VectorRenderer, RasterRenderer). It knows how 
 to draw lines or pixels on a screen.

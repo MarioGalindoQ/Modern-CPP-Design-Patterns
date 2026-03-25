@@ -29,7 +29,8 @@ identity via recursive virtual calls.
 2. Visitor_GoF/:
 The classic Gang of Four (GoF) implementation. It uses an 'accept' 
 mechanism to decouple operations from the object structure. 
-## Note This version is "Cyclic", meaning adding a new element requires 
+
+Note This version is "Cyclic", meaning adding a new element requires 
 recompiling all visitors.
 
 3. Visitor_RTTI/:
