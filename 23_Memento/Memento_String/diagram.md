@@ -33,16 +33,16 @@ classDiagram
         +main()
     }
 
+    %% Persistence relationship
+    Caretaker ..> DiskFile : saves to
+    Caretaker ..> DiskFile : restore from
+
     %% The Caretaker owns a collection of serialized states
     Caretaker *-- "n" string : history_
 
     %% Originators depend on strings to export/import state
     ComponentA ..> string : creates/reads
     ComponentB ..> string : creates/reads
-
-    %% Persistence relationship
-    Caretaker ..> DiskFile : saves to
-    Caretaker ..> DiskFile : restore from
 
     %% Client manages the workflow
     Client ..> Caretaker : manages history
