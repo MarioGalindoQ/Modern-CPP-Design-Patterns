@@ -22,7 +22,7 @@
 #include <stack>
 #include <stdexcept>
 
-//--------------------------------------------------------- Memento Interface:
+//------------------------------------------------------------ Memento Interface:
 // Opaque interface for the Caretaker
 class Memento
 {
@@ -36,12 +36,12 @@ using MementoPtr = std::unique_ptr<Memento>;
 class Originator
 {
 public:
-   virtual ~Originator() = default;
-   virtual MementoPtr createMemento() const = 0;
-   virtual void restoreMemento(MementoPtr memento) = 0;
+   virtual ~Originator()                                = default;
+   virtual MementoPtr createMemento()             const = 0;
+   virtual void restoreMemento(MementoPtr memento)      = 0;
 };
 
-//--------------------------------------------------------- Caretaker:
+//-------------------------------------------------------------------- Caretaker:
 // Manages the safekeeping of Mementos without inspecting them.
 class Caretaker
 {
@@ -57,7 +57,7 @@ public:
 
    MementoPtr undo()
    {
-      if (history_.empty()) throw std::out_of_range("No more states to undo.");
+      if(history_.empty()) throw std::out_of_range("No more states to undo.");
       
       MementoPtr memento = std::move(history_.top());
       history_.pop();
@@ -66,7 +66,7 @@ public:
 
    void discardLatest()
    {
-      if (!history_.empty()) history_.pop();
+      if(!history_.empty()) history_.pop();
    }
 };
 
@@ -103,7 +103,7 @@ public:
    void restoreMemento(MementoPtr memento) override
    {
       auto* m = dynamic_cast<MementoA*>(memento.get());
-      if (!m) throw std::invalid_argument("Invalid Memento passed to ComponentA");
+      if(!m) throw std::invalid_argument("Invalid Memento passed to ComponentA");
 
       std::string oldState = state_;
       state_ = std::move(m->savedState);
@@ -145,7 +145,7 @@ public:
    void restoreMemento(MementoPtr memento) override
    {
       auto* m = dynamic_cast<MementoB*>(memento.get());
-      if (!m) throw std::invalid_argument("Invalid Memento passed to ComponentB");
+      if(!m) throw std::invalid_argument("Invalid Memento passed to ComponentB");
 
       int oldValue = value_;
       value_ = m->savedValue;
@@ -214,7 +214,7 @@ int main()
       a.print();
       b.print();
    }
-   catch (const std::exception& e)
+   catch(const std::exception& e)
    {
       std::cerr << " [Error] " << e.what() << "\n";
    }

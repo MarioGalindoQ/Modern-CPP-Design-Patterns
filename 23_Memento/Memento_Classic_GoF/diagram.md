@@ -43,10 +43,10 @@ classDiagram
     }
 
     %% Inheritance (Is_a)
-    Originator <|-- ComponentA
-    Originator <|-- ComponentB
-    Memento <|-- MementoA
-    Memento <|-- MementoB
+    Originator <|.. ComponentA
+    Originator <|.. ComponentB
+    Memento <|.. MementoA
+    Memento <|.. MementoB
 
     %% Caretaker owns a collection of Mementos
     Caretaker *-- "n" Memento : history_
