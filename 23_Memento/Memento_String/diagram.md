@@ -21,6 +21,7 @@ classDiagram
         +save(string)
         +undo() string
         +saveToFile(string)
+        +restoreFromFile(string)
     }
 
     class DiskFile {
@@ -41,12 +42,12 @@ classDiagram
 
     %% Persistence relationship
     Caretaker ..> DiskFile : saves to
+    Caretaker ..> DiskFile : restore from
 
     %% Client manages the workflow
     Client ..> Caretaker : manages history
     Client ..> ComponentA
     Client ..> ComponentB
-    Client ..> DiskFile : restores from
 ```
 
 ### Design Note:

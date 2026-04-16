@@ -18,10 +18,9 @@
  * ============================================================================
  */
 
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
-#include <fstream>
 #include <stack>
 #include <memory>
 
@@ -90,7 +89,7 @@ public:
 
    std::string undo()
    {
-      if (history_.empty()) throw std::runtime_error("No more states to undo.");
+      if(history_.empty()) throw std::runtime_error("No more states to undo.");
       std::string memento = history_.top();
       history_.pop();
       return memento;
@@ -99,16 +98,28 @@ public:
    void saveToFile(const std::string& filename) const
    {
       std::ofstream ofs(filename);
-      std::stack<std::string> tmp = history_;
-      std::vector<std::string> v;
-      while (!tmp.empty())
+      std::stack<std::string> tmpStraight = history_;
+      std::stack<std::string> tmpInverse;
+      while(!tmpStraight.empty()) // Reverse
       {
-         v.push_back(tmp.top());
-         tmp.pop();
+         tmpInverse.push(tmpStraight.top());
+         tmpStraight.pop();
       }
-      for (auto it = v.rbegin(); it != v.rend(); ++it) ofs << *it << "\n";
+      while(!tmpInverse.empty()) // Save to file
+      {
+         ofs << tmpInverse.top() << "\n";
+         tmpInverse.pop();
+      }
       std::cout << " [System] Stack saved to file: " << filename << "\n";
    }
+
+   void restoreFromFile(const std::string& filename)
+   {
+      std::ifstream ifs(filename);
+      std::string line;
+      while(std::getline(ifs, line)) if(!line.empty()) save(line);
+   }
+   
 };
 
 //--------------------------------------------------------- Main Simulation:
@@ -137,16 +148,10 @@ int main()
 
    std::cout << "\n--- PHASE 2: SIMULATING A FRESH RESTART ---\n";
    std::cout << " [System] Clearing memory by reinstantiating a new caretaker..." << std::endl;
-   caretaker.reset(); // Destroy old caretaker
-   caretaker = std::make_unique<Caretaker>();
+   caretaker = std::make_unique<Caretaker>(); // Create a new caretaker destroying the old one
 
    std::cout << "\n--- RESTORING FROM DISK ---\n";
-   std::ifstream ifs("memento_stack_data.txt");
-   std::string line;
-   while (std::getline(ifs, line))
-   {
-      if (!line.empty()) caretaker->save(line);
-   }
+   caretaker->restoreFromFile("memento_stack_data.txt");
 
    std::cout << "\n--- PERFORMING UNDOES ---\n";
    caretaker->undo(); // Discards B's 3rd state
@@ -158,14 +163,12 @@ int main()
    std::cout << "\n [Undo] Restoring Component A (string)...\n";
    a.deserialize(caretaker->undo()); 
 
-//   caretaker->saveToFile("memento_stack_data.txt");
    std::cout << "\n [Undo] Restoring Component B (integer)...\n";
    b.deserialize(caretaker->undo()); 
 
    std::cout << "\n [Undo] Restoring Component A (string)...\n";
    a.deserialize(caretaker->undo()); 
 
-//   caretaker->saveToFile("memento_stack_data.txt");
    std::cout << "\n--- CURRENT STATE AFTER ALL UNDOES ---\n";
    a.print();
    b.print();
