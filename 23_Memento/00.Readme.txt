@@ -35,16 +35,23 @@ Stack for Undo operations).
 ## Our Examples
 This folder demonstrates two different architectural approaches
 
-1. **Memento_Classic_GoF/:**
+1. **01_Memento_Classic_GoF/:**
 The traditional Gang of Four (GoF) implementation. It uses polymorphic 
 base classes and nested structs to ensure that only the Originator can 
 access the Memento's data (strict encapsulation).
 
-2. **Memento_String/ (Manual Serialization):**
+2. **02_Memento_String/ (Manual Serialization):**
 A modern, pragmatic approach where the "Memento" is simply a serialized 
 string (e.g., generated using std::stringstream). The Caretaker just 
 holds opaque strings. The Originator knows how to pack its variables 
 into the string and unpack them later.
+
+3. **03_Persistent_Mmap/ (Binary Persistence):**
+A high-performance implementation using Memory-Mapped files (mmap). It 
+synchronizes the system state (both Component A and B) to a binary file 
+in real-time. It features a non-destructive Undo/Redo system and 
+demonstrates "Crash Recovery" by automatically restoring the last 
+saved state when the application restarts.
 
 ## INDUSTRY NOTE BOOST & ADVANCED SERIALIZATION
 
