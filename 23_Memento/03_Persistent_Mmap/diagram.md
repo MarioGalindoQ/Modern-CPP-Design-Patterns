@@ -47,12 +47,12 @@ classDiagram
     }
 
     %% The Caretaker owns the structures mapped in memory
-    Caretaker *-- "1" FileHeader : metadata
+    Caretaker *-- FileHeader : metadata
     Caretaker *-- "n" SystemState : history_
 
     %% Components interact with the Caretaker for Auto-Save
-    ComponentA o-- "1" Caretaker
-    ComponentB o-- "1" Caretaker
+    ComponentA o-- Caretaker
+    ComponentB o-- Caretaker
 
     %% Caretaker manages the physical storage
     Caretaker ..> BinaryFile : maps to memory
