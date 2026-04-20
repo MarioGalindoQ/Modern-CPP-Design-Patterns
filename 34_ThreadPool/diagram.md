@@ -39,7 +39,7 @@ classDiagram
    class Task {
    }
 
-   class Client_Main {
+   class Client {
       +main()
    }
 
@@ -67,10 +67,10 @@ classDiagram
    SafeQueue~Result~ *-- "n" Result : queue_
 
    %% The Client (Main) creates the high-level infrastructure
-   Client_Main --> ThreadPool
-   Client_Main --> Producer
-   Client_Main --> Reporter
-   Client_Main *-- SafeQueue~Result~
+   Client --> ThreadPool
+   Client --> Producer
+   Client --> Reporter
+   Client *-- SafeQueue~Result~
 
    %% Operational dependencies
    Producer ..> ThreadPool : submits tasks
@@ -82,7 +82,7 @@ classDiagram
 
 ### Design Note:
 This diagram illustrates the complete asynchronous flow. The 'ThreadPool'
-provides the stable execution environment ('Worker Pool'). The 'Client_Main'
+provides the stable execution environment ('Worker Pool'). The 'Client'
 orchestrates the lifecycle by creating 'Producer' threads to feed the pool and
 'Reporter' threads to drain the results. The 'SafeQueue' acts as the
 synchronized bridge between all participants, ensuring thread-safety and
