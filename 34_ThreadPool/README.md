@@ -109,21 +109,21 @@ classDiagram
    }
 
    %% The Pool owns its internal components
-   ThreadPool *-- SafeQueue~Task~ : Has a (owner)
-   ThreadPool *-- "n" Worker : Has several (owner)
+   ThreadPool *-- SafeQueue~Task~
+   ThreadPool *-- "n" Worker
 
    %% The Client (Main) creates the high-level infrastructure
-   Client_Main --> ThreadPool : Creates
-   Client_Main --> Producer : Creates
-   Client_Main --> Reporter : Creates
-   Client_Main *-- "n" SafeQueue~Result~ : Has several (owner)
+   Client_Main --> ThreadPool
+   Client_Main --> Producer
+   Client_Main --> Reporter
+   Client_Main *-- "n" SafeQueue~Result~
 
    %% Operational dependencies
-   Producer ..> ThreadPool : Uses (submits tasks)
-   Worker ..> SafeQueue~Task~ : Uses (pops work)
-   Worker ..> ComputationLogic : Uses (executes math)
-   Worker ..> SafeQueue~Result~ : Uses (pushes results)
-   Reporter ..> SafeQueue~Result~ : Uses (pops for I/O)
+   Producer ..> ThreadPool : submits tasks
+   Worker ..> SafeQueue~Task~ : pops work
+   Worker ..> ComputationLogic : executes math
+   Worker ..> SafeQueue~Result~ : pushes results
+   Reporter ..> SafeQueue~Result~ : pops for I/O
 ```
 
 ### Design Note:
