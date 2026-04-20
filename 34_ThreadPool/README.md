@@ -141,7 +141,7 @@ classDiagram
 
    %% Operational dependencies
    Producer ..> ThreadPool : submits tasks
-   Worker ..> SafeQueue_~Task~ : pops work
+   Worker ..> SafeQueue_~Task~ : pops task
    Worker ..> ComputationLogic : executes math
    Worker ..> SafeQueue~Result~ : pushes results
    Reporter ..> SafeQueue~Result~ : pops results to save
