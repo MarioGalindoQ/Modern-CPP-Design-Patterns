@@ -127,11 +127,11 @@ classDiagram
    ThreadPool *-- SafeQueue_~Task~ : work_queue_
    ThreadPool *-- "n" Worker
 
-   %% Tasks in SaveQueue~Task~
-   SaveQueue_~Task~ *-- "n" Task
+   %% Tasks in SafeQueue~Task~
+   SafeQueue_~Task~ *-- "n" Task : queue_
 
-   %% Results in SaveQueue~Result~
-   SaveQueue~Result~ *-- "n" Result
+   %% Results in SafeQueue~Result~
+   SafeQueue~Result~ *-- "n" Result : queue_
 
    %% The Client (Main) creates the high-level infrastructure
    Client_Main --> ThreadPool
