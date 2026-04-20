@@ -124,7 +124,7 @@ classDiagram
    }
 
    %% The Pool owns its internal components
-   ThreadPool *-- SafeQueue_~Task~ : work_queue_
+   ThreadPool *-- SafeQueue_~Task~ : task_queue_
    ThreadPool *-- "n" Worker
 
    %% Tasks in SafeQueue~Task~
@@ -141,10 +141,10 @@ classDiagram
 
    %% Operational dependencies
    Producer ..> ThreadPool : submits tasks
-   Worker ..> SafeQueue_~Task~ : pops task
+   Worker ..> SafeQueue_~Task~ : pops tasks
    Worker ..> ComputationLogic : executes math
    Worker ..> SafeQueue~Result~ : pushes results
-   Reporter ..> SafeQueue~Result~ : pops results to save
+   Reporter ..> SafeQueue~Result~ : pops results to report
 ```
 
 ### Design Note:
