@@ -32,6 +32,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <functional>
+#include <atomic>
 
 //--------------------------------------------------------- SafeQueue (Monitor):
 template <class T>

@@ -123,7 +123,7 @@ classDiagram
    Worker ..> SafeQueue~Task~ : pops work
    Worker ..> ComputationLogic : executes math
    Worker ..> SafeQueue~Result~ : pushes results
-   Reporter ..> SafeQueue~Result~ : pops for I/O
+   Reporter ..> SafeQueue~Result~ : pops results to save
 ```
 
 ### Design Note:
