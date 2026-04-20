@@ -24,14 +24,14 @@
 //--------------------------------------------------------- Binary Memento (POD):
 struct FileHeader
 {
-   size_t count;  // Total valid states in the timeline
-   size_t cursor; // Current position in time
+   size_t count;  // Total valid states in the timeline // (8 bytes)
+   size_t cursor; // Current position in time           // (8 bytes), Total = 16 bytes
 };
 
 struct SystemState
 {
-   int valB;
-   char strA[64];
+   int valB;      // ( 4 bytes)
+   char strA[64]; // (64 bytes), Total = 68 bytes
 };
 
 //--------------------------------------------------------- Concrete Originators:
@@ -69,7 +69,7 @@ public:
 class Caretaker
 {
 private:
-   constexpr static size_t MAX_STATES = 100;
+   constexpr static size_t MAX_STATES = 120; // FILE_SIZE = 16 + 68*120 = 8176 almost 8kB
    constexpr static size_t FILE_SIZE = sizeof(FileHeader) + (sizeof(SystemState) * MAX_STATES);
 
    int fd_;
