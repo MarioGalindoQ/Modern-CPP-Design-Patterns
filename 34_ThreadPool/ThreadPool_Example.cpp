@@ -88,13 +88,13 @@ void simulate_work(int min, int max)
 
 SqrtOutput my_sqrt(double n)
 {
-   simulate_work(30, 200); // Simulate complex root finding
+   simulate_work(50, 350); // Simulate complex root finding
    return { std::sqrt(n) };
 }
 
 TrigOutput my_trig(double n1, double n2)
 {
-   simulate_work(50, 350); // Simulate complex trigonometric analysis
+   simulate_work(90, 450); // Simulate complex trigonometric analysis
    return { std::sin(n1), std::cos(n2) };
 }
 
@@ -121,7 +121,6 @@ int main()
          while(root_results_queue.pop(result_root))
          {
             if(result_root.end_of_task) break; // End of task
-            simulate_work(2, 10);
             file << "Job ID "
                  << result_root.payload.id
                  << ": sqrt("
@@ -139,7 +138,7 @@ int main()
          for(int i = 1; i <= 200; ++i)
          {
             // Prepare input data
-            simulate_work(5, 20);
+            simulate_work(6, 10);
             double val = static_cast<double>(i);
 
             // Send data to be processed
@@ -183,7 +182,6 @@ int main()
          while(trig_results_queue.pop(result_trig))
          {
             if(result_trig.end_of_task) break; // End of task
-            simulate_work(10, 20);
             fileSin << "Job ID "
                     << result_trig.payload.id
                     << ": sin("
@@ -208,7 +206,7 @@ int main()
          for(int i = 1; i <= 100; ++i)
          {
             // Prepare input data
-            simulate_work(50, 80);
+            simulate_work(5, 15);
             double val1 = static_cast<double>(i) * 0.1;
             double val2 = static_cast<double>(i) * 0.2;
 

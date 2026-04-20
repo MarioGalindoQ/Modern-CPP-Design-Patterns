@@ -88,7 +88,7 @@ class ThreadPool
 private:
    using Task = std::function<void()>;
 
-   SafeQueue<Task> work_queue_;
+   SafeQueue<Task> task_queue_;
    std::vector<std::jthread> workers_;
    std::atomic<int> tasks_in_flight_{0};
    std::mutex barrier_mutex_;
@@ -96,18 +96,18 @@ private:
 
 public:
    explicit ThreadPool(size_t num_threads, size_t queue_size) 
-      : work_queue_{queue_size}
+      : task_queue_{queue_size}
    {
       for(size_t i = 0; i < num_threads; ++i)
          workers_.emplace_back([this](std::stop_token st) { worker_loop(st); });
    }
 
-   ~ThreadPool() { work_queue_.close(); }
+   ~ThreadPool() { task_queue_.close(); }
 
    void submit(Task task)
    {
       tasks_in_flight_++;
-      work_queue_.push(std::move(task));
+      task_queue_.push(std::move(task));
    }
 
    void wait_until_empty()
@@ -119,7 +119,7 @@ public:
    void worker_loop(std::stop_token st)
    {
       Task task;
-      while(!st.stop_requested() && work_queue_.pop(task))
+      while(!st.stop_requested() && task_queue_.pop(task))
       {
          task();
          
