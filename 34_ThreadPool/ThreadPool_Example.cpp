@@ -106,14 +106,14 @@ int main()
    std::cout << "=== THREAD POOL: ASYNCHRONOUS PIPELINE SIMULATION ===\n" << std::endl;
 
    // Create a pool of working threads
-   ThreadPool pool(15, 20);
+   ThreadPool pool(15, 20); // num_workers = 15, task_queue_size = 20
 
    // ---------------------------------------------------------------- PHASE 1: Square Roots:
    {
       std::cout << "--- Starting Batch 1: Square Roots ---\n";
 
       // Create a queue to receive the results.
-      SafeQueue<ResultRoots> root_results_queue{10};
+      SafeQueue<ResultRoots> root_results_queue{10}; // queue_size = 10
 
       // Create a thread to get the results and use them as appropriate.
       std::jthread reporter([&root_results_queue]()
@@ -177,7 +177,7 @@ int main()
       std::cout << "\n--- Starting Batch 2: Sine & Cosine ---\n";
 
       // Create a queue to receive the results.
-      SafeQueue<ResultTrig> trig_results_queue{10};
+      SafeQueue<ResultTrig> trig_results_queue{10}; // queue_size = 10
 
       // Create a thread to get the results and use them as appropriate.
       std::jthread reporter([&trig_results_queue]()
