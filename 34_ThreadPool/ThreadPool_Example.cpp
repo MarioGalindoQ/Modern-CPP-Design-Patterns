@@ -122,8 +122,9 @@ int main()
          ResultRoots result_root;
          while(root_results_queue.pop(result_root))
          {
-            if(result_root.end_of_task) break; // End of task
+            if(result_root.end_of_task) break;
 
+            // Use results as appropriate
             file << "Job ID "
                  << result_root.payload.id
                  << ": sqrt("
@@ -141,7 +142,7 @@ int main()
          for(int i = 1; i <= 200; ++i)
          {
             // Prepare input data
-            simulate_work(6, 10);
+            simulate_work(0, 10);
             double val = static_cast<double>(i);
 
             // Send data to be processed
@@ -186,8 +187,9 @@ int main()
          ResultTrig result_trig;
          while(trig_results_queue.pop(result_trig))
          {
-            if(result_trig.end_of_task) break; // End of task
+            if(result_trig.end_of_task) break;
 
+            // Use results as appropriate
             fileSin << "Job ID "
                     << result_trig.payload.id
                     << ": sin("
@@ -212,7 +214,7 @@ int main()
          for(int i = 1; i <= 100; ++i)
          {
             // Prepare input data
-            simulate_work(5, 15);
+            simulate_work(0, 15);
             double val1 = static_cast<double>(i) * 0.1;
             double val2 = static_cast<double>(i) * 0.2;
 
