@@ -70,20 +70,20 @@ workflow divided into two distinct batches:
 ```mermaid
 classDiagram
    class SafeQueue_~Task~ {
-      -queue~T~ queue_
+      -queue~Task~ queue_
       -mutex mutex_
       -condition_variable cond_
-      +push(T)
-      +pop(T&) bool
+      +push(Task)
+      +pop(Task&) bool
       +close()
    }
 
    class SafeQueue~Result~ {
-      -queue~T~ queue_
+      -queue~Result~ queue_
       -mutex mutex_
       -condition_variable cond_
-      +push(T)
-      +pop(T&) bool
+      +push(Result)
+      +pop(Result&) bool
       +close()
    }
 
@@ -98,6 +98,12 @@ classDiagram
    class Worker {
       <<std::jthread>>
       +worker_loop()
+   }
+
+   class Result {
+   }
+
+   class Task {
    }
 
    class Client_Main {
@@ -118,8 +124,14 @@ classDiagram
    }
 
    %% The Pool owns its internal components
-   ThreadPool *-- SafeQueue_~Task~
+   ThreadPool *-- SafeQueue_~Task~ : work_queue_
    ThreadPool *-- "n" Worker
+
+   %% Tasks in SaveQueue~Task~
+   SaveQueue_~Task~ *-- "n" Task
+
+   %% Results in SaveQueue~Result~
+   SaveQueue~Result~ *-- "n" Result
 
    %% The Client (Main) creates the high-level infrastructure
    Client_Main --> ThreadPool
