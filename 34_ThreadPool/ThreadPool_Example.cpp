@@ -36,51 +36,65 @@
 #include <string>
 #include <cmath>
 #include <random>
-#include <chrono>
 
 //--------------------------------------------------------- Functional Structs:
 // Results returned by the heavy computation functions
-struct SqrtOutput { double val; };
-struct TrigOutput { double sinVal; double cosVal; };
+struct SqrtOutput
+{
+   double val;
+};
+
+struct TrigOutput
+{
+   double sinVal;
+   double cosVal;
+};
 
 //--------------------------------------------------------- Queue Structs:
 // Packets that travel through the result queues
+// We use nested structs to separate Data from Control Signals
 struct ResultRoots
 {
-   int id;
-   double input;
-   double value;
-   bool is_sentinel{false};
+   struct Data {
+      int id;
+      double input;
+      double value;
+   } payload{}; 
+
+   bool end_of_task{false};
 };
 
 struct ResultTrig
 {
-   int id;
-   double input1;
-   double input2;
-   double sinVal;
-   double cosVal;
-   bool is_sentinel{false};
+   struct Data {
+      int id;
+      double input1;
+      double input2;
+      double sinVal;
+      double cosVal;
+   } payload{};
+
+   bool end_of_task{false};
 };
 
 //--------------------------------------------------------- Heavy Computations:
-void simulate_work()
+void simulate_work(int min, int max)
 {
    static std::random_device rd;
    static std::mt19937 gen(rd());
-   std::uniform_int_distribution<> dis(10, 50);
+   std::uniform_int_distribution<> dis(min, max);
    std::this_thread::sleep_for(std::chrono::milliseconds(dis(gen)));
 }
 
 SqrtOutput my_sqrt(double n)
 {
-   simulate_work(); // Simulate complex root finding
+   simulate_work(30, 200); // Simulate complex root finding
    return { std::sqrt(n) };
 }
 
 TrigOutput my_trig(double n1, double n2)
 {
-   simulate_work(); // Simulate complex trigonometric analysis
+   simulate_work(50, 350); // Simulate complex trigonometric analysis
    return { std::sin(n1), std::cos(n2) };
 }
 
@@ -89,80 +103,145 @@ int main()
 {
    std::cout << "=== THREAD POOL: ASYNCHRONOUS PIPELINE SIMULATION ===\n" << std::endl;
 
-   ThreadPool pool(10, 20);
+   // Create a pool of working threads
+   ThreadPool pool(15, 20);
 
    // --- PHASE 1: Square Roots ---
    {
       std::cout << "--- Starting Batch 1: Square Roots ---\n";
-      SafeQueue<ResultRoots> roots_results{100};
 
-      std::jthread reporter([&roots_results]() {
+      // Create a queue to receive the results.
+      SafeQueue<ResultRoots> root_results_queue{10};
+
+      // Create a thread to get the results and use them as appropriate.
+      std::jthread reporter([&root_results_queue]()
+      {
          std::ofstream file("batch1_roots.txt");
-         ResultRoots r;
-         while (roots_results.pop(r))
+         ResultRoots result_root;
+         while(root_results_queue.pop(result_root))
          {
-            if (r.is_sentinel) break;
-            file << "Job ID " << r.id << ": sqrt(" << r.input << ") = " << r.value << "\n";
+            if(result_root.end_of_task) break; // End of task
+            simulate_work(2, 10);
+            file << "Job ID "
+                 << result_root.payload.id
+                 << ": sqrt("
+                 << result_root.payload.input
+                 << ") = "
+                 << result_root.payload.value
+                 << "\n";
          }
          std::cout << " [Reporter 1] All roots saved. Closing file.\n";
       });
 
-      std::jthread producer([&pool, &roots_results]() {
-         for (int i = 1; i <= 100; ++i)
+      // Create a thread to produce the data and send it for processing
+      std::jthread producer([&pool, &root_results_queue]()
+      {
+         for(int i = 1; i <= 200; ++i)
          {
+            // Prepare input data
+            simulate_work(5, 20);
             double val = static_cast<double>(i);
-            pool.submit([&roots_results, i, val]() {
-               // The lambda only coordinates the call to the heavy function
+
+            // Send data to be processed
+            pool.submit([&root_results_queue, i, val]()
+            {
+               // This is the work that the worker will perform
                SqrtOutput res = my_sqrt(val);
-               roots_results.push({i, val, res.val, false});
+
+               // This is how the worker will return the results
+               root_results_queue.push({ .payload = {i, val, res.val} });
             });
          }
+         std::cout << " [Producer 1] All jobs submited.\n";
       });
 
-      producer.join(); 
+      // Wait for producer thread to end
+      producer.join();
+
+      // Wait until all data has been processed
       pool.wait_until_empty();
-      roots_results.push({0, 0.0, 0.0, true}); 
-      std::cout << " [System] Batch 1 completed.\n\n";
+
+      // Send an end of task message to the reporter
+      root_results_queue.push({ .end_of_task = true }); 
+
+      std::cout << " [System] Batch 1 completed.\n";
    }
 
    // --- PHASE 2: Sine & Cosine ---
    {
-      std::cout << "--- Starting Batch 2: Sine & Cosine ---\n";
-      SafeQueue<ResultTrig> trig_results{50};
+      std::cout << "\n--- Starting Batch 2: Sine & Cosine ---\n";
 
-      std::jthread reporter([&trig_results]() {
+      // Create a queue to receive the results.
+      SafeQueue<ResultTrig> trig_results_queue{10};
+
+      // Create a thread to get the results and use them as appropriate.
+      std::jthread reporter([&trig_results_queue]()
+      {
          std::ofstream fileSin("batch2_sines.txt");
          std::ofstream fileCos("batch2_cosines.txt");
-         ResultTrig r;
-         while (trig_results.pop(r))
+         ResultTrig result_trig;
+         while(trig_results_queue.pop(result_trig))
          {
-            if (r.is_sentinel) break;
-            fileSin << "Job ID " << r.id << ": sin(" << r.input1 << ") = " << r.sinVal << "\n";
-            fileCos << "Job ID " << r.id << ": cos(" << r.input2 << ") = " << r.cosVal << "\n";
+            if(result_trig.end_of_task) break; // End of task
+            simulate_work(10, 20);
+            fileSin << "Job ID "
+                    << result_trig.payload.id
+                    << ": sin("
+                    << result_trig.payload.input1
+                    << ") = "
+                    << result_trig.payload.sinVal
+                    << "\n";
+            fileCos << "Job ID "
+                    << result_trig.payload.id
+                    << ": cos("
+                    << result_trig.payload.input2
+                    << ") = "
+                    << result_trig.payload.cosVal
+                    << "\n";
          }
          std::cout << " [Reporter 2] Trig results saved. Closing files.\n";
       });
 
-      std::jthread producer([&pool, &trig_results]() {
-         for (int i = 1; i <= 50; ++i)
+      // Create a thread to produce the data and send it for processing
+      std::jthread producer([&pool, &trig_results_queue]()
+      {
+         for(int i = 1; i <= 100; ++i)
          {
+            // Prepare input data
+            simulate_work(50, 80);
             double val1 = static_cast<double>(i) * 0.1;
             double val2 = static_cast<double>(i) * 0.2;
-            pool.submit([&trig_results, i, val1, val2]() {
-               // Calculating sin of first and cos of second
+
+            // Send data to be processed
+            pool.submit([&trig_results_queue, i, val1, val2]()
+            {
+               // This is the work that the worker will perform
                TrigOutput res = my_trig(val1, val2);
-               trig_results.push({i, val1, val2, res.sinVal, res.cosVal, false});
+
+               // This is how the worker will return the results
+               trig_results_queue.push({ .payload = {.id = i,
+                                                     .input1 = val1,
+                                                     .input2 = val2,
+                                                     .sinVal = res.sinVal,
+                                                     .cosVal = res.cosVal } });
             });
          }
+         std::cout << " [Producer 2] All jobs submited.\n";
       });
 
+      // Wait for producer thread to end
       producer.join();
+
+      // Wait until all data has been processed
       pool.wait_until_empty();
-      trig_results.push({0, 0.0, 0.0, 0.0, 0.0, true}); 
-      std::cout << " [System] Batch 2 completed.\n\n";
+
+      // Send an end of task message to the reporter
+      trig_results_queue.push({ .end_of_task = true }); 
+
+      std::cout << " [System] Batch 2 completed.\n";
    }
 
-   std::cout << "=== SIMULATION COMPLETED. SHUTTING DOWN POOL ===\n";
+   std::cout << "\n=== SIMULATION COMPLETED. SHUTTING DOWN POOL ===\n";
 }
 
 //================================================================================ END

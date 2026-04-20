@@ -32,17 +32,17 @@ This implementation simulates a professional scientific data-processing
 workflow divided into two distinct batches:
 
 1. **Batch 1: Single-Input / Single-Output**:
-   Calculates 100 square roots. Results are sent to a dedicated "Reporter" 
+   Calculates 200 square roots. Results are sent to a dedicated "Reporter" 
    thread that persists the data into a text file.
    
 2. **Batch 2: Multi-Input / Multi-Output**:
-   Calculates Sines and Cosines from dual inputs. This demonstrates how 
+   Calculates 100 Sines and Cosines from dual inputs. This demonstrates how 
    the same infrastructure can handle complex data structures and 
    distribute results across multiple files.
 
 ### Thread Topology:
 - **Producer Thread**: Generates mathematical problems independently.
-- **Worker Pool (10 threads)**: Persistent threads that handle the heavy 
+- **Worker Pool (15 threads)**: Persistent threads that handle the heavy 
   computation (encapsulated in pure functions like `my_sqrt` and `my_trig`).
 - **Reporter Threads**: Ephemeral (short-lived) threads created per batch 
   to handle specific I/O and persistence logic.

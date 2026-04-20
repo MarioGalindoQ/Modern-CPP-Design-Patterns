@@ -32,7 +32,6 @@
 #include <mutex>
 #include <condition_variable>
 #include <functional>
-#include <atomic>
 
 //--------------------------------------------------------- SafeQueue (Monitor):
 template <class T>
@@ -54,7 +53,7 @@ public:
       std::unique_lock lock{mutex_};
       cond_push_.wait(lock, [this]() { return queue_.size() < max_size_ || closed_; });
       
-      if (closed_) return;
+      if(closed_) return;
 
       queue_.push(std::move(item));
       cond_pop_.notify_one();
@@ -65,7 +64,7 @@ public:
       std::unique_lock lock{mutex_};
       cond_pop_.wait(lock, [this]() { return !queue_.empty() || closed_; });
 
-      if (queue_.empty() && closed_) return false;
+      if(queue_.empty() && closed_) return false;
 
       item = std::move(queue_.front());
       queue_.pop();
@@ -98,7 +97,7 @@ public:
    explicit ThreadPool(size_t num_threads, size_t queue_size) 
       : work_queue_{queue_size}
    {
-      for (size_t i = 0; i < num_threads; ++i)
+      for(size_t i = 0; i < num_threads; ++i)
          workers_.emplace_back([this](std::stop_token st) { worker_loop(st); });
    }
 
@@ -119,13 +118,13 @@ public:
    void worker_loop(std::stop_token st)
    {
       Task task;
-      while (!st.stop_requested() && work_queue_.pop(task))
+      while(!st.stop_requested() && work_queue_.pop(task))
       {
          task();
          
          // Decrement and notify must be synchronized with the barrier mutex
          std::lock_guard lock{barrier_mutex_};
-         if (--tasks_in_flight_ == 0) barrier_cv_.notify_all();
+         if(--tasks_in_flight_ == 0) barrier_cv_.notify_all();
       }
    }
 };
