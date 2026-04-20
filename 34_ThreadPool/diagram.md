@@ -2,7 +2,7 @@
 
 ```mermaid
 classDiagram
-   class SafeQueue~T~ {
+   class SafeQueue ~T~ {
       -queue~T~ queue_
       -mutex mutex_
       -condition_variable cond_
