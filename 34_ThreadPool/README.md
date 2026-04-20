@@ -69,7 +69,16 @@ workflow divided into two distinct batches:
 
 ```mermaid
 classDiagram
-   class SafeQueue ~T~ {
+   class SafeQueue_~Task~ {
+      -queue~T~ queue_
+      -mutex mutex_
+      -condition_variable cond_
+      +push(T)
+      +pop(T&) bool
+      +close()
+   }
+
+   class SafeQueue~Result~ {
       -queue~T~ queue_
       -mutex mutex_
       -condition_variable cond_
