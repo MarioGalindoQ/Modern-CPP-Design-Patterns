@@ -118,15 +118,21 @@ public:
    {
       if(isRestoring_) return;
 
-      SystemState s;
-      s.valB = b_->getValue();
-      std::strncpy(s.strA, a_->getState().c_str(), 63);
-      s.strA[63] = '\0';
+      if(header_->cursor + 1 >= MAX_STATES) 
+         throw std::runtime_error("History file is full! Cannot save more states.\n");
+
+      SystemState systemSate;
+
+      systemSate.valB = b_->getValue();
+
+      std::strncpy(systemSate.strA, a_->getState().c_str(), 63);
+      systemSate.strA[63] = '\0';
 
       if(header_->count > 0) header_->cursor++;
       
-      history_[header_->cursor] = s;
+      history_[header_->cursor] = systemSate;
       header_->count = header_->cursor + 1;
+
       std::cout << "          ... Automatic checkpoint saved (State " << header_->cursor << ").\n";
    }
 
