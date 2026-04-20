@@ -88,7 +88,7 @@ classDiagram
    }
 
    class ThreadPool {
-      -SafeQueue~Task~ work_queue_
+      -SafeQueue~Task~ task_queue_
       -vector~jthread~ workers_
       -atomic~int~ tasks_in_flight_
       +submit(Task)
