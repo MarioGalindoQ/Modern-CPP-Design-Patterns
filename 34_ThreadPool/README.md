@@ -69,16 +69,7 @@ workflow divided into two distinct batches:
 
 ```mermaid
 classDiagram
-   class SafeQueue~Task~ {
-      -queue~T~ queue_
-      -mutex mutex_
-      -condition_variable cond_
-      +push(T)
-      +pop(T&) bool
-      +close()
-   }
-
-   class SafeQueue~Result~ {
+   class SafeQueue~T~ {
       -queue~T~ queue_
       -mutex mutex_
       -condition_variable cond_
@@ -129,10 +120,10 @@ classDiagram
 
    %% Operational dependencies
    Producer ..> ThreadPool : submits tasks
-   Worker ..> SafeQueue~Task~ : pops work
+   Worker ..> SafeQueue~T~ : pops work
    Worker ..> ComputationLogic : executes math
-   Worker ..> SafeQueue~Result~ : pushes results
-   Reporter ..> SafeQueue~Result~ : pops results to save
+   Worker ..> SafeQueue~T~ : pushes results
+   Reporter ..> SafeQueue~T~ : pops results to save
 ```
 
 ### Design Note:
