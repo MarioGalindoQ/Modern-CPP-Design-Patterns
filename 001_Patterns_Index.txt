@@ -46,6 +46,6 @@ IV. C++ SPECIFIC TECHNIQUES, FRAMEWORKS & CONCURRENCY
 31_Variant       : Type-safe unions for non-intrusive polymorphism and modern dispatch.
 32_CRTP          : Static polymorphism using the Curiously Recurring Template Pattern.
 33_ErrorHandling : Manages operation outcomes via the 'Result' pattern (std::expected).
-34_ThreadPool    : Orchestrates concurrent execution using a managed pool of threads. (In Development)
+34_ThreadPool    : Manages a set of persistent worker threads to execute tasks concurrently.
 
 ================================================================================== END
