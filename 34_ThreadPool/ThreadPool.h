@@ -39,37 +39,42 @@ template <class T>
 class SafeQueue
 {
 private:
-   std::queue<T> queue_;
-   std::mutex mutex_;
-   std::condition_variable cond_push_;
-   std::condition_variable cond_pop_;
-   size_t max_size_;
-   bool closed_{false};
+   std::queue<T>           queue_;
+   std::mutex              mutex_;
+   std::condition_variable cond_var_push_;
+   std::condition_variable cond_var_pop_;
+   size_t                  max_size_;
+   bool                    closed_{false};
 
 public:
    explicit SafeQueue(size_t max_size) : max_size_{max_size} { }
 
+   ~SafeQueue() 
+   { 
+      close(); 
+   }
+
    void push(T item)
    {
       std::unique_lock lock{mutex_};
-      cond_push_.wait(lock, [this]() { return queue_.size() < max_size_ || closed_; });
+      cond_var_push_.wait(lock, [this]() { return queue_.size() < max_size_ || closed_; });
       
       if(closed_) return;
 
       queue_.push(std::move(item));
-      cond_pop_.notify_one();
+      cond_var_pop_.notify_one();
    }
 
    bool pop(T& item)
    {
       std::unique_lock lock{mutex_};
-      cond_pop_.wait(lock, [this]() { return !queue_.empty() || closed_; });
+      cond_var_pop_.wait(lock, [this]() { return !queue_.empty() || closed_; });
 
       if(queue_.empty() && closed_) return false;
 
       item = std::move(queue_.front());
       queue_.pop();
-      cond_push_.notify_one();
+      cond_var_push_.notify_one();
       return true;
    }
 
@@ -77,8 +82,8 @@ public:
    {
       std::lock_guard lock{mutex_};
       closed_ = true;
-      cond_push_.notify_all();
-      cond_pop_.notify_all();
+      cond_var_push_.notify_all();
+      cond_var_pop_.notify_all();
    }
 };
 
@@ -88,32 +93,37 @@ class ThreadPool
 private:
    using Task = std::function<void()>;
 
-   SafeQueue<Task> task_queue_;
+   SafeQueue<Task>           task_queue_;
    std::vector<std::jthread> workers_;
-   std::atomic<int> tasks_in_flight_{0};
-   std::mutex barrier_mutex_;
-   std::condition_variable barrier_cv_;
+   std::atomic<int>          tasks_in_queue_{0};
+   std::mutex                mutex_;
+   std::condition_variable   cond_var_;
 
 public:
-   explicit ThreadPool(size_t num_threads, size_t queue_size) 
-      : task_queue_{queue_size}
+   explicit ThreadPool(size_t num_threads, size_t queue_size) : task_queue_{queue_size}
    {
       for(size_t i = 0; i < num_threads; ++i)
          workers_.emplace_back([this](std::stop_token st) { worker_loop(st); });
    }
 
-   ~ThreadPool() { task_queue_.close(); }
+   ~ThreadPool()
+   { 
+      task_queue_.close(); 
+   }
 
    void submit(Task task)
    {
-      tasks_in_flight_++;
+      {
+         std::lock_guard lock{mutex_};
+         tasks_in_queue_++;
+      }
       task_queue_.push(std::move(task));
    }
 
    void wait_until_empty()
    {
-      std::unique_lock lock{barrier_mutex_};
-      barrier_cv_.wait(lock, [this]() { return tasks_in_flight_ == 0; });
+      std::unique_lock lock{mutex_};
+      cond_var_.wait(lock, [this]() { return tasks_in_queue_ == 0; });
    }
 
    void worker_loop(std::stop_token st)
@@ -123,12 +133,12 @@ public:
       {
          task();
          
-         // Decrement and notify must be synchronized with the barrier mutex
-         std::lock_guard lock{barrier_mutex_};
-         if(--tasks_in_flight_ == 0) barrier_cv_.notify_all();
+         std::lock_guard lock{mutex_};
+         if(--tasks_in_queue_ == 0) cond_var_.notify_all();
       }
    }
 };
 
 #endif
+
 //================================================================================ END

@@ -22,7 +22,7 @@
  * 
  * --- CONCURRENCY TOPOLOGY & SYNCHRONIZATION:
  * - Producer Thread: Generates problems and submits them to the pool.
- * - Worker Threads (10): Persistent threads that consume and execute tasks.
+ * - Worker Threads (15): Persistent threads that consume and execute tasks.
  * - Reporter Thread: Consumes results and persists them to disk.
  * - Determinism: We use explicit producer joining and the 'wait_until_empty()' 
  *   barrier to ensure all tasks are submitted and processed before the 
@@ -36,6 +36,8 @@
 #include <string>
 #include <cmath>
 #include <random>
+#include <chrono>
+#include <thread>
 
 //--------------------------------------------------------- Functional Structs:
 // Results returned by the heavy computation functions
@@ -106,7 +108,7 @@ int main()
    // Create a pool of working threads
    ThreadPool pool(15, 20);
 
-   // --- PHASE 1: Square Roots ---
+   // ---------------------------------------------------------------- PHASE 1: Square Roots:
    {
       std::cout << "--- Starting Batch 1: Square Roots ---\n";
 
@@ -121,6 +123,7 @@ int main()
          while(root_results_queue.pop(result_root))
          {
             if(result_root.end_of_task) break; // End of task
+
             file << "Job ID "
                  << result_root.payload.id
                  << ": sqrt("
@@ -151,7 +154,7 @@ int main()
                root_results_queue.push({ .payload = {i, val, res.val} });
             });
          }
-         std::cout << " [Producer 1] All jobs submited.\n";
+         std::cout << " [Producer 1] All jobs submitted.\n";
       });
 
       // Wait for producer thread to end
@@ -163,10 +166,12 @@ int main()
       // Send an end of task message to the reporter
       root_results_queue.push({ .end_of_task = true }); 
 
+      simulate_work(5, 5);
+
       std::cout << " [System] Batch 1 completed.\n";
    }
 
-   // --- PHASE 2: Sine & Cosine ---
+   // --------------------------------------------------------------- PHASE 2: Sine & Cosine:
    {
       std::cout << "\n--- Starting Batch 2: Sine & Cosine ---\n";
 
@@ -182,6 +187,7 @@ int main()
          while(trig_results_queue.pop(result_trig))
          {
             if(result_trig.end_of_task) break; // End of task
+
             fileSin << "Job ID "
                     << result_trig.payload.id
                     << ": sin("
@@ -224,7 +230,7 @@ int main()
                                                      .cosVal = res.cosVal } });
             });
          }
-         std::cout << " [Producer 2] All jobs submited.\n";
+         std::cout << " [Producer 2] All jobs submitted.\n";
       });
 
       // Wait for producer thread to end
@@ -235,6 +241,8 @@ int main()
 
       // Send an end of task message to the reporter
       trig_results_queue.push({ .end_of_task = true }); 
+
+      simulate_work(5, 5);
 
       std::cout << " [System] Batch 2 completed.\n";
    }
