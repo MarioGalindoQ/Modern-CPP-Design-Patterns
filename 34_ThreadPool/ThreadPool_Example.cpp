@@ -158,10 +158,10 @@ int main()
          std::cout << " [Producer 1] All jobs submitted.\n";
       });
 
-      // Wait for producer thread to end
+      // Wait for producer thread to end producing all tasks
       producer.join();
 
-      // Wait until all data has been processed
+      // Wait until all data has been processed by the workers
       pool.wait_until_empty();
 
       // Send an end of task message to the reporter
@@ -235,10 +235,10 @@ int main()
          std::cout << " [Producer 2] All jobs submitted.\n";
       });
 
-      // Wait for producer thread to end
+      // Wait for producer thread to end producing all tasks
       producer.join();
 
-      // Wait until all data has been processed
+      // Wait until all data has been processed by the workers
       pool.wait_until_empty();
 
       // Send an end of task message to the reporter

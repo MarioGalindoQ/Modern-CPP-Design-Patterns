@@ -15,7 +15,7 @@
  *    (std::jthread). It decouples task submission from execution.
  * 
  * --- SYNCHRONIZATION & DETERMINISM:
- * The pool uses an atomic 'tasks_in_flight' counter and a condition-based 
+ * The pool uses an atomic 'tasks_in_queue' counter and a condition-based 
  * barrier. Synchronization is strictly handled within mutex-protected 
  * scopes to prevent 'lost wake-ups' and ensure that the main thread 
  * always receives the completion signal reliably.
@@ -70,7 +70,7 @@ public:
       std::unique_lock lock{mutex_};
       cond_var_pop_.wait(lock, [this]() { return !queue_.empty() || closed_; });
 
-      if(queue_.empty() && closed_) return false;
+      if(closed_) return false;
 
       item = std::move(queue_.front());
       queue_.pop();
@@ -82,8 +82,8 @@ public:
    {
       std::lock_guard lock{mutex_};
       closed_ = true;
-      cond_var_push_.notify_all();
       cond_var_pop_.notify_all();
+      cond_var_push_.notify_all();
    }
 };
 
@@ -97,7 +97,7 @@ private:
    std::vector<std::jthread> workers_;
    std::atomic<int>          tasks_in_queue_{0};
    std::mutex                mutex_;
-   std::condition_variable   cond_var_;
+   std::condition_variable   cond_var_pool;
 
 public:
    explicit ThreadPool(size_t num_threads, size_t queue_size) : task_queue_{queue_size}
@@ -108,7 +108,7 @@ public:
 
    ~ThreadPool()
    { 
-      task_queue_.close(); 
+      task_queue_.close();
    }
 
    void submit(Task task)
@@ -123,7 +123,7 @@ public:
    void wait_until_empty()
    {
       std::unique_lock lock{mutex_};
-      cond_var_.wait(lock, [this]() { return tasks_in_queue_ == 0; });
+      cond_var_pool.wait(lock, [this]() { return tasks_in_queue_ == 0; });
    }
 
    void worker_loop(std::stop_token st)
@@ -134,7 +134,9 @@ public:
          task();
          
          std::lock_guard lock{mutex_};
-         if(--tasks_in_queue_ == 0) cond_var_.notify_all();
+         if(--tasks_in_queue_ == 0)
+            // Notify to the main that is waiting_until_empty
+            cond_var_pool.notify_one();
       }
    }
 };
