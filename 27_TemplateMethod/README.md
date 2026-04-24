@@ -65,8 +65,8 @@ classDiagram
    }
 
    %% Inheritance (Is_a)
-   SortAndPrint <|-- BubbleSort
-   SortAndPrint <|-- ShellSort
+   SortAndPrint <|.. BubbleSort
+   SortAndPrint <|.. ShellSort
 
    %% Dependency
    Client ..> SortAndPrint

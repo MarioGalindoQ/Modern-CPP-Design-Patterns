@@ -101,18 +101,18 @@ classDiagram
    }
 
    %% Inheritance Hierarchy
-   Accept <|-- As~T~
+   Accept <|.. As~T~
    Visitable <|-- Red
    As~Red~ <|-- Red
    Visitable <|-- Blue
    As~Blue~ <|-- Blue
 
-   Visitor <|-- Triangle
-   Visit~Red~ <|-- Triangle
-   Visit~Blue~ <|-- Triangle
+   Visitor <|.. Triangle
+   Visit~Red~ <|.. Triangle
+   Visit~Blue~ <|.. Triangle
 
-   Visitor <|-- Circle
-   Visit~Red~ <|-- Circle
+   Visitor <|.. Circle
+   Visit~Red~ <|.. Circle
 
    %% Composition and Storage
    Client *-- "n" Visitable : colors

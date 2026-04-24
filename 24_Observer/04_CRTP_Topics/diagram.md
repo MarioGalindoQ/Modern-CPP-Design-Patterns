@@ -48,11 +48,11 @@ classDiagram
    Observable~NumberObservable~ <|-- NumberObservable
    
    %% Multiple Inheritance for observers that listen to multiple topics
-   Observer~NumberObservable, Value~ <|-- ValueColorObserver
-   Observer~NumberObservable, Color~ <|-- ValueColorObserver
+   Observer~NumberObservable, Value~ <|.. ValueColorObserver
+   Observer~NumberObservable, Color~ <|.. ValueColorObserver
    
-   Observer~NumberObservable, Value~ <|-- ValueObserver
-   Observer~NumberObservable, Color~ <|-- ColorObserver
+   Observer~NumberObservable, Value~ <|.. ValueObserver
+   Observer~NumberObservable, Color~ <|.. ColorObserver
 
    %% Composition (Has_a) - The Observable manages n Observers per topic
    Observable~ConcreteObservable~ *-- "n" Observer~ConcreteObservable, TopicType~ : categorized by Topic

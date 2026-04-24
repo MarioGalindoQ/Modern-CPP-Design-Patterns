@@ -23,8 +23,8 @@ classDiagram
    }
 
    %% Inheritance (Is_a) - No numbers
-   Logger <|-- ConsoleLogger
-   Logger <|-- NullLogger
+   Logger <|.. ConsoleLogger
+   Logger <|.. NullLogger
 
    %% Singleton relationship for the Null Object
    NullLogger *-- NullLogger : 1 static instance

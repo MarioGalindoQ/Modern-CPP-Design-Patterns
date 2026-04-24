@@ -34,10 +34,10 @@ classDiagram
         +createApp() App
     }
 
-    App <|-- up
-    App <|-- wc
+    App <|.. up
+    App <|.. wc
 
-    FrameworkEngine *-- "1" App : owns
+    FrameworkEngine *-- App
     FrameworkEngine ..> App : executes
 ```
 

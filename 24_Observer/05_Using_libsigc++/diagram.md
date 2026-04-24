@@ -50,16 +50,16 @@ classDiagram
 
     %% Inheritance (Is_a)
     sigc_trackable <|-- Observer~T~
-    Observer~T~ <|-- DivObserver
-    Observer~T~ <|-- ModObserver
+    Observer~T~ <|.. DivObserver
+    Observer~T~ <|.. ModObserver
     Subject~T~ <|-- Number
 
     %% Composition (Has_a)
-    Subject~T~ *-- "1" sigc_signal : observers
+    Subject~T~ *-- sigc_signal : observers
 
     %% Dependencies
     sigc_signal ..> "n" Observer~T~ : triggers update
-    Client ..> "1" sigc_connection : manages link
+    Client ..> sigc_connection : manages link
     Client ..> Number
     Client ..> Observer~T~
 ```

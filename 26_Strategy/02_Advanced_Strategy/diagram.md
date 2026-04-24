@@ -40,14 +40,14 @@ classDiagram
       +main()
    }
 
-   SortStrategy <|-- BubbleSort
-   SortStrategy <|-- ShellSort
+   SortStrategy <|.. BubbleSort
+   SortStrategy <|.. ShellSort
 
-   PrintStrategy <|-- FreePrint
-   PrintStrategy <|-- WidthPrint
+   PrintStrategy <|.. FreePrint
+   PrintStrategy <|.. WidthPrint
 
-   SortAndPrint *-- "1" SortStrategy : sortImpl_
-   SortAndPrint *-- "1" PrintStrategy : printImpl_
+   SortAndPrint *-- SortStrategy : sortImpl_
+   SortAndPrint *-- PrintStrategy : printImpl_
 
    Client ..> SortAndPrint
    Client ..> BubbleSort

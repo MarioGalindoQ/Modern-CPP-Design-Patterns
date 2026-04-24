@@ -36,8 +36,8 @@ classDiagram
 
     %% Inheritance (Is_a) - No numbers
     Observable <|-- Number
-    Observer <|-- DivObserver
-    Observer <|-- ModObserver
+    Observer <|.. DivObserver
+    Observer <|.. ModObserver
 
     %% Composition (Has_a) - Multiplicity "n" only at the end
     Observable *-- "n" Observer : observers_

@@ -36,8 +36,8 @@ classDiagram
 
    %% Inheritance (Is_a) via CRTP
    Observable~Number~ <|-- Number
-   Observer~Number~ <|-- DivObserver
-   Observer~Number~ <|-- ModObserver
+   Observer~Number~ <|.. DivObserver
+   Observer~Number~ <|.. ModObserver
 
    %% Composition (Has_a)
    Observable~ConcreteObservable~ *-- "n" Observer~ConcreteObservable~ : observers_

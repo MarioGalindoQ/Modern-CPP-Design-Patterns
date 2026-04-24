@@ -35,8 +35,8 @@ classDiagram
    }
 
    Observable~Number~ <|-- Number
-   Observer~Number~ <|-- DivObserver
-   Observer~Number~ <|-- ModObserver
+   Observer~Number~ <|.. DivObserver
+   Observer~Number~ <|.. ModObserver
 
    Observable~T~ *-- "n" Observer~T~ : weak_ptr collection
 

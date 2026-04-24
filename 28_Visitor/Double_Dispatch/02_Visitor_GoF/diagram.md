@@ -36,10 +36,10 @@ classDiagram
     }
 
     %% Inheritance (Is_a)
-    Visitable <|-- Red
-    Visitable <|-- Blue
-    Visitor <|-- Triangle
-    Visitor <|-- Circle
+    Visitable <|.. Red
+    Visitable <|.. Blue
+    Visitor <|.. Triangle
+    Visitor <|.. Circle
 
     %% Composition (Has_a)
     Client *-- "n" Visitable : colors

@@ -92,12 +92,12 @@ classDiagram
    }
 
    %% Inheritance (Is_a)
-   Visitable <|-- Paragraph
-   Visitable <|-- Image
-   Visitable <|-- Hyperlink
+   Visitable <|.. Paragraph
+   Visitable <|.. Image
+   Visitable <|.. Hyperlink
 
-   Visitor <|-- HtmlExport
-   Visitor <|-- TextExtract
+   Visitor <|.. HtmlExport
+   Visitor <|.. TextExtract
 
    %% Composition (Has_a)
    Client *-- "n" Visitable : document collection

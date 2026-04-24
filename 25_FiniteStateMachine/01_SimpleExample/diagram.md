@@ -42,8 +42,8 @@ classDiagram
     }
 
     %% Inheritance (Is_a) - No numbers
-    IState_FSM <|-- State_A
-    IState_FSM <|-- State_B
+    IState_FSM <|.. State_A
+    IState_FSM <|.. State_B
 
     %% The FSM owns all available states in a static registry
     %% Composition (Has_a) - Multiplicity "n" at the end

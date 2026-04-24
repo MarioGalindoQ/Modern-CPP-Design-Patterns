@@ -46,13 +46,13 @@ classDiagram
    }
 
    %% Hierarchy
-   Singleton <|-- IState_FSM
-   IState_FSM <|-- Closed_without_CD
-   IState_FSM <|-- Open_without_CD
-   IState_FSM <|-- Open_with_CD
-   IState_FSM <|-- Closed_with_CD
-   IState_FSM <|-- Playing
-   IState_FSM <|-- Paused
+   Singleton <|.. IState_FSM
+   IState_FSM <|.. Closed_without_CD
+   IState_FSM <|.. Open_without_CD
+   IState_FSM <|.. Open_with_CD
+   IState_FSM <|.. Closed_with_CD
+   IState_FSM <|.. Playing
+   IState_FSM <|.. Paused
 
    %% Relationships
    %% The FSM has a pointer to the current state (Composition)

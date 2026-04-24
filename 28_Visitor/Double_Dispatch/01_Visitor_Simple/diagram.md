@@ -26,8 +26,8 @@ classDiagram
    }
 
    %% Inheritance (Is_a) - No numbers used
-   Visitable_Visitor <|-- Circle
-   Visitable_Visitor <|-- Triangle
+   Visitable_Visitor <|.. Circle
+   Visitable_Visitor <|.. Triangle
 
    %% The Client manages a collection of these dual-role objects
    %% Composition (Has_a) - Multiplicity "n" at the end

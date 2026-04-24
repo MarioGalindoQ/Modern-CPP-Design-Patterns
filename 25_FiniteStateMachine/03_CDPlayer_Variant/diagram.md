@@ -60,7 +60,7 @@ classDiagram
         +main()
     }
 
-    FSM *-- "1" StateVariant : state_
+    FSM *-- StateVariant : state_
 
     StateVariant ..> Closed_without_CD
     StateVariant ..> Open_without_CD
@@ -69,12 +69,12 @@ classDiagram
     StateVariant ..> Playing
     StateVariant ..> Paused
 
-    Closed_without_CD *-- "1" FSM
-    Open_without_CD *-- "1" FSM
-    Open_with_CD *-- "1" FSM
-    Closed_with_CD *-- "1" FSM
-    Playing *-- "1" FSM
-    Paused *-- "1" FSM
+    Closed_without_CD *-- FSM
+    Open_without_CD *-- FSM
+    Open_with_CD *-- FSM
+    Closed_with_CD *-- FSM
+    Playing *-- FSM
+    Paused *-- FSM
 
     Client ..> FSM
 ```

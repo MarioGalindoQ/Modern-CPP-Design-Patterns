@@ -25,12 +25,12 @@ classDiagram
         +main()
     }
 
-    %% Inheritance (Is_a) - No numbers
-    SortStrategy <|-- BubbleSort
-    SortStrategy <|-- ShellSort
+    %% Inheritance (Is_a)
+    SortStrategy <|.. BubbleSort
+    SortStrategy <|.. ShellSort
 
-    %% Composition (Has_a) - Multiplicity "1" only at the end
-    Sorter *-- "1" SortStrategy : strategy_
+    %% Composition (Has_a)
+    Sorter *-- SortStrategy : strategy_
 
     %% Dependency - No numbers
     Client ..> Sorter
