@@ -42,15 +42,15 @@ classDiagram
    }
 
    %% Inheritance (Is_a)
-   Shape <|-- Square
-   Shape <|-- Circle
-   Shape <|-- Triangle
+   Shape <|.. Square
+   Shape <|.. Circle
+   Shape <|.. Triangle
    
-   ICloneable <|-- Cloneable~T~
+   ICloneable <|.. Cloneable~T~
    
    %% Multiple Inheritance (The Mixin injection)
-   Cloneable~Square~ <|-- Square
-   Cloneable~Circle~ <|-- Circle
+   Cloneable~Square~ <|.. Square
+   Cloneable~Circle~ <|.. Circle
 
    %% Dependencies (Creates / Cross-Casts)
    Cloneable~T~ ..> T : instantiates
