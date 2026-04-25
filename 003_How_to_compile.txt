@@ -11,3 +11,5 @@ gcc3 program.cpp
 
 Note:
 When the program has several .cpp files, a compile.sh script has been placed to compile.
+
+**Author:** Mario Galindo Queralt, Ph.D.

@@ -1,5 +1,6 @@
 ============================================================================
                          DESIGN PATTERNS INDEX
+                 Author: Mario Galindo Queralt, Ph.D.
 ============================================================================
 
 I. CREATIONAL PATTERNS (The "How" of Object Creation)
@@ -47,5 +48,7 @@ IV. C++ SPECIFIC TECHNIQUES, FRAMEWORKS & CONCURRENCY
 32_CRTP          : Static polymorphism using the Curiously Recurring Template Pattern.
 33_ErrorHandling : Manages operation outcomes via the 'Result' pattern (std::expected).
 34_ThreadPool    : Manages a set of persistent worker threads to execute tasks concurrently.
+
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ================================================================================== END

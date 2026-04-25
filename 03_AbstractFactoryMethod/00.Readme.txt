@@ -1,4 +1,5 @@
 # ABSTRACT FACTORY PATTERN (CREATIONAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Abstract Factory pattern is a creational design pattern that provides an 

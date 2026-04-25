@@ -1,5 +1,6 @@
 ================================================================================
 MGQ SYSTEM ARCHITECTURE - C++ ROBUST CLASS DESIGN (THE RULE OF SEVEN)
+Author: Mario Galindo Queralt, Ph.D.
 ================================================================================
 Version: 2.5 (Debian MGQ-Hybrid Standard)
 Date: May 20, 2022
@@ -78,6 +79,8 @@ private:                                    // 7 PC: Controlled birth
 - Performance: Forces move semantics across high-load systems, reducing latency.
 - Code Auditability: The 1-7 numbering allows instant verification of missing 
   or incorrectly implemented lifecycle functions during peer review.
+
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ================================================================================
 MGQ STANDARDS - OBJECT INTEGRITY THROUGH EXPLICIT LIFECYCLE MANAGEMENT

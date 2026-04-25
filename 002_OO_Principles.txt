@@ -1,5 +1,6 @@
 ============================================================================
                    OBJECT-ORIENTED DESIGN PRINCIPLES
+                  Author: Mario Galindo Queralt, Ph.D.
 ============================================================================
 Version: 3.1 (Debian MGQ-Hybrid Standard)
 Date: Jun 10, 2025
@@ -191,5 +192,7 @@ P: Principle of Least Astonishment (POLA)
    [Examples] 
       - Pattern 14 (Proxy): Works exactly like the original object.
       - Pattern 30 (NullObject): Prevents crashes by behaving as an animal/logger.
+
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ================================================================================ END
