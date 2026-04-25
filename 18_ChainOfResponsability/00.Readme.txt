@@ -1,4 +1,5 @@
 # CHAIN OF RESPONSIBILITY (BEHAVIORAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 Avoid coupling the sender of a request to its receiver by giving more than 

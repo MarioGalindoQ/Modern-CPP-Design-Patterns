@@ -35,3 +35,5 @@ classDiagram
    %% The Client only interacts with the simple interface
    Client ..> ComputerFacade
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

@@ -38,3 +38,5 @@ possibility of failure. The 'ResultHandler' visitor encapsulates the logic for
 both successful and failed outcomes. This design eliminates the need for output
 parameters or side-effect-heavy exceptions, making the function 'safeSqrt'
 honest about its potential results.
+
+**Author:** Mario Galindo Queralt, Ph.D.

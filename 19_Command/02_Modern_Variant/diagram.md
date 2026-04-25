@@ -71,3 +71,5 @@ plain structs. The 'CommandExecutor' holdsthe receivers,
 establishing a 'Has_a' relationship (Composition). The Command Queue manages a
 collection of commands by value and depends on the Executor to process them via
 'std::visit'.
+
+**Author:** Mario Galindo Queralt, Ph.D.

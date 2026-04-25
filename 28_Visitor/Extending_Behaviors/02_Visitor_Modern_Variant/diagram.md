@@ -45,3 +45,5 @@ not need a base class. The 'DocumentElement' is a type-safe union
 separate objects. The 'Client' processes the entire collection using
 'std::visit', providing compile-time safety and high performance by avoiding
 virtual function overhead.
+
+**Author:** Mario Galindo Queralt, Ph.D.

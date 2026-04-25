@@ -1,4 +1,5 @@
 # BRIDGE PATTERN (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Bridge pattern is designed to decouple an abstraction from its implementation so

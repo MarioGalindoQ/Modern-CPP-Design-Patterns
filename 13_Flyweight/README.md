@@ -1,4 +1,5 @@
 # FLYWEIGHT PATTERN (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Flyweight pattern is used to minimize memory usage by sharing as much 
@@ -81,3 +82,5 @@ classDiagram
    Client ..> FlyweightFactory
    Client ..> Airplane
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

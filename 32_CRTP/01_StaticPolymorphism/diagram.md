@@ -37,3 +37,5 @@ knowledge of the derived type at compile-time. The 'print()' method in the base
 class performs a 'static_cast' to call 'printImplementation()' in the derived
 class, achieving polymorphic behavior with zero runtime overhead and no virtual
 table.
+
+**Author:** Mario Galindo Queralt, Ph.D.

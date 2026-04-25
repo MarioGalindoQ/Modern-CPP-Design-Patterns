@@ -41,3 +41,5 @@ not shared between different species; each derived class gets its own unique set
 of counters automatically. The protected constructor and destructor in the base
 class ensure that the counting logic is triggered every time a derived object is
 born or dies.
+
+**Author:** Mario Galindo Queralt, Ph.D.

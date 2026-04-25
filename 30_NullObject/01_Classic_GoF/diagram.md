@@ -39,3 +39,5 @@ from the 'Logger' interface but provides a "no-op" (do nothing) implementation
 of the 'log' method. By providing a valid object instead of a null pointer, the
 'Client' can iterate through a collection of loggers and call 'log()' without
 using 'if (logger != nullptr)' checks, leading to cleaner and safer code.
+
+**Author:** Mario Galindo Queralt, Ph.D.

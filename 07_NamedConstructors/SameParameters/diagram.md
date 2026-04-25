@@ -19,3 +19,5 @@ classDiagram
    Point --> Point : creates
    Client ..> Point
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

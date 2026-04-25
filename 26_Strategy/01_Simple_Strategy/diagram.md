@@ -45,3 +45,5 @@ the 'SortStrategy' interface. The Client is responsible for injecting the
 desired concrete strategy (BubbleSort or ShellSort) into the context at
 runtime. This fulfills the Open/Closed Principle, as new sorting algorithms can
 be added without modifying the existing 'Sorter' code.
+
+**Author:** Mario Galindo Queralt, Ph.D.

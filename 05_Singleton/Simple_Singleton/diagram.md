@@ -12,3 +12,5 @@ classDiagram
 
     Singleton *-- Singleton : 1 Static instance
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

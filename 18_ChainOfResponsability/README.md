@@ -1,4 +1,5 @@
 # CHAIN OF RESPONSIBILITY (BEHAVIORAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 Avoid coupling the sender of a request to its receiver by giving more than 
@@ -84,3 +85,5 @@ manager that simplifies the linking process (the builder). Each 'Handler' has a
 composition relationship with the next 'IHandler' in the sequence. If a request
 cannot be processed by the current node, it is delegated via the 'next_' pointer
 until it reaches the end of the chain.
+
+**Author:** Mario Galindo Queralt, Ph.D.

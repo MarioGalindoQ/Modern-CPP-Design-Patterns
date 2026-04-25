@@ -54,3 +54,5 @@ In this classic version, the 'Observable' class maintains a collection of
 through the list and calls 'update(this)'. Since the 'Observer' interface only
 knows about the base 'Observable' class, concrete observers like 'DivObserver'
 must cast the pointer back to 'Number' to retrieve the current value.
+
+**Author:** Mario Galindo Queralt, Ph.D.

@@ -1,4 +1,5 @@
 # ERROR HANDLING PATTERNS (RESULT / EITHER)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To represent the outcome of an operation that might fail by returning a single

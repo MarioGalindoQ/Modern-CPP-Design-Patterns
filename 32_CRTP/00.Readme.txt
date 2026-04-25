@@ -1,4 +1,5 @@
 # CURIOUSLY RECURRING TEMPLATE PATTERN (CRTP) - C++ IDIOM
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Curiously Recurring Template Pattern (CRTP) is a C++ idiom in which a 

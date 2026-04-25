@@ -38,3 +38,5 @@ classDiagram
    Client ..> FlyweightFactory
    Client ..> Airplane
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

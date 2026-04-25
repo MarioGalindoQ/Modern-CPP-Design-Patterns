@@ -42,3 +42,5 @@ classDiagram
    %% Dependency - No numbers
    Client ..> Equipment
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

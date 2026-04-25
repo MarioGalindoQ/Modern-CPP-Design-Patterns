@@ -35,3 +35,5 @@ interface (operator* and bool conversion) which is more intuitive for C++
 developers. This implementation represents the final evolution in the
 repository, moving from manual error management to a standardized,
 high-performance, and type-safe functional approach.
+
+**Author:** Mario Galindo Queralt, Ph.D.

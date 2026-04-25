@@ -20,3 +20,5 @@ classDiagram
    Fred --> Fred : creates
    Client ..> Fred
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

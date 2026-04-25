@@ -30,3 +30,5 @@ classDiagram
    %% The Registry Map: Singleton manages multiple instances of itself
    Singleton *-- Singleton : n instances in singletonMap
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

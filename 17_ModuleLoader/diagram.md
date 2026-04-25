@@ -51,3 +51,5 @@ DynamicLibrary) and the 'Plugin' (Module). The Client only has a compile-time
 dependency on the 'IModule' interface. The concrete 'Module' class is loaded at
 runtime from the Shared Object (.so), and its lifecycle is managed through a
 smart pointer with a custom deleter provided by the library's symbols.
+
+**Author:** Mario Galindo Queralt, Ph.D.

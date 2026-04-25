@@ -1,4 +1,5 @@
 # COMPOSITE PATTERN (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Composite pattern allows you to compose objects into tree structures to 
@@ -85,3 +86,5 @@ classDiagram
    %% Dependency - No numbers
    Client ..> Equipment
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

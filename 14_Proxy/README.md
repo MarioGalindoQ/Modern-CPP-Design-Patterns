@@ -1,4 +1,5 @@
 # PROXY PATTERN (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Proxy pattern provides a surrogate or placeholder for another object 
@@ -77,3 +78,5 @@ classDiagram
    %% Dependency - No numbers
    Client ..> ICar
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

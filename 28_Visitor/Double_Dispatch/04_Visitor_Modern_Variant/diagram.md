@@ -45,3 +45,5 @@ using 'std::visit' with multiple arguments, the system automatically handles the
 dispatch matrix. This version includes an optimization for symmetry
 (Circle-Triangle being handled the same as Triangle-Circle) and stores objects
 by value in the collection for better performance.
+
+**Author:** Mario Galindo Queralt, Ph.D.

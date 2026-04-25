@@ -54,3 +54,5 @@ This implementation leverages the Curiously Recurring Template Pattern
 method provides direct access to the concrete observable's state, improving both
 performance (by allowing inlining) and type safety (by eliminating raw pointer
 casts).
+
+**Author:** Mario Galindo Queralt, Ph.D.

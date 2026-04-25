@@ -1,4 +1,5 @@
 # MEMENTO PATTERN (BEHAVIORAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 Without violating encapsulation, capture and externalize an object's 

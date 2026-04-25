@@ -1,4 +1,5 @@
 # TEMPLATE METHOD PATTERN (BEHAVIORAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Template Method pattern defines the skeleton of an algorithm in a base 

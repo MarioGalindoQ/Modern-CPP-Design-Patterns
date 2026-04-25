@@ -1,4 +1,5 @@
 # FRAMEWORK DESIGN PATTERN
+**Author:** Mario Galindo Queralt, Ph.D.
 
 A framework design pattern refers to the architectural strategies and 
 reusable solutions used to build, structure, and maintain software 

@@ -61,3 +61,5 @@ handshake. The 'Visitor' interface must declare a 'visit' method for every
 concrete type in the Visitable hierarchy. This creates a cyclic dependency but
 provides a type-safe way to resolve both the element and the operation types at
 runtime without manual type checking.
+
+**Author:** Mario Galindo Queralt, Ph.D.

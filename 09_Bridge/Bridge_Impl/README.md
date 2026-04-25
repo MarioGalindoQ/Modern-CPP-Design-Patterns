@@ -1,4 +1,5 @@
 # BRIDGE PATTERN PIMPL IDIOM (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 This is a C++ specific implementation of the Bridge pattern, commonly 
@@ -49,3 +50,5 @@ classDiagram
    %% Client only knows about the Employee interface
    Client ..> Employee
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

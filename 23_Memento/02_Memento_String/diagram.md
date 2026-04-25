@@ -57,3 +57,5 @@ these strings in memory and providing the ability to dump them into a
 'DiskFile'. The simulation demonstrates a "Fresh Restart" where the memory is
 cleared and the state is perfectly reconstructed from the serialized data on
 disk.
+
+**Author:** Mario Galindo Queralt, Ph.D.

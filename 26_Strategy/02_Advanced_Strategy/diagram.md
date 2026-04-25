@@ -63,3 +63,5 @@ printing). By using Dependency Injection, the Client configures the Context at
 runtime. This prevents a combinatorial explosion of subclasses (e.g.,
 BubbleSortWithFreePrint, ShellSortWithWidthPrint) and demonstrates that the
 Strategy pattern scales perfectly through composition.
+
+**Author:** Mario Galindo Queralt, Ph.D.

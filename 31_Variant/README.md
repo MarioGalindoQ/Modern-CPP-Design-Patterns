@@ -1,4 +1,5 @@
 # std::variant (MODERN C++17 FEATURE)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To provide a type-safe union that can hold exactly one value from a predefined 
@@ -104,3 +105,5 @@ is no base class; memory is managed automatically on the stack or within the
 container, following Value Semantics. The 'Logger' class is used here to prove
 that constructors and destructors are called correctly during these value-based
 transitions.
+
+**Author:** Mario Galindo Queralt, Ph.D.

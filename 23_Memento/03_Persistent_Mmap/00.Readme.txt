@@ -1,4 +1,5 @@
 # MEMENTO PATTERN: PERSISTENT BINARY SNAPSHOTS (MMAP)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To implement a high-performance Memento pattern that is synchronized with 

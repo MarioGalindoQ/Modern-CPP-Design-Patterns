@@ -1,4 +1,5 @@
 # THREAD POOL / ASYNCHRONOUS PIPELINE (CONCURRENCY)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Thread Pool pattern manages a dedicated set of persistent worker threads to 

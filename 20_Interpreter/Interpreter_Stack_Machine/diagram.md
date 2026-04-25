@@ -54,3 +54,5 @@ Instruction objects (Bytecode). This bytecode is stored in a vector and then
 passed to the VirtualMachine, which executes it using an internal stack. Unlike
 the AST version, this design prioritizes execution speed and memory efficiency
 over a tree-like object structure.
+
+**Author:** Mario Galindo Queralt, Ph.D.

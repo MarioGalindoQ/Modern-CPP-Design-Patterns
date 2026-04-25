@@ -45,3 +45,5 @@ every object both the receiver and the executor of the interaction. The
 shape type. When 'intersect' is called on a base pointer, the object uses its
 own concrete identity (*this) to trigger the correct overload in the second
 object, resolving the types of both participants at runtime.
+
+**Author:** Mario Galindo Queralt, Ph.D.

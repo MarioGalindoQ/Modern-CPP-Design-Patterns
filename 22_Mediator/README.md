@@ -1,4 +1,5 @@
 # MEDIATOR PATTERN (BEHAVIORAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 Define an object that encapsulates how a set of objects interact. Mediator 
@@ -121,3 +122,5 @@ for the calculation (1/a) * (b+c) + d. Instead of Colleagues interacting with
 each other, they notify the Mediator when their values change. The Mediator then
 decides which parts of the calculation are "dirty" and need to be recomputed,
 effectively managing an internal cache of the equation's steps.
+
+**Author:** Mario Galindo Queralt, Ph.D.

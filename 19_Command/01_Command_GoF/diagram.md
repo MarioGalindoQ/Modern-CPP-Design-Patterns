@@ -76,3 +76,5 @@ In this traditional version, each 'Command' object acts as a bridge. It knows
 which 'Receiver' method to call. The 'CommandQueue' remains completely
 decoupled from the 'Receivers', as it only interacts with the 'Command'
 interface to trigger actions.
+
+**Author:** Mario Galindo Queralt, Ph.D.

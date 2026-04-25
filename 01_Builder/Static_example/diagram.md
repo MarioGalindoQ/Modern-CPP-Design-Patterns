@@ -60,3 +60,5 @@ classDiagram
 
    Client ..> Car
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

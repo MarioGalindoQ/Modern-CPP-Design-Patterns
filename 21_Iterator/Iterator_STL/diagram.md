@@ -55,3 +55,5 @@ return 'BookIterator' instances. The C++ compiler uses these methods and the
 overloaded operators (*, ++, !=) to enable the 'Range-based for loop'
 syntax. This approach follows the Zero-Overhead Principle, as all calls are
 resolved at compile-time without virtual table lookups.
+
+**Author:** Mario Galindo Queralt, Ph.D.

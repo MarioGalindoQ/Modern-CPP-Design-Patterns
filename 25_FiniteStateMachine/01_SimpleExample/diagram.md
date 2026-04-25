@@ -65,3 +65,5 @@ pointer. When a transition is needed, the concrete state class calls
 'changeState()' on the FSM, which handles the exit/entry logic. The states are
 managed by a static map, ensuring that each state class is instantiated only
 once (Singleton/Flyweight behavior).
+
+**Author:** Mario Galindo Queralt, Ph.D.

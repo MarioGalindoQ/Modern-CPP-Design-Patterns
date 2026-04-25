@@ -37,3 +37,5 @@ classDiagram
     Client ..> MeteorFactory
     Client *-- "n" Meteor
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

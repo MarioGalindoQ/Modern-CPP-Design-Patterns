@@ -24,3 +24,5 @@ classDiagram
    %% Client only knows about the Employee interface
    Client ..> Employee
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

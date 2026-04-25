@@ -52,3 +52,5 @@ classDiagram
    Client ..> Shape
    Client ..> Renderer
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

@@ -1,4 +1,5 @@
 # ITERATOR PATTERN (BEHAVIORAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To provide a way to access the elements of an aggregate object (a container) 

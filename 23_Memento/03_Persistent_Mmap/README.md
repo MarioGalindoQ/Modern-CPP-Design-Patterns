@@ -1,4 +1,5 @@
 # MEMENTO PATTERN: PERSISTENT BINARY SNAPSHOTS (MMAP)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To implement a high-performance Memento pattern that is synchronized with 
@@ -129,3 +130,5 @@ The `Caretaker` maps a `BinaryFile` directly into memory using `mmap`.
 3. **Crash Resilience**: Because the `FileHeader` (with the cursor) and the 
    `history_` are stored on disk, the system can perfectly recover its latest 
    state after a program crash, allowing for continued Undo/Redo operations.
+
+**Author:** Mario Galindo Queralt, Ph.D.

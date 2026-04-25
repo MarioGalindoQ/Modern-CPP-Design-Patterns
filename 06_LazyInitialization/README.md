@@ -1,4 +1,5 @@
 # LAZY INITIALIZATION PATTERN (CREATIONAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 Lazy Initialization is an optimization technique that delays the creation 
@@ -63,3 +64,5 @@ classDiagram
    %% Client depends on the Fruit factory
    Client ..> Fruit
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

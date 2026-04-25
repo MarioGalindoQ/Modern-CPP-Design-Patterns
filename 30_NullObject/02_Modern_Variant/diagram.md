@@ -43,3 +43,5 @@ Object. The 'LogVisitor' encapsulates the logic: it performs the logging for
 Semantics" (objects are stored on the stack/vector directly) and "Static
 Safety", as the compiler verifies that both the real and the null cases are
 handled.
+
+**Author:** Mario Galindo Queralt, Ph.D.

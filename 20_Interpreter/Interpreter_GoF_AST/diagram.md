@@ -80,3 +80,5 @@ is no bytecode or Virtual Machine; evaluation is a decentralized process
 triggered by calling 'evaluate()' on the root node, which recursively 
 calculates the result by traversing its children. This design prioritizes 
 structural clarity and extensibility over raw execution speed.
+
+**Author:** Mario Galindo Queralt, Ph.D.

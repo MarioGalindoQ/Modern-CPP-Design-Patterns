@@ -69,3 +69,5 @@ classDiagram
    %% Dependency - No numbers
    Client ..> Decorated
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

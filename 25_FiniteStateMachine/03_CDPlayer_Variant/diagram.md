@@ -87,3 +87,5 @@ state by value on the Stack. Transitions are handled via 'std::visit' and
 automatically triggers the destructor of the previous state (onExit) and the
 constructor of the new one (onEntry). This provides both memory safety and high
 execution performance.
+
+**Author:** Mario Galindo Queralt, Ph.D.

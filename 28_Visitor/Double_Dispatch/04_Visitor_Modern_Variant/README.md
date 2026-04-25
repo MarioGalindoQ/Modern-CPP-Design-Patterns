@@ -1,4 +1,5 @@
 # VISITOR PATTERN MODERN VARIANT (C++17)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Introduction
 Since the C++17 standard, the language provides a new way to handle 
@@ -104,3 +105,5 @@ using 'std::visit' with multiple arguments, the system automatically handles the
 dispatch matrix. This version includes an optimization for symmetry
 (Circle-Triangle being handled the same as Triangle-Circle) and stores objects
 by value in the collection for better performance.
+
+**Author:** Mario Galindo Queralt, Ph.D.

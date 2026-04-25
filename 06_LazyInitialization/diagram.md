@@ -21,3 +21,5 @@ classDiagram
    %% Client depends on the Fruit factory
    Client ..> Fruit
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

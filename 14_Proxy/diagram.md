@@ -33,3 +33,5 @@ classDiagram
    %% Dependency - No numbers
    Client ..> ICar
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

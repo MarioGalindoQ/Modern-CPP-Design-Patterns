@@ -1,4 +1,5 @@
 # MIXIN PATTERN (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Mixin pattern is a design strategy used to add specific behaviors to 

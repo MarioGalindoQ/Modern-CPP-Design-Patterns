@@ -77,3 +77,5 @@ state exists in memory (Flyweight). The FSM maintains a pointer to the current
 state and delegates all external events (buttons, sensors) to it. Transitions
 are performed by the states themselves calling 'changeState' back on the FSM
 context.
+
+**Author:** Mario Galindo Queralt, Ph.D.

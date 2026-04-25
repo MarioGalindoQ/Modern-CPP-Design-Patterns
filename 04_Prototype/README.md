@@ -1,4 +1,5 @@
 # PROTOTYPE PATTERN (CREATIONAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To specify the kinds of objects to create using a prototypical instance, 
@@ -69,3 +70,5 @@ classDiagram
     %% Client depends on the abstraction
     Client ..> Base
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

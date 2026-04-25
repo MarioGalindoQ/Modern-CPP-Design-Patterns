@@ -72,3 +72,5 @@ observers interested in a particular change (e.g., notifying 'Color' subscribers
 without disturbing 'Value' subscribers).
 The 'ValueColorObserver' demonstrates how a single class can satisfy multiple
 'Observer' interfaces to listen to different events simultaneously.
+
+**Author:** Mario Galindo Queralt, Ph.D.

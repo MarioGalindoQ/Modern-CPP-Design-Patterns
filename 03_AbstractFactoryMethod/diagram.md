@@ -50,3 +50,5 @@ classDiagram
     Client *-- Player
     Client *-- "n" Hazard
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

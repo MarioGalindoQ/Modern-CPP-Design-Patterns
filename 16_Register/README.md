@@ -1,4 +1,5 @@
 # REGISTRY PATTERN (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To centralize the creation, management, and lookup of shared objects or 
@@ -151,3 +152,5 @@ This diagram highlights the decoupled nature of the Registry. The 'Client' has
 no direct link to 'GrayscaleProcessor' or 'BlurProcessor'. The 'Register' helper
 facilitates a "push" registration during static initialization, populating the
 Registry's internal map before the 'main' function starts.
+
+**Author:** Mario Galindo Queralt, Ph.D.

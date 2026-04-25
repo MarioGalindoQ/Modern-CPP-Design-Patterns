@@ -67,3 +67,5 @@ are the only ones capable of seeing inside their respective Mementos ('MementoA'
 and 'MementoB'). The 'Caretaker' treats all mementos as opaque 'Memento' base
 pointers, fulfilling its role as a safekeeper without violating the internal
 state of the components.
+
+**Author:** Mario Galindo Queralt, Ph.D.

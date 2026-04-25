@@ -1,4 +1,5 @@
 # NAMED CONSTRUCTOR IDIOM (CREATIONAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To provide more intuitive and descriptive ways to create objects, overcoming 

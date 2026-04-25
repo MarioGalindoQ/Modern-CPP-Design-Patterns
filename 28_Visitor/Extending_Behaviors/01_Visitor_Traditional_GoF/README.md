@@ -1,4 +1,5 @@
 # VISITOR PATTERN TRADITIONAL GOF
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 This implementation follows the classic Gang of Four (GoF) approach to the 
@@ -117,3 +118,5 @@ Hyperlink) is considered stable. The power of the GoF Visitor lies in its
 ability to add completely new operations, like 'HtmlExport' or 'TextExtract',
 without changing the code of the data elements. The 'accept' method provides the
 entry point for the visitor to perform its specific logic on each concrete type.
+
+**Author:** Mario Galindo Queralt, Ph.D.

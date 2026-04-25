@@ -70,3 +70,5 @@ correct class can inherit from its specialized template.
 runtime "Cross-Cast" (dynamic_cast) from the 'Shape' branch to the 'ICloneable'
 branch. If an object (like Triangle) does not inherit from the Mixin, the system
 detects it and throws an exception, preserving architectural integrity.
+
+**Author:** Mario Galindo Queralt, Ph.D.

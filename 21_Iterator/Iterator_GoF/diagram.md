@@ -66,3 +66,5 @@ This diagram illustrates the classic decoupled approach. The 'BookCollection'
 while the 'BookIterator' manages the traversal state. By providing a 'clone()'
 method, we allow multiple independent iterators to exist and duplicate their
 positions efficiently, as shown in the author's search simulation.
+
+**Author:** Mario Galindo Queralt, Ph.D.

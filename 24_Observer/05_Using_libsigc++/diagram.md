@@ -75,3 +75,5 @@ crashes.
 involving the subject directly.
 3. Clean Handshake: The use of 'sigc::mem_fun' binds the concrete observer's
 method to the signal, maintaining full type safety across the board.
+
+**Author:** Mario Galindo Queralt, Ph.D.

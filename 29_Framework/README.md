@@ -1,4 +1,5 @@
 # FRAMEWORK DESIGN PATTERN
+**Author:** Mario Galindo Queralt, Ph.D.
 
 A framework design pattern refers to the architectural strategies and 
 reusable solutions used to build, structure, and maintain software 
@@ -116,3 +117,5 @@ loop. It is responsible for creating exactly one instance of an 'App' and
 calling its methods in the predefined sequence. Concrete applications like 'up'
 and 'wc' simply plug into this skeleton by inheriting from 'App', providing
 their specific logic without ever controlling the main loop themselves.
+
+**Author:** Mario Galindo Queralt, Ph.D.

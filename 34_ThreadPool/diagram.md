@@ -87,3 +87,5 @@ orchestrates the lifecycle by creating 'Producer' threads to feed the pool and
 'Reporter' threads to drain the results. The 'SafeQueue' acts as the
 synchronized bridge between all participants, ensuring thread-safety and
 providing backpressure when limits are reached.
+
+**Author:** Mario Galindo Queralt, Ph.D.

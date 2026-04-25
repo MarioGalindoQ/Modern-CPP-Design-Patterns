@@ -1,4 +1,5 @@
 # FACADE PATTERN (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Facade pattern provides a simplified interface to a complex subsystem. 
@@ -87,3 +88,5 @@ classDiagram
    %% The Client only interacts with the simple interface
    Client ..> ComputerFacade
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

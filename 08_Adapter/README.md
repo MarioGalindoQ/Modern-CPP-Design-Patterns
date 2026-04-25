@@ -1,4 +1,5 @@
 # ADAPTER PATTERN (STRUCTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 The Adapter pattern (also known as a "Wrapper") is a structural design 
@@ -65,12 +66,14 @@ classDiagram
       +render(ModernRectangle)
    }
 
-   %% Inheritance (Is_a) - No numbers
-   ModernRectangle <|-- RectangleAdapter
+   %% Inheritance (Implements)
+   ModernRectangle <|.. RectangleAdapter
 
    %% Composition (Has_a)
    RectangleAdapter *-- LegacyRectangle
 
-   %% Dependency - No numbers
+   %% Dependency
    Client ..> ModernRectangle
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

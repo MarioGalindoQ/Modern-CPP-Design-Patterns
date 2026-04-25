@@ -1,4 +1,5 @@
 # VISITOR PATTERN ACYCLIC VARIATION (RTTI)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 Run-Time Type Information (RTTI) is a C++ mechanism that allows a program to
 determine the type of an object during program execution. It is particularly
@@ -130,3 +131,5 @@ elements. The base 'Visitor' is now empty, and concrete visitors only inherit
 from the 'Visit<T>' interfaces they actually need to implement. This allows
 adding new 'Visitable' classes without recompiling the entire visitor hierarchy,
 solving the main drawback of the classic GoF pattern.
+
+**Author:** Mario Galindo Queralt, Ph.D.

@@ -27,3 +27,5 @@ classDiagram
     %% Client depends on the abstraction
     Client ..> Base
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

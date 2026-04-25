@@ -46,3 +46,5 @@ inherits from its template parameters ('SortAlgo' and 'PrintAlgo'). There is no
 a single, flat structure in memory. This allows the compiler to perform
 aggressive inlining, achieving Zero-Overhead polymorphism. The specific behavior
 is "baked into" the type itself during compilation.
+
+**Author:** Mario Galindo Queralt, Ph.D.

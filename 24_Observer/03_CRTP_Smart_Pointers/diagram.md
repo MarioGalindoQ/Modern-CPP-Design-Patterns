@@ -51,3 +51,5 @@ circular dependencies (leaks) and ensures that if an observer is destroyed by
 the Client, the Observable won't attempt to access invalid memory. During
 'notify()', each pointer is temporarily locked to verify the observer's
 existence before calling 'update()'.
+
+**Author:** Mario Galindo Queralt, Ph.D.

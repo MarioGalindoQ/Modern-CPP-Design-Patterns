@@ -29,3 +29,5 @@ classDiagram
    %% Dependency
    Client ..> ModernRectangle
 ```
+
+**Author:** Mario Galindo Queralt, Ph.D.

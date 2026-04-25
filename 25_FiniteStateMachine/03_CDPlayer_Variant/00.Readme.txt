@@ -1,4 +1,5 @@
 # FSM: MODERN VARIANT (C++17/23)
+**Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 Implement a Finite State Machine using `std::variant` and 

@@ -44,3 +44,5 @@ is no base class; memory is managed automatically on the stack or within the
 container, following Value Semantics. The 'Logger' class is used here to prove
 that constructors and destructors are called correctly during these value-based
 transitions.
+
+**Author:** Mario Galindo Queralt, Ph.D.

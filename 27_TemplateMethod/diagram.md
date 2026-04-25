@@ -41,3 +41,5 @@ printing logic) are defined as private virtual placeholders that the base class
 calls. This follows the Hollywood Principle: "Don't call us, we will call
 you". Subclasses provide the implementation details, but the base class
 maintains control over the execution order.
+
+**Author:** Mario Galindo Queralt, Ph.D.
