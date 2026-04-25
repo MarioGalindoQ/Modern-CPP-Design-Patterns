@@ -75,6 +75,7 @@ This repository is provided as an open educational resource under the following 
 * **Mandatory Attribution:** If you redistribute, publish, or use this code in
     any public project, course, or publication, you **must** provide a clear
     reference and a link back to this original repository:
+
   [https://github.com/MarioGalindoQ/Modern-CPP-Design-Patterns](https://github.com/MarioGalindoQ/Modern-CPP-Design-Patterns)
 
 **Author:** Mario Galindo Queralt, Ph.D.
