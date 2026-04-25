@@ -68,12 +68,14 @@ c++ -std=c++23 -O3 -Wfatal-errors -Wall -Wextra -Wpedantic program.cpp -o progra
 For detailed instructions, refer to '003_How_to_compile.txt' file.
 
 ## --- License & Usage ---
-This repository is provided as an open educational resource.
+This repository is provided as an open educational resource under the following terms:
+
 * **Free Use:** You are free to use, copy, modify, and distribute these examples
-      for personal, educational, or commercial purposes.
-* **Attribution:** If you find this material useful or use it in your own
-      projects/courses, I would greatly appreciate a mention or a link back to
-      this repository.
+    for personal, educational, or commercial purposes.
+* **Mandatory Attribution:** If you redistribute, publish, or use this code in
+    any public project, course, or publication, you **must** provide a clear
+    reference and a link back to this original repository:
+  [https://github.com/MarioGalindoQ/Modern-CPP-Design-Patterns](https://github.com/MarioGalindoQ/Modern-CPP-Design-Patterns)
 
 **Author:** Mario Galindo Queralt, Ph.D.
 
