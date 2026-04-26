@@ -58,6 +58,14 @@ structures (Bridge, Decorator, Proxy, Mixins).
 4.  **Behavioral Patterns:** Handling communication between objects and
 algorithmic distribution (Command, Interpreter, Observer, Visitor).
 
+## --- Execution Traceability ---
+To provide immediate verification and aid in understanding the program flow, 
+every pattern directory includes an 'output.txt' file. This file contains 
+the exact terminal output from a successful execution. It is particularly 
+useful for tracing the memory management logs (The "Rule of Seven") and 
+verifying that your local compilation results match the author's 
+intended behavior.
+
 ## --- How to Compile ---
 Each example is self-contained. To ensure the best performance and standard
 compliance, it is recommended to compile using **C++20** or higher.
