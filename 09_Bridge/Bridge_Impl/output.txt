@@ -1,0 +1,25 @@
+1 DC: Employee():
+1 DC: Default constructor
+
+7 PC: Employee(std::string name, std::string id):
+7 PC: Particular constructor
+
+2 CC: Employee(Employee const& other):
+2 CC: Copy constructor
+
+3 MC: Employee(Employee&& other):
+3 MC: Move constructor
+
+4 CA: operator=(Employee const& other):
+4 CA: Copy assignment
+
+5 MA: operator=(Employee&& other):
+5 MA: Move assignment
+
+Print:
+e1: Jimmy
+e2: Jimmy
+e3: Jimmy
+e4: No name
+
+------ END:

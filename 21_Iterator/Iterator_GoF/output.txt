@@ -1,0 +1,23 @@
+=== ITERATOR PATTERN (CLASSIC GOF) ===
+
+--- bookCollection Inventory ---
+ - The C++ Programming Language (by Bjarne Stroustrup)
+ - Design Patterns (by Gang of Four)
+ - Clean Code (by Robert C. Martin)
+ - The Pragmatic Programmer (by Robert C. Martin)
+ - Effective C++ (by Scott Meyers)
+ - Clean Agile: Back to Basics (by Robert C. Martin)
+ - Effective Modern C++ (by Scott Meyers)
+
+--- Finding multiple books by the same author ---
+Several books found by Robert C. Martin:
+ - Clean Code
+ - The Pragmatic Programmer
+ - Clean Agile: Back to Basics
+
+Several books found by Scott Meyers:
+ - Effective C++
+ - Effective Modern C++
+
+
+=== SIMULATION COMPLETED ===

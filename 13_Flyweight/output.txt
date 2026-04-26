@@ -1,0 +1,121 @@
+=== FLYWEIGHT PATTERN (MASSIVE SCALING SIMULATION) ===
+
+ [Factory] Creating 100 airplanes...
+ [Factory] Creating new model type: 220
+ [Factory] Creating new model type: 380
+ [Factory] Creating new model type: 787
+ [Factory] Creating new model type: 747
+ [Factory] Total fleet created.
+ Fleet size: 100
+
+ First airplane details:
+  Name: Airbus 220, Capacity: 150 passengers, Speed: 450 knots, Deploy date: Sep 2013, Serial No: 1
+
+ Last airplane details:
+  Name: Airbus 380, Capacity: 545 passengers, Speed: 510 knots, Deploy date: Apr 2005, Serial No: 100
+
+=== SIMULATION COMPLETED ===
+ [~Airplane] Airplane 1 model Airbus 220 destroyed.
+ [~Airplane] Airplane 2 model Airbus 220 destroyed.
+ [~Airplane] Airplane 3 model Airbus 220 destroyed.
+ [~Airplane] Airplane 4 model Airbus 380 destroyed.
+ [~Airplane] Airplane 5 model Boeing 787 destroyed.
+ [~Airplane] Airplane 6 model Boeing 747 destroyed.
+ [~Airplane] Airplane 7 model Airbus 380 destroyed.
+ [~Airplane] Airplane 8 model Boeing 747 destroyed.
+ [~Airplane] Airplane 9 model Airbus 380 destroyed.
+ [~Airplane] Airplane 10 model Airbus 380 destroyed.
+ [~Airplane] Airplane 11 model Airbus 220 destroyed.
+ [~Airplane] Airplane 12 model Airbus 380 destroyed.
+ [~Airplane] Airplane 13 model Airbus 380 destroyed.
+ [~Airplane] Airplane 14 model Airbus 380 destroyed.
+ [~Airplane] Airplane 15 model Boeing 747 destroyed.
+ [~Airplane] Airplane 16 model Airbus 220 destroyed.
+ [~Airplane] Airplane 17 model Boeing 747 destroyed.
+ [~Airplane] Airplane 18 model Airbus 380 destroyed.
+ [~Airplane] Airplane 19 model Airbus 380 destroyed.
+ [~Airplane] Airplane 20 model Boeing 747 destroyed.
+ [~Airplane] Airplane 21 model Airbus 380 destroyed.
+ [~Airplane] Airplane 22 model Airbus 220 destroyed.
+ [~Airplane] Airplane 23 model Airbus 220 destroyed.
+ [~Airplane] Airplane 24 model Airbus 220 destroyed.
+ [~Airplane] Airplane 25 model Boeing 787 destroyed.
+ [~Airplane] Airplane 26 model Boeing 787 destroyed.
+ [~Airplane] Airplane 27 model Airbus 380 destroyed.
+ [~Airplane] Airplane 28 model Boeing 747 destroyed.
+ [~Airplane] Airplane 29 model Boeing 747 destroyed.
+ [~Airplane] Airplane 30 model Boeing 787 destroyed.
+ [~Airplane] Airplane 31 model Boeing 787 destroyed.
+ [~Airplane] Airplane 32 model Boeing 747 destroyed.
+ [~Airplane] Airplane 33 model Airbus 220 destroyed.
+ [~Airplane] Airplane 34 model Boeing 747 destroyed.
+ [~Airplane] Airplane 35 model Airbus 380 destroyed.
+ [~Airplane] Airplane 36 model Boeing 787 destroyed.
+ [~Airplane] Airplane 37 model Boeing 747 destroyed.
+ [~Airplane] Airplane 38 model Boeing 787 destroyed.
+ [~Airplane] Airplane 39 model Airbus 380 destroyed.
+ [~Airplane] Airplane 40 model Airbus 220 destroyed.
+ [~Airplane] Airplane 41 model Boeing 747 destroyed.
+ [~Airplane] Airplane 42 model Airbus 220 destroyed.
+ [~Airplane] Airplane 43 model Boeing 747 destroyed.
+ [~Airplane] Airplane 44 model Airbus 380 destroyed.
+ [~Airplane] Airplane 45 model Airbus 220 destroyed.
+ [~Airplane] Airplane 46 model Boeing 747 destroyed.
+ [~Airplane] Airplane 47 model Boeing 787 destroyed.
+ [~Airplane] Airplane 48 model Boeing 747 destroyed.
+ [~Airplane] Airplane 49 model Airbus 380 destroyed.
+ [~Airplane] Airplane 50 model Boeing 787 destroyed.
+ [~Airplane] Airplane 51 model Airbus 220 destroyed.
+ [~Airplane] Airplane 52 model Boeing 747 destroyed.
+ [~Airplane] Airplane 53 model Boeing 747 destroyed.
+ [~Airplane] Airplane 54 model Airbus 380 destroyed.
+ [~Airplane] Airplane 55 model Boeing 787 destroyed.
+ [~Airplane] Airplane 56 model Boeing 787 destroyed.
+ [~Airplane] Airplane 57 model Airbus 220 destroyed.
+ [~Airplane] Airplane 58 model Airbus 220 destroyed.
+ [~Airplane] Airplane 59 model Airbus 380 destroyed.
+ [~Airplane] Airplane 60 model Boeing 787 destroyed.
+ [~Airplane] Airplane 61 model Airbus 220 destroyed.
+ [~Airplane] Airplane 62 model Airbus 220 destroyed.
+ [~Airplane] Airplane 63 model Boeing 787 destroyed.
+ [~Airplane] Airplane 64 model Airbus 220 destroyed.
+ [~Airplane] Airplane 65 model Airbus 380 destroyed.
+ [~Airplane] Airplane 66 model Boeing 787 destroyed.
+ [~Airplane] Airplane 67 model Boeing 747 destroyed.
+ [~Airplane] Airplane 68 model Boeing 787 destroyed.
+ [~Airplane] Airplane 69 model Airbus 380 destroyed.
+ [~Airplane] Airplane 70 model Airbus 380 destroyed.
+ [~Airplane] Airplane 71 model Boeing 787 destroyed.
+ [~Airplane] Airplane 72 model Airbus 380 destroyed.
+ [~Airplane] Airplane 73 model Airbus 220 destroyed.
+ [~Airplane] Airplane 74 model Boeing 747 destroyed.
+ [~Airplane] Airplane 75 model Airbus 220 destroyed.
+ [~Airplane] Airplane 76 model Boeing 747 destroyed.
+ [~Airplane] Airplane 77 model Airbus 380 destroyed.
+ [~Airplane] Airplane 78 model Airbus 380 destroyed.
+ [~Airplane] Airplane 79 model Boeing 787 destroyed.
+ [~Airplane] Airplane 80 model Boeing 787 destroyed.
+ [~Airplane] Airplane 81 model Boeing 787 destroyed.
+ [~Airplane] Airplane 82 model Airbus 380 destroyed.
+ [~Airplane] Airplane 83 model Airbus 380 destroyed.
+ [~Airplane] Airplane 84 model Boeing 787 destroyed.
+ [~Airplane] Airplane 85 model Airbus 220 destroyed.
+ [~Airplane] Airplane 86 model Boeing 787 destroyed.
+ [~Airplane] Airplane 87 model Airbus 380 destroyed.
+ [~Airplane] Airplane 88 model Airbus 380 destroyed.
+ [~Airplane] Airplane 89 model Boeing 787 destroyed.
+ [~Airplane] Airplane 90 model Boeing 747 destroyed.
+ [~Airplane] Airplane 91 model Boeing 747 destroyed.
+ [~Airplane] Airplane 92 model Airbus 380 destroyed.
+ [~Airplane] Airplane 93 model Boeing 787 destroyed.
+ [~Airplane] Airplane 94 model Boeing 747 destroyed.
+ [~Airplane] Airplane 95 model Boeing 747 destroyed.
+ [~Airplane] Airplane 96 model Boeing 787 destroyed.
+ [~Airplane] Airplane 97 model Airbus 220 destroyed.
+ [~Airplane] Airplane 98 model Airbus 220 destroyed.
+ [~Airplane] Airplane 99 model Boeing 787 destroyed.
+ [~Airplane] Airplane 100 model Airbus 380 destroyed.
+ [~Model] Model 'Boeing 747' destroyed.
+ [~Model] Model 'Boeing 787' destroyed.
+ [~Model] Model 'Airbus 380' destroyed.
+ [~Model] Model 'Airbus 220' destroyed.

@@ -1,0 +1,8 @@
+=== DOUBLE DISPATCH (VISITABLE_VISITOR SIMULATION) ===
+
+ [Verification] Checking intersection: Triangle <-> Triangle
+ [Verification] Checking intersection: Circle <-> Triangle
+ [Verification] Checking intersection: Triangle <-> Circle
+ [Verification] Checking intersection: Circle <-> Circle
+
+=== SIMULATION COMPLETED ===

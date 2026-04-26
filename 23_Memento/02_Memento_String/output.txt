@@ -1,0 +1,52 @@
+=== MEMENTO PATTERN (STRING SERIALIZATION) ===
+
+--- PHASE 1: DOING ACTIONS AND SAVING ---
+ [Action] Component A (string) set to "1st value"
+          ... Memento (string) saved to Caretaker.
+ [Action] Component B (integer) set to 1
+          ... Memento (string) saved to Caretaker.
+ [Action] Component A (string) set to "2nd value"
+          ... Memento (string) saved to Caretaker.
+ [Action] Component B (integer) set to 2
+          ... Memento (string) saved to Caretaker.
+ [Action] Component A (string) set to "3rd value"
+          ... Memento (string) saved to Caretaker.
+ [Action] Component B (integer) set to 3
+          ... Memento (string) saved to Caretaker.
+
+--- CURRENT STATE AFTER ALL ACTIONS ---
+ Current A (string): "3rd value"
+ Current B (integer): 3
+
+--- SAVING CURRENT STATE TO FILE ---
+ [System] Stack saved to file: memento_stack_data.txt
+
+--- PHASE 2: SIMULATING A FRESH RESTART ---
+ [System] Clearing memory by reinstantiating a new caretaker...
+
+--- RESTORING FROM DISK ---
+          ... Memento (string) saved to Caretaker.
+          ... Memento (string) saved to Caretaker.
+          ... Memento (string) saved to Caretaker.
+          ... Memento (string) saved to Caretaker.
+          ... Memento (string) saved to Caretaker.
+          ... Memento (string) saved to Caretaker.
+
+--- PERFORMING UNDOES ---
+ [Undo] Restoring Component B (integer)...
+    -> Component B (integer) changed from 3 to 2
+
+ [Undo] Restoring Component A (string)...
+    -> Component A (string) changed from "3rd value" to "2nd value"
+
+ [Undo] Restoring Component B (integer)...
+    -> Component B (integer) changed from 2 to 1
+
+ [Undo] Restoring Component A (string)...
+    -> Component A (string) changed from "2nd value" to "1st value"
+
+--- CURRENT STATE AFTER ALL UNDOES ---
+ Current A (string): "1st value"
+ Current B (integer): 1
+
+=== SIMULATION COMPLETED ===

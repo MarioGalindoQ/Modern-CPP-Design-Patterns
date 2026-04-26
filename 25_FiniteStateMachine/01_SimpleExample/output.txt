@@ -1,0 +1,35 @@
+=== FINITE STATE MACHINE (SIMPLE EXAMPLE) ===
+
+fsm1: State_A::onEntry, i=1
+fsm1: State_A, event_change, i=2
+fsm1: State_A::onExit, i=3
+
+fsm1: Transition_AtoB, i=4
+
+fsm1: State_B::onEntry, i=5
+
+fsm2: State_A::onEntry, i=1
+fsm2: State_A, event_stay, i=2
+fsm2: State_A, event_only_A, i=3
+fsm2: State_A, event_change, i=4
+fsm2: State_A::onExit, i=5
+
+fsm2: Transition_AtoB, i=6
+
+fsm2: State_B::onEntry, i=7
+fsm2: State_B, event_stay, i=8
+>>> Event_only_A out of order
+fsm2: State_B, event_change, i=9
+fsm2: State_B::onExit, i=10
+
+fsm2: Transition_BtoA, i=11
+
+fsm2: State_A::onEntry, i=12
+fsm2: State_A, event_stay, i=13
+fsm2: State_A, event_only_A, i=14
+
+=== SIMULATION COMPLETED ===
+fsm2: State_A::onExit, i=15
+
+fsm1: State_B::onExit, i=6
+

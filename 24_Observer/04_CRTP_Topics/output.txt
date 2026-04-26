@@ -1,0 +1,25 @@
+=== OBSERVER PATTERN (WITH TOPICS) ===
+
+--- Initial state changes for numberObservable_1:
+Setting Value to 14 (Triggers ValueColorObserver and ValueObserver):
+  [ValueObserver] Value changed to 14
+  [ValueColorObserver] Value changed to 14
+
+Setting Color to 'A' (Triggers ValueColorObserver and ColorObserver):
+  [ColorObserver] Color changed to A
+  [ValueColorObserver] Color changed to A
+
+--- Detaching observer_1 from both topics on numberObservable_1...
+--- Attaching observer_1 to numberObservable_2...
+
+Setting Value to 18 on numberObservable_1 (Should only trigger ValueObserver):
+  [ValueObserver] Value changed to 18
+
+Setting Color to 'B' on numberObservable_1 (Should only trigger ColorObserver):
+  [ColorObserver] Color changed to B
+
+Setting Value to 15 and Color to 'C' on numberObservable_2 (Triggers ValueColorObserver):
+  [ValueColorObserver] Value changed to 15
+  [ValueColorObserver] Color changed to C
+
+=== SIMULATION COMPLETED ===

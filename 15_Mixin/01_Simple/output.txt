@@ -1,0 +1,29 @@
+=== MIXIN PATTERN SIMULATION (HORIZONTAL COMPOSITION) ===
+
+Dragon:
+	Flying
+	Laser fire intensity 4
+	Flying
+	No fuel to fly
+	Loading fuel 1
+	Flying
+	No fuel to fly
+	Laser fire intensity 3
+
+Elephant:
+	Walk speed 3
+	Gun fire
+	Gun fire
+	Gun no more bullets
+
+Airplane:
+	Flying
+	Laser fire intensity 3
+	Gun fire
+	Gun fire
+	Flying
+	Laser fire intensity 2
+	Gun no more bullets
+	No fuel to fly
+
+=== SIMULATION COMPLETED ===

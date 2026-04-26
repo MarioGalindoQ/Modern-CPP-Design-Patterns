@@ -1,0 +1,14 @@
+./calc -p "sin(0.3) + (5 * 2.1)" > output.txt
+
+=== INTERPRETER PATTERN (STACK MACHINE) ===
+
+--- Bytecode Program ---
+  PUSH 0.3
+  SIN
+  PUSH 5
+  PUSH 2.1
+  MUL
+  ADD
+------------------------
+
+Result: 10.7955

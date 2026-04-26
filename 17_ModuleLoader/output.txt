@@ -1,0 +1,20 @@
+=== DYNAMIC MODULE LOADER ===
+
+ [Host] Loading shared library: ./libModule.so...
+ [Host] Resolving symbols (build_module, destroy_module)...
+ [Host] Requesting new module instance...
+    -> [Plugin] build_module called.
+    -> [Plugin] Module 'MathProcessor_v1' initialized.
+    -> [Plugin] with factor = 2
+
+ [Host] Executing module operation with data: 42...
+    -> [Plugin] Processing data: 42
+    -> [Plugin] Returning calculated value: 84
+ [Host] Module returned value: 84
+
+ [Host] Destroying module instance...
+    -> [Plugin] destroy_module called.
+    -> [Plugin] Module 'MathProcessor_v1' destroyed.
+ [Host] Unloading shared library...
+
+=== EXECUTION COMPLETED ===

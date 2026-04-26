@@ -1,0 +1,103 @@
+=== CD PLAYER (VARIANT STATE MACHINE) ===
+
+    Current state = Closed_without_CD
+
+open:
+    CD Player: Opening tray.
+    Current state = Open_without_CD
+
+insert_CD:
+    CD Player: A CD has been inserted.
+    Current state = Open_with_CD
+
+close:
+    CD Player: Closing tray.
+    CD Player: Reading CD directory with 3 songs.
+    CD Player: Turning ON yellow light.
+    Current state = Closed_with_CD
+
+play:
+    CD Player: Turning OFF yellow light.
+    CD Player: Resetting to play first song.
+    CD Player: Turning ON green light.
+    CD Player: Playing song number 1
+    Current state = Playing
+
+next_song:
+    CD Player: Playing song number 2
+
+next_song:
+    CD Player: Playing song number 3
+
+play:
+    CD Player: Stop playing.
+    CD Player: Turning OFF green light.
+    CD Player: Resetting to play first song.
+    CD Player: Turning ON green light.
+    CD Player: Playing song number 1
+    Current state = Playing
+
+previous_song:
+    CD Player: Playing song number 3
+
+pause:
+    CD Player: Stop playing.
+    CD Player: Turning OFF green light.
+    CD Player: Turning ON cian light.
+    Current state = Paused
+
+play:
+    CD Player: Turning OFF cian light.
+    CD Player: Turning ON green light.
+    CD Player: Playing song number 3
+    Current state = Playing
+
+next_song:
+    CD Player: Playing song number 1
+
+stop:
+    CD Player: Stop playing.
+    CD Player: Turning OFF green light.
+    CD Player: Turning ON yellow light.
+    Current state = Closed_with_CD
+
+stop:
+
+open:
+    CD Player: Turning OFF yellow light.
+    CD Player: Opening tray.
+    Current state = Open_with_CD
+
+open:
+
+play:
+    CD Player: Closing tray.
+    CD Player: Reading CD directory with 3 songs.
+    CD Player: Turning ON green light.
+    CD Player: Playing song number 1
+    Current state = Playing
+
+play:
+    CD Player: Stop playing.
+    CD Player: Turning OFF green light.
+    CD Player: Resetting to play first song.
+    CD Player: Turning ON green light.
+    CD Player: Playing song number 1
+    Current state = Playing
+
+open:
+    CD Player: Stop playing.
+    CD Player: Turning OFF green light.
+    CD Player: Opening tray.
+    Current state = Open_with_CD
+
+remove_CD:
+    CD Player: A CD has been removed.
+    Current state = Open_without_CD
+
+close:
+    CD Player: Closing tray.
+    Current state = Closed_without_CD
+
+insert_CD:
+>>> The CD player has been destroyed inserting a CD by force!

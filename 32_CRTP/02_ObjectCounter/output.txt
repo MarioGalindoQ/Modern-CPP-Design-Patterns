@@ -1,0 +1,19 @@
+=== CRTP: OBJECT COUNTER SIMULATION ===
+
+--- Initial state ---
+ Dragons created: 0, alive: 0
+ Elephants created: 0, alive: 0
+
+Creating 2 Dragons and 1 Elephant...
+ Dragons created: 2, alive: 2
+ Elephants created: 1, alive: 1
+
+Destroying 1 Dragon...
+ Dragons created: 2, alive: 1
+ Elephants created: 1, alive: 1
+
+=== FINAL TOTALS ===
+ Dragons created: 2, alive: 0
+ Elephants created: 1, alive: 0
+
+=== SIMULATION COMPLETED ===

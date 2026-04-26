@@ -1,0 +1,7 @@
+=== VISITOR PATTERN (RTTI / ACYCLIC VERSION) ===
+
+ -> Exclusive RED + TRIANGLE function
+ -> Exclusive RED + CIRCLE function
+ -> Exclusive BLUE + TRIANGLE function
+
+=== SIMULATION COMPLETED ===

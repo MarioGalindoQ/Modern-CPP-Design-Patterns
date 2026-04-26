@@ -1,0 +1,28 @@
+=== CHAIN OF RESPONSIBILITY (CHAINBUILDER) ===
+
+Testing request 3:
+ [Handler_1] Handler-3 handled request: 3
+
+Testing request 5:
+ [Handler_1] Handler-3 passing request 5 forward.
+ [Handler_2] Handler-5 handled request: 5
+
+Testing request 4:
+ [Handler_1] Handler-3 passing request 4 forward.
+ [Handler_2] Handler-5 passing request 4 forward.
+ [Handler_2] Handler-8 passing request 4 forward.
+ [Handler_1] Handler-11 passing request 4 forward.
+ [System] Request 4 reached the end of the chain unhandled.
+
+Testing request 8:
+ [Handler_1] Handler-3 passing request 8 forward.
+ [Handler_2] Handler-5 passing request 8 forward.
+ [Handler_2] Handler-8 handled request: 8
+
+Testing request 11:
+ [Handler_1] Handler-3 passing request 11 forward.
+ [Handler_2] Handler-5 passing request 11 forward.
+ [Handler_2] Handler-8 passing request 11 forward.
+ [Handler_1] Handler-11 handled request: 11
+
+=== SIMULATION COMPLETED ===

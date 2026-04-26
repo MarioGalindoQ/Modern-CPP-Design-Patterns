@@ -1,0 +1,11 @@
+=== STRATEGY PATTERN (ADVANCED COMPOSITION) ===
+
+Testing Bubble + FreePrint:
+ [Strategy] Applying Bubble Sort
+6 8 10 11 12 14 21 26 30 
+
+Testing Shell + WidthPrint:
+ [Strategy] Applying Shell Sort
+06 08 10 11 12 14 21 26 30 
+
+=== SIMULATION COMPLETED ===

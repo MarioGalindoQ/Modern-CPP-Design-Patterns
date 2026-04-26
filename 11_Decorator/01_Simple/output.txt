@@ -1,0 +1,12 @@
+=== COFFEE SHOP (SIMPLE DECORATOR) ===
+
+ Order: Coffee, Cost: $2
+ Order: Coffee with Milk, Cost: $2.5
+ Order: Coffee with Milk and Sugar, Cost: $2.7
+ Order: Coffee with Milk, Sugar and Vanilla, Cost: $3.4
+
+--- Closing the shop. Cleaning up orders... ---
+ [Cleanup] Ingredient wrapper destroyed.
+ [Cleanup] Ingredient wrapper destroyed.
+ [Cleanup] Ingredient wrapper destroyed.
+ [Cleanup] Coffee base object destroyed.

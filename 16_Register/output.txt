@@ -1,0 +1,17 @@
+ [Registry] Registered: Blur
+ [Registry] Registered: Grayscale
+=== REGISTRY PATTERN SIMULATION ===
+
+Original: I am an image
+
+Result: I am an image grayscaled
+Result: I am an image grayscaled blured
+
+--- Verifying Instance Policy ---
+ Pointer 1 (p1): 0x557e4ef28360
+ Pointer 2 (p3): 0x557e4ef28360
+ Policy: Singleton (Instance shared) - Defined in Register.h
+
+Attempting to get an unknown processor:
+
+=== SIMULATION COMPLETED ===

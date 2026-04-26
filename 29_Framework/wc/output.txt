@@ -1,0 +1,1 @@
+lines=5 words=20 chars=110

@@ -1,0 +1,11 @@
+ [System] Singleton_A registered.
+ [System] Singleton_B registered.
+=== SINGLETON WITH AUTO-REGISTER ===
+
+ -> Running Singleton_A::method_1
+ -> Running Singleton_B::method_2
+ [Error] Singleton_C not found in registry.
+
+=== END OF MAIN ===
+ [System] Singleton_B destroyed.
+ [System] Singleton_A destroyed.

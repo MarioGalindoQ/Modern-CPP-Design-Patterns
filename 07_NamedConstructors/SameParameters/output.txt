@@ -1,0 +1,9 @@
+=== NAMED CONSTRUCTORS (SAME PARAMETERS) ===
+
+ [System] A rectangular coordinate has been created.
+  -> Point(x: 5.7, y: 1.2)
+
+ [System] A polar coordinate has been created.
+  -> Point(x: 2.06544, y: 5.31262)
+
+=== SIMULATION COMPLETED ===

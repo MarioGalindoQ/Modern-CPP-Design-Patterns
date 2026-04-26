@@ -283,7 +283,7 @@ private:
 public:
    void printProgram(const std::vector<Instruction>& program) const
    {
-      std::cout << "\n--- Bytecode Program ---\n";
+      std::cout << "--- Bytecode Program ---\n";
       for(const auto& inst : program)
       {
          std::cout << "  " << opcodeToString(inst.code);
@@ -364,7 +364,7 @@ public:
 //=============================================================================
 int main(int argc, char* argv[])
 {
-   std::cout << "=== CHAIN OF RESPONSIBILITY (STACK MACHINE) ===\n" << std::endl;
+   std::cout << "=== INTERPRETER PATTERN (STACK MACHINE) ===\n" << std::endl;
 
    if(argc < 2 || argc > 3)
    {

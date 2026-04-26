@@ -1,0 +1,10 @@
+=== OBSERVER PATTERN (CLASSIC GOF) ===
+
+--- Changing numberObservable state to 14 (with two observers):
+  [DivObserver] 14 div 4 is 3
+  [ModObserver] 14 mod 3 is 2
+
+--- Detaching divObserver and changing numberObservable to 20:
+  [ModObserver] 20 mod 3 is 2
+
+=== SIMULATION COMPLETED ===

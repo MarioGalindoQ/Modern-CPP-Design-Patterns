@@ -1,0 +1,23 @@
+=== OBSERVER PATTERN (WITHOUT TOPICS) ===
+
+--- With three observers attached to numberObservables 1 and 2:
+Setting numberObservable_1 to 14:
+  [DivObserver] 14 div 4 is 3
+  [DivObserver] 14 div 3 is 4
+  [ModObserver] 14 mod 3 is 2
+
+Setting numberObservable_2 to 18:
+  [DivObserver] 18 div 4 is 4
+  [DivObserver] 18 div 3 is 6
+  [ModObserver] 18 mod 3 is 0
+
+--- Detaching observer_2 from numberObservable_1:
+Setting numberObservable_1 to 14 again:
+  [DivObserver] 14 div 4 is 3
+  [ModObserver] 14 mod 3 is 2
+
+--- Detaching observers 1 and 3, and reattaching observer_2 to numberObservable_1:
+Setting numberObservable_1 to 14 again:
+  [DivObserver] 14 div 3 is 4
+
+=== SIMULATION COMPLETED ===

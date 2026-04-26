@@ -1,0 +1,13 @@
+=== THREAD POOL: ASYNCHRONOUS PIPELINE SIMULATION ===
+
+--- Starting Batch 1: Square Roots ---
+ [Producer 1] All jobs submitted.
+ [Reporter 1] All roots saved. Closing file.
+ [System] Batch 1 completed.
+
+--- Starting Batch 2: Sine & Cosine ---
+ [Producer 2] All jobs submitted.
+ [Reporter 2] Trig results saved. Closing files.
+ [System] Batch 2 completed.
+
+=== SIMULATION COMPLETED. SHUTTING DOWN POOL ===

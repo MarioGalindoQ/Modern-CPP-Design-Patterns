@@ -1,0 +1,12 @@
+=== INDUSTRIAL COFFEE FACTORY (STATIC DECORATORS) ===
+
+ Recipe 1 (Latte): Coffee with Milk
+ Static Cost: $2.5
+
+ Recipe 2 (Sweet Latte): Coffee with Milk and Sugar
+ Static Cost: $2.7
+
+ Recipe 3 (Vanilla Dream): Coffee with Milk, Sugar and Vanilla
+ Static Cost: $3.4
+
+--- Production lines are optimized. No pointers used. ---

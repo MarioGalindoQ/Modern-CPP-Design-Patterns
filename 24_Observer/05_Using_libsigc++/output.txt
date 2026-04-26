@@ -1,0 +1,14 @@
+With three observers (unique_ptr):
+14 div 4 is 3
+14 div 3 is 4
+14 mod 3 is 2
+18 div 4 is 4
+18 div 3 is 6
+18 mod 3 is 0
+
+With two observers (disconnecting con_2):
+14 div 4 is 3
+14 mod 3 is 2
+
+With one observer (re-attaching observer_2):
+14 div 3 is 4

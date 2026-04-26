@@ -1,0 +1,24 @@
+=== COMMAND PATTERN SIMULATION ===
+
+Executing command queue:
+ [Receiver] Cow says moo!
+ [Receiver] Marshall barks!
+ [Receiver] Car engine ON.
+ [Receiver] Car: Vroom, vroom!
+ [Receiver] Car engine OFF.
+ [Receiver] Marshall barks!
+
+Executing command queue (again):
+ [Receiver] Cow says moo!
+ [Receiver] Marshall barks!
+ [Receiver] Car engine ON.
+ [Receiver] Car: Vroom, vroom!
+ [Receiver] Car engine OFF.
+ [Receiver] Marshall barks!
+
+--- Executing command outside the queue ---
+ [Receiver] Car engine ON.
+ [Receiver] Car: Vroom, vroom!
+ [Receiver] Car engine OFF.
+
+=== SIMULATION COMPLETED ===

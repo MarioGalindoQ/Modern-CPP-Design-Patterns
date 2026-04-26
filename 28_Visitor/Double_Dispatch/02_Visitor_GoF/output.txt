@@ -1,0 +1,7 @@
+=== VISITOR PATTERN (GOF CLASSIC SIMULATION) ===
+
+ -> Action: Exclusive Red Triangle function
+ -> Action: Exclusive Red Circle function
+ -> Action: Exclusive Blue Triangle function
+
+=== SIMULATION COMPLETED ===

@@ -1,0 +1,10 @@
+=== BRIDGE PATTERN SIMULATION ===
+
+ [Vector] Drawing a circle of radius 5
+ [Raster] Drawing pixels for a square of side 10
+
+ --- Resizing Shapes ---
+ [Vector] Drawing a circle of radius 10
+ [Raster] Drawing pixels for a square of side 5
+
+=== SIMULATION COMPLETED ===

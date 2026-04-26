@@ -1,0 +1,24 @@
+=== LAZY INITIALIZATION PATTERN ===
+
+Requesting number of shared instances in the cache:
+ Number of shared instances: 0
+
+Requesting 'Banana' (1st time):
+ [System] Fruit instance created: Banana
+ Number of shared instances: 1
+ - Banana
+
+Requesting 'Apple' (1st time):
+ [System] Fruit instance created: Apple
+ Number of shared instances: 2
+ - Apple
+ - Banana
+
+Requesting 'Banana' (2nd time):
+ Number of shared instances: 2
+ - Apple
+ - Banana
+
+=== SIMULATION COMPLETED ===
+ [Cleanup] Fruit instance destroyed: Banana
+ [Cleanup] Fruit instance destroyed: Apple

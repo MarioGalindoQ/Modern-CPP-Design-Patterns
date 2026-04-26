@@ -1,0 +1,42 @@
+
+----------------------- Size of components:
+size of int:         4
+size of double:      8
+size of char:        1
+size of Logger:      32
+size of const char*: 8
+size of std::string: 32
+
+size of var_t:       40
+
+--------------------------- Fill the stack:
+----- Logger 7 PC: Particular Constructor: I am a Logger
+----- Logger 3 MC: Move Constructor: I am a Logger
+----- Logger 6 De: Destructor: 
+
+--------------------------- Read the stack:
+>> const char*: C string 2
+>> std::string: I am std::string
+>> const char*: C string 1
+----- Logger 3 MC: Move Constructor: I am a Logger
+----- Logger 6 De: Destructor: 
+>> Logger: I am a Logger
+----- Logger 6 De: Destructor: I am a Logger
+>> int: 9
+>> char: c
+>> double: 8.3
+>> int: 12
+
+---------------------------------- Results:
+Num int:         2
+Num double:      1
+Num char:        1
+Num Logger:      1
+Num const char*: 2
+Num string:      1
+
+--------------------------- Manual Access (std::get_if):
+ Found double value: 3.1415
+ Confirmed: manualVar does not contain an int.
+
+--------------------------------------- END

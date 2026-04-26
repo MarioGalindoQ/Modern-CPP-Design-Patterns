@@ -1,0 +1,9 @@
+=== STRATEGY PATTERN (SIMPLE VERSION) ===
+
+ [Strategy] Applying Bubble Sort
+ Result: 6 8 10 11 12 14 21 26 30 
+
+ [Strategy] Applying Shell Sort
+ Result: 6 8 10 11 12 14 21 26 30 
+
+=== SIMULATION COMPLETED ===

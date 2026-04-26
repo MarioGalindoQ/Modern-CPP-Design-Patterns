@@ -1,0 +1,38 @@
+=== MIXIN PATTERN (ADVANCED VISITOR & DEPENDENCIES) ===
+
+Ancient Dragon:
+  - Fly capability: Alt 300 / Speed 40
+  - Tank with 2 of fuel
+  - Laser with intensity 4
+  + Testing dragon:
+	Flying at 300 ft
+	Laser fire intensity 4
+	Flying at 300 ft
+	No fuel to Fly
+	Loading fuel 1
+	Flying at 300 ft
+	Laser fire intensity 3
+
+War Elephant:
+  - Walk with speed 3
+  - Gun with 2 bullets
+  + Testing elephant:
+	Walk speed 3
+	Gun fire
+	Gun fire
+	Gun no more bullets
+
+Combat Jet:
+  - Fly capability: Alt 5000 / Speed 600
+  - Tank with 2 of fuel
+  - Laser with intensity 5
+  - Gun with 3 bullets
+  + Testing ariplane:
+	Flying at 5000 ft
+	Laser fire intensity 5
+	Gun fire
+	Gun fire
+	Flying at 5000 ft
+	No fuel to Fly
+
+=== SIMULATION COMPLETED ===

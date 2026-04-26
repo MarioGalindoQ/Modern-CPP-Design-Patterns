@@ -1,0 +1,7 @@
+=== NULL OBJECT PATTERN ===
+
+Broadcasting logs to all loggers (both real and null):
+ [Console-A] System update in progress.
+ [Console-B] System update in progress.
+
+=== SIMULATION COMPLETED ===

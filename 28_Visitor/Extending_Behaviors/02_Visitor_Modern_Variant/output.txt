@@ -1,0 +1,13 @@
+=== VISITOR PATTERN (MODERN VARIANT) ===
+
+--- HTML Export:
+<p>Hello World!</p>
+<img src="logo.png" />
+<a href="https://cpp.org">C++ Site</a>
+
+--- Text Extraction:
+Text: Hello World!
+Image found at: logo.png
+Link: C++ Site [https://cpp.org]
+
+=== SIMULATION COMPLETED ===

@@ -1,0 +1,74 @@
+=== MEMENTO PATTERN (MMAP PERSISTENCE & CRASH SIMULATION) ===
+
+--- PHASE 1: INITIAL EXECUTION & SAVE ---
+ [Action] Component A set to "Alpha"
+          ... Automatic checkpoint saved (State 0).
+ [Action] Component A set to "Beta"
+          ... Automatic checkpoint saved (State 1).
+ [Action] Component B set to 50
+          ... Automatic checkpoint saved (State 2).
+ [Action] Component B set to 100
+          ... Automatic checkpoint saved (State 3).
+ Current A (string):  "Beta"
+ Current B (integer): 100
+ [CRASH] Program terminated unexpectedly!
+
+--- PHASE 2: RESTART & RECOVERY ---
+ [System] Recovery: Restoring state 3 from disk.
+ Current A (string):  "Beta"
+ Current B (integer): 100
+
+--- PHASE 3: UNDO & REDO ---
+ [Undo] System rolled back to state 2
+ Current A (string):  "Beta"
+ Current B (integer): 50
+ [Redo] System moved forward to state 3
+ Current A (string):  "Beta"
+ Current B (integer): 100
+
+--- PHASE 4: CONTINUING ACTIONS ---
+ [Action] Component A set to "Gamma"
+          ... Automatic checkpoint saved (State 4).
+ [Action] Component B set to 200
+          ... Automatic checkpoint saved (State 5).
+ [Action] Component B set to 800
+          ... Automatic checkpoint saved (State 6).
+ Current A (string):  "Gamma"
+ Current B (integer): 800
+
+--- PHASE 5: MULTIPLE UNDOS ---
+ [Undo] System rolled back to state 5
+ Current A (string):  "Gamma"
+ Current B (integer): 200
+ [Undo] System rolled back to state 4
+ Current A (string):  "Gamma"
+ Current B (integer): 100
+ [Undo] System rolled back to state 3
+ Current A (string):  "Beta"
+ Current B (integer): 100
+
+--- PHASE 6: REDO TEST ---
+ [Redo] System moved forward to state 4
+ Current A (string):  "Gamma"
+ Current B (integer): 100
+
+--- PHASE 7: NEW ACTION (KILLING REDO) ---
+ [Action] Component B set to 600
+          ... Automatic checkpoint saved (State 5).
+ Current A (string):  "Gamma"
+ Current B (integer): 600
+
+--- PHASE 8: ATTEMPTING TO REDO (SHOULD FAIL) ---
+ [System] Cannot Redo: latest state reached.
+ Current A (string):  "Gamma"
+ Current B (integer): 600
+
+--- PHASE 9: UNDO & REDO ---
+ [Undo] System rolled back to state 4
+ Current A (string):  "Gamma"
+ Current B (integer): 100
+ [Redo] System moved forward to state 5
+ Current A (string):  "Gamma"
+ Current B (integer): 600
+
+=== SIMULATION COMPLETED ===

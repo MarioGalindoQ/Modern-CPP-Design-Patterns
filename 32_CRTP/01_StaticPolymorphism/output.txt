@@ -1,0 +1,11 @@
+=== CRTP: STATIC POLYMORPHISM SIMULATION ===
+
+Testing Inkjet Printer:
+ [Base] Preparing to print...
+  -> [Inkjet] Spraying ink: Medium Performance Printing
+
+Testing Laser Printer:
+ [Base] Preparing to print...
+  -> [Laser] Fusing toner: High Performance Printing.
+
+=== SIMULATION COMPLETED ===

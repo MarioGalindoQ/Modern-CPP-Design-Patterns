@@ -1,0 +1,55 @@
+open:
+      CD Player: Opening tray.
+insert_CD:
+      CD Player: A CD has been inserted.
+close:
+      CD Player: Closing tray.
+      CD Player: Reading CD directory with 3 songs.
+      CD Player: Turning ON yellow light.
+play:
+      CD Player: Turning OFF yellow light.
+      CD Player: Resetting to play first song.
+      CD Player: Turning ON green light.
+      CD Player: Playing song number 1
+next_song:
+      CD Player: Playing song number 2
+play:
+      CD Player: Stop playing.
+      CD Player: Turning OFF green light.
+      CD Player: Resetting to play first song.
+      CD Player: Turning ON green light.
+      CD Player: Playing song number 1
+previous_song:
+      CD Player: Playing song number 3
+pause:
+      CD Player: Stop playing.
+      CD Player: Turning OFF green light.
+      CD Player: Turning ON cyan light.
+play:
+      CD Player: Turning OFF cyan light.
+      CD Player: Turning ON green light.
+      CD Player: Playing song number 3
+next_song:
+      CD Player: Playing song number 1
+stop:
+      CD Player: Stop playing.
+      CD Player: Turning OFF green light.
+      CD Player: Turning ON yellow light.
+open:
+      CD Player: Turning OFF yellow light.
+      CD Player: Opening tray.
+play:
+      CD Player: Closing tray.
+      CD Player: Reading CD directory with 3 songs.
+      CD Player: Turning ON green light.
+      CD Player: Playing song number 1
+open:
+      CD Player: Stop playing.
+      CD Player: Turning OFF green light.
+      CD Player: Opening tray.
+remove_CD:
+      CD Player: A CD has been removed.
+close:
+      CD Player: Closing tray.
+insert_CD:
+      Error: insert_CD: invalid event

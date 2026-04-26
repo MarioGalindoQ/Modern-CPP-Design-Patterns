@@ -1,0 +1,14 @@
+=== COMPUTER ASSEMBLY (COMPOSITE PATTERN) ===
+
++ Composite: Tower Case
+  - SSD: Samsung 980 Pro
+  + Composite: ASUS ROG Motherboard
+    - CPU: Intel i9-13900K
+    - RAM: Corsair Vengeance 32GB
+    - RAM: Corsair Vengeance 32GB
+    + Composite: Disk Rack SDD Server Memory
+      - SSD: One Tera SSD disk
+      - SSD: One Tera SSD disk
+      - SSD: One Tera SSD disk
+
+=== ASSEMBLY COMPLETED ===

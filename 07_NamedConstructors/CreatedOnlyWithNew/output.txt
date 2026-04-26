@@ -1,0 +1,11 @@
+=== NAMED CONSTRUCTORS (FORCE HEAP ALLOCATION) ===
+
+Creating Fred dynamically...
+  -> Fred talking: i = 5
+
+Creating a copy of Fred...
+  -> Fred talking: i = 5
+
+=== END OF MAIN (Smart pointers will trigger cleanup) ===
+ [Cleanup] Fred destroyed (Memory freed automatically).
+ [Cleanup] Fred destroyed (Memory freed automatically).

@@ -1,0 +1,38 @@
+=== MEDIATOR PATTERN SIMULATION ===
+
+	Initial Evaluation:
+		Inverting (1/a)
+		Adding (b+c)
+		Multiplying
+		Adding (+d)
+	Result = 6.5
+
+	Second Evaluation (Cache hit, no operations should run):
+	Result = 6.5
+
+ [Variable] Double changed to 4.4
+	Evaluating after 'a' changes:
+		Inverting (1/a)
+		Multiplying
+		Adding (+d)
+	Result = 3.5
+
+ [Variable] Integer changed to 10
+	Evaluating after 'c' changes:
+		Adding (b+c)
+		Multiplying
+		Adding (+d)
+	Result = 5.09091
+
+ [Variable] Integer changed to 6
+	Evaluating after 'd' changes:
+		Adding (+d)
+	Result = 10.0909
+
+ [Variable] Double changed to 3.1
+ [Variable] Integer changed to 4
+	Evaluating after 'a' and 'c' changes:
+		Inverting (1/a)
+		Multiplying
+		Adding (+d)
+	Result = 9.80645

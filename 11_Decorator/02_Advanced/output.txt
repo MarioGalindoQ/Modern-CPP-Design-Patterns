@@ -1,0 +1,29 @@
+=== ADVANCED COFFEE SHOP (DYNAMIC DECORATORS) ===
+
+
+------------------------------------------
+
+--- Order 1 ---
+ Receipt: Iced Coffee with Almond Milk and 2 portions of Vanilla
+ Total Cost: $3.7
+
+------------------------------------------
+
+--- Order 2 ---
+ Receipt: Hot Tea with 1 portion of Sugar
+ Total Cost: $1.65
+
+------------------------------------------
+
+--- Order 3 ---
+ Receipt: Hot Coffee with Soy Milk, 3 portions of Sugar and 1 portion of Vanilla
+ Total Cost: $3.35
+
+------------------------------------------
+
+--- Order 4 (Same as 3 but Extra Hot) ---
+ Receipt: Extra Hot Coffee with Soy Milk, 3 portions of Sugar and 1 portion of Vanilla
+ Total Cost: $3.35
+
+------------------------------------------
+

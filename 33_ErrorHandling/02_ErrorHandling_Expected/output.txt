@@ -1,0 +1,15 @@
+=== ERROR HANDLING (std::expected VERSION - C++23) ===
+
+Calculating sqrt of '16.0':
+ [Success] Result: 4.0000
+
+Calculating sqrt of '-4.0':
+ [Failure] Math error: cannot calculate sqrt of -4.000000
+
+Calculating sqrt of 'abc':
+ [Failure] Invalid input: 'abc' is not a number.
+
+Calculating sqrt of '25.0':
+ [Success] Result: 5.0000
+
+=== SIMULATION COMPLETED ===

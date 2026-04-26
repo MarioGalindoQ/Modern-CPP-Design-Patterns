@@ -1,0 +1,11 @@
+=== PROXY PATTERN SIMULATION ===
+
+--- Attempt 1: Young driver ---
+ [Proxy] Access denied: Driver is too young.
+
+--- Attempt 2: Adult driver ---
+ [System] Real Car created.
+ -> Driving the car!
+
+=== SIMULATION COMPLETED ===
+ [Cleanup] Real Car destroyed.

@@ -1,0 +1,8 @@
+=== ADAPTER PATTERN SIMULATION ===
+
+ [Adapter] Converting coordinates to dimensions...
+ [Legacy Library] Drawing rectangle...
+  -> Origin: (10, 10)
+  -> Dimensions: 40x20
+
+=== SIMULATION COMPLETED ===

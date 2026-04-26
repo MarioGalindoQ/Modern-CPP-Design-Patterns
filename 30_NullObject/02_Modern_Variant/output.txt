@@ -1,0 +1,7 @@
+=== NULL OBJECT PATTERN (VARIANT VERSION) ===
+
+Broadcasting logs to all loggers (including the monostate Null Object):
+ [Console-A] System update in progress.
+ [Console-B] System update in progress.
+
+=== SIMULATION COMPLETED ===

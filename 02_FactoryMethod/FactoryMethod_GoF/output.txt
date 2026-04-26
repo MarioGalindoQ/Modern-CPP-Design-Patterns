@@ -1,0 +1,21 @@
+=== SPACE METEOR DEFENSE ===
+
+--- STARTING LEVEL 1 ---
+ [Game Engine] Spawning meteors for this level...
+ -> Meteor spawned![Size: Small | Speed: Slow]
+ -> Meteor spawned![Size: Small | Speed: Slow]
+ [Game Engine] Level Cleared!
+
+--- STARTING LEVEL 2 ---
+ [Game Engine] Spawning meteors for this level...
+ -> Meteor spawned![Size: Medium | Speed: Normal]
+ -> Meteor spawned![Size: Medium | Speed: Normal]
+ [Game Engine] Level Cleared!
+
+--- STARTING LEVEL 3 ---
+ [Game Engine] Spawning meteors for this level...
+ -> Meteor spawned! [Size: Large | Speed: Fast]
+ -> Meteor spawned! [Size: Large | Speed: Fast]
+ [Game Engine] Level Cleared!
+
+=== CONGRATULATIONS! YOU WIN! ===

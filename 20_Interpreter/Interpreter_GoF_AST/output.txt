@@ -1,0 +1,14 @@
+./calc -p "sin(0.3) + (5 * 2.1)" > output.txt
+
+=== INTERPRETER PATTERN (GoF AST VERSION) ===
+
+--- Abstract Syntax Tree ---
+    Add
+       Function [sin]
+          Number: 0.3
+       Multiply
+          Number: 5
+          Number: 2.1
+----------------------------
+
+Result: 10.7955
