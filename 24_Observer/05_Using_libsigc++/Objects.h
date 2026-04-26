@@ -1,5 +1,6 @@
 // **************************************************************************
 // Objects.h - Implementation of Concrete Subjects and Observers
+// Author: Mario Galindo Queralt, Ph.D.
 // **************************************************************************
 // This file defines the 'Number' class as a Concrete Subject and the 
 // 'DivObserver'/'ModObserver' classes as Concrete Observers.

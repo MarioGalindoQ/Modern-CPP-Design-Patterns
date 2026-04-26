@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Visitor_Modern.cpp (Optimized Variant Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Visitor pattern using std::variant.

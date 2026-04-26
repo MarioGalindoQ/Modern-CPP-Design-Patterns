@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: up.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This is a concrete implementation of the 'App' framework.

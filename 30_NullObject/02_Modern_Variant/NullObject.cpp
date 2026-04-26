@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: NullObject.cpp (Modern Variant Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Null Object pattern using std::variant 

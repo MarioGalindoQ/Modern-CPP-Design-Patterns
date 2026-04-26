@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Framework.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This is the core engine of the Framework. It implements the "Hollywood 

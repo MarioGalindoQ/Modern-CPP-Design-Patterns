@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: SimpleFactoryMethod.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- EDUCATIONAL OVERVIEW: THE "SIMPLE FACTORY" IDIOM ---
  * 

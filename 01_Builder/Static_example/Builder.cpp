@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Builder_Stack.cpp (Pure Stack Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  *
  * --- DESIGN OVERVIEW:
  * This version is optimized for maximum performance by avoiding the Heap

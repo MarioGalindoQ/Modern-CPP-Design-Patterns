@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Visitor_Modern.cpp (std::variant Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation uses C++17 'std::variant' and 'std::visit' to replace 

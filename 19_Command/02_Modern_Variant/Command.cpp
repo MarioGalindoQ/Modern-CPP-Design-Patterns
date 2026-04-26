@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Command.cpp (Modern Variant Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates a non-intrusive Command pattern using std::variant.

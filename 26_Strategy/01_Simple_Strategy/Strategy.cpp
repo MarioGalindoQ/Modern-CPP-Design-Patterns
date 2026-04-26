@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Strategy.cpp (Simple Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Strategy pattern. It defines a family of 

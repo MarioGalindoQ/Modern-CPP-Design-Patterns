@@ -1,5 +1,6 @@
 // **************************************************************************
 // Observer.cpp - Main application demonstrating the Observer Pattern
+// Author: Mario Galindo Queralt, Ph.D.
 // **************************************************************************
 // This program illustrates a modern implementation of the Observer pattern 
 // using libsigc++ and C++14/23 smart pointers.

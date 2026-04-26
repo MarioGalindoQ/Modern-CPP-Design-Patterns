@@ -1,4 +1,5 @@
 // File: FSM.h (Finite State Machine Pattern)
+// Author: Mario Galindo Queralt, Ph.D.
 
 #ifndef FSM_H
 #define FSM_H

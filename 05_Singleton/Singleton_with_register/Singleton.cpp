@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Singleton.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation demonstrates the "Multiton" pattern combined with a 

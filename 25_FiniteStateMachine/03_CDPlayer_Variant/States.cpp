@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: States.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This file contains the implementation of all state behaviors.

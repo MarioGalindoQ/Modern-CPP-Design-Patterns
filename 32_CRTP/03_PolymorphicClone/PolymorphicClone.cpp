@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: PolymorphicClone.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates a highly sophisticated, non-intrusive implementation 

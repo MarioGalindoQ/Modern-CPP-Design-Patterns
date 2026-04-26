@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: calc.cpp (Interpreter: GoF AST Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation follows the classic Gang of Four Interpreter pattern.

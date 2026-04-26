@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Memento.cpp (Persistent Mmap with Auto-Save & Crash Simulation)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates a robust Memento pattern with disk persistence.

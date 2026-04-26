@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: FSM.cpp (Modern Variant Implementation)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This file implements the FSM context logic and the main simulation loop.

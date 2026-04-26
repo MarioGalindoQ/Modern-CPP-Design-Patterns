@@ -1,4 +1,5 @@
 //---------------- File: main.cpp (Finite State Machine Pattern):
+// Author: Mario Galindo Queralt, Ph.D.
 
 #include "FSM.h"
 

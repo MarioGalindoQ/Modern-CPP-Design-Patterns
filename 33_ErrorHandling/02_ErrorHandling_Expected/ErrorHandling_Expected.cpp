@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: ErrorHandling_Expected.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the "Result" pattern using std::expected (C++23).

@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Proxy.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Proxy pattern. The 'ProxyCar' acts as an 

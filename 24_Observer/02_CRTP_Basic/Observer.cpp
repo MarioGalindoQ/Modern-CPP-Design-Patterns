@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Observer.cpp (Without Topics)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation uses the CRTP (Curiously Recurring Template Pattern) 

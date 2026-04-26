@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Observer.cpp (Memory-Safe with Smart Pointers)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation uses the CRTP (Curiously Recurring Template Pattern) 

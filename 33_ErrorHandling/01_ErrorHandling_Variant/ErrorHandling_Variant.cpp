@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: ErrorHandling_Variant.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the "Either" pattern using std::variant (C++17).

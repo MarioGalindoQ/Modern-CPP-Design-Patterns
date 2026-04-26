@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: wc.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program implements a word and character count utility using the 'App'

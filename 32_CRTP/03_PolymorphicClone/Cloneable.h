@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Cloneable.h
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- INFRASTRUCTURE:
  * This utility provides a non-intrusive cloning mechanism using CRTP.

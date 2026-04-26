@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Adapter.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Adapter Pattern. It allows a modern 

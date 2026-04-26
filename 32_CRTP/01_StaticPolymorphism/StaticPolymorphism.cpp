@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: StaticPolymorphism.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates Static Polymorphism using the CRTP idiom.

@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Mediator.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Mediator Pattern. It evaluates the math 

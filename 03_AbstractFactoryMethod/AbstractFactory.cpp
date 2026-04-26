@@ -1,6 +1,8 @@
 /**
  * ============================================================================
  *                   --- THE ABSTRACT FACTORY PATTERN ---
+ * Author: Mario Galindo Queralt, Ph.D.
+ *
  * Concept:
  * This program demonstrates how to create families of related objects 
  * that must always work together.

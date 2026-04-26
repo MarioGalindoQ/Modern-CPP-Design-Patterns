@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Builder.cpp (Dynamic Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Builder pattern in a dynamic context. 

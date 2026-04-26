@@ -1,4 +1,5 @@
 /**
+ * Author: Mario Galindo Queralt, Ph.D.
  * Game Concept & Example Overview:
  *
  * This is a multi-level space game where the difficulty progressively 

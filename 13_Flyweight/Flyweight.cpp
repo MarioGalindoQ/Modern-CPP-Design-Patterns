@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Flyweight.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Flyweight pattern. We separate the intrinsic 

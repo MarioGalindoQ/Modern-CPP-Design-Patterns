@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Module.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This is the concrete Plugin implementation. It gets compiled into a 

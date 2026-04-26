@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Singleton.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- EDUCATIONAL NOTE:
  * "We use the Heap (via unique_ptr) when the Singleton is very large, when we 

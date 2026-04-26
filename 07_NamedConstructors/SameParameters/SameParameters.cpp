@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: SameParameters.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * It is not possible to create two constructors with the exact same 

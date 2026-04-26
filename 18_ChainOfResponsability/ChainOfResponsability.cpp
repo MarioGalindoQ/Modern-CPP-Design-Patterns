@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: ChainOfResponsability.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Chain of Responsibility pattern. Each handler 

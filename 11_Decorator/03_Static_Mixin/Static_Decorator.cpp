@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Static_Decorator.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Static Decorator pattern, also known as 

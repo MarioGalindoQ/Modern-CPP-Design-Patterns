@@ -1,4 +1,5 @@
 // File: Closed_with_CD.cpp
+// Author: Mario Galindo Queralt, Ph.D.
 
 #include "FSM.h"
 

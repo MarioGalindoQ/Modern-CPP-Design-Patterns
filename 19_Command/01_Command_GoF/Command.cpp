@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Command.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation uses a generic 'CommandQueue' that manages a queue of 

@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: calc.cpp (Interpreter: Stack Machine Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This is an industrial-style interpreter. It does not use the GoF AST.

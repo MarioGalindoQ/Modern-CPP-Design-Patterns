@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Iterator.cpp (Classic GoF Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the classic Object-Oriented Iterator pattern.

@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: IModule.h
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This is the Contract (Interface) shared between the Host application 

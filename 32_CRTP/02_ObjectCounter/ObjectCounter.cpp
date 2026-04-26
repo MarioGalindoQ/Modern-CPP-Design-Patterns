@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: ObjectCounter.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the "Object Counter" idiom using CRTP. It allows 

@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Mixin.cpp (Simple Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates "Horizontal Composition" through Mixin 

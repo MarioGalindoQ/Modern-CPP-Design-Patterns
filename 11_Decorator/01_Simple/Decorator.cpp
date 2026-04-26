@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Decorator.cpp (Simple Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Decorator pattern with advanced string 

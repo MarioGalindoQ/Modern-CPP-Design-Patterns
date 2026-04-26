@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Visitor_GoF.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * Visitor pattern implemented to solve the "double dispatch problem".

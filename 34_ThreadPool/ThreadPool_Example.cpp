@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: ThreadPool_Example.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates an advanced asynchronous pipeline using a

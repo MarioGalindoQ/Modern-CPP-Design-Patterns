@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Observer.cpp (With Topics)
+ * Author: Mario Galindo Queralt, Ph.D.
  *
  * --- DESIGN OVERVIEW:
  * This advanced implementation introduces "Topics" (or Events). Instead

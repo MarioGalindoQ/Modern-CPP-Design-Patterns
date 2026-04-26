@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: BlurProcessor.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * Concrete implementation of the Processor interface. Demonstrates how 

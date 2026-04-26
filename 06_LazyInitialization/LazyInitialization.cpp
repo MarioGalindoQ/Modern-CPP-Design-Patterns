@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: LazyInitialization.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Lazy Initialization pattern. The creation of 

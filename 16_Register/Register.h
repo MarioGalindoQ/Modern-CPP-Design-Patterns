@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Register.h
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * The Registry pattern acts as a central repository for service creation.

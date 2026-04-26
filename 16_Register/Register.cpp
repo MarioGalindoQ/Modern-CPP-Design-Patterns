@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Register.cpp (Registry Pattern)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Registry pattern, providing a centralized 

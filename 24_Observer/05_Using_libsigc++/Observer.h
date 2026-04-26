@@ -1,6 +1,6 @@
-#ifndef OBSERVER_H
 // **************************************************************************
 // Observer.h - Generic Observer Pattern Framework using libsigc++
+// Author: Mario Galindo Queralt, Ph.D.
 // **************************************************************************
 // This file defines the template base classes 'Observer' and 'Subject'.
 // It implements a type-safe callback system for the Observer pattern.
@@ -12,6 +12,7 @@
 // - Modern C++: Uses std::static_cast and connection management.
 // **************************************************************************
 
+#ifndef OBSERVER_H
 #define OBSERVER_H
 
 #include <sigc++/sigc++.h>

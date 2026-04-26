@@ -1,4 +1,6 @@
 // File: Open_without_CD.cpp
+// Author: Mario Galindo Queralt, Ph.D.
+
 #include "FSM.h"
 
 class Open_without_CD : public IState_FSM

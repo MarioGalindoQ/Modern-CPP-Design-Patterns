@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: CreatedOnlyWithNew.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * By making all constructors private and exposing static creation methods, 

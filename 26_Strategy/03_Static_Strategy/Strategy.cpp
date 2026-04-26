@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Static_Strategy.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation demonstrates the Static Strategy pattern using templates

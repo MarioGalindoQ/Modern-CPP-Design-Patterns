@@ -1,4 +1,5 @@
 // File: Visitor.h
+// Author: Mario Galindo Queralt, Ph.D.
 
 #ifndef VISITOR_H
 #define VISITOR_H

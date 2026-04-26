@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Facade.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Facade pattern, which provides a simplified 

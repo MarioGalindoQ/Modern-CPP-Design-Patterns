@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Observer.cpp (Classic GoF Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation follows the classic Gang of Four (GoF) approach. 

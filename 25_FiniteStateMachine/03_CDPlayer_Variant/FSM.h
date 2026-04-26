@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: FSM.h (Modern Finite State Machine with std::variant)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation demonstrates a state machine using std::variant (C++17).

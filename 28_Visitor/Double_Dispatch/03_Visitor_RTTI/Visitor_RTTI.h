@@ -1,4 +1,5 @@
 // File: Visitor_RTTI.h
+// Author: Mario Galindo Queralt, Ph.D.
 
 #ifndef VISITOR_RTTI_H
 #define VISITOR_RTTI_H

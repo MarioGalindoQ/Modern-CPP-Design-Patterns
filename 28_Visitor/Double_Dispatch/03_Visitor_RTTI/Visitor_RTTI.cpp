@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Visitor_RTTI.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation uses Runtime Type Information (RTTI) to allow creating 

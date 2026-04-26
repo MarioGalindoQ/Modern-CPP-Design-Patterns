@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Decorator.cpp (Advanced Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This advanced implementation of the Decorator pattern simulates a dynamic

@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Iterator.cpp (Modern STL / Idiomatic C++ Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * In modern C++, the Iterator pattern is built into the language itself.

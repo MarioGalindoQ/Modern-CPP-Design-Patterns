@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: TemplateMethod.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Template Method pattern. The base class 

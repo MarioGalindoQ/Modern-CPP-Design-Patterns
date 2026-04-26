@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Memento.cpp (String Serialization Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Memento pattern using string serialization.

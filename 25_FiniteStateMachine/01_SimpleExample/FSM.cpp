@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: FSM.cpp (Simple Example)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the State pattern using a Finite State Machine (FSM).

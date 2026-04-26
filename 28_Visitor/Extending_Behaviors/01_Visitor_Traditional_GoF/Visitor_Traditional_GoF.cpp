@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Visitor_Traditional_GoF.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation demonstrates the classic GoF Visitor pattern.

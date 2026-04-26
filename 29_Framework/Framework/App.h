@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: App.h
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This is the core interface of our Framework. It defines the application 

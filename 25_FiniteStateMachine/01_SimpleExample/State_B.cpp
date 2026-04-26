@@ -1,4 +1,5 @@
 // File: State_B.cpp
+// Author: Mario Galindo Queralt, Ph.D.
 
 #include "FSM.h"
 

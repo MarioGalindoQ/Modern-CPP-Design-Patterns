@@ -1,5 +1,6 @@
 /**
  * Prototype Pattern (Virtual Constructor)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * This example demonstrates how to clone objects polymorphically.
  * We use smart pointers (std::unique_ptr) to ensure memory is 

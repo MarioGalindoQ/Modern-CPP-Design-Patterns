@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Composite.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Composite Pattern. It treats single 

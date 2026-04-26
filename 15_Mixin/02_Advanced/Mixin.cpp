@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Mixin.cpp (Advanced Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This advanced implementation demonstrates two powerful C++ techniques:

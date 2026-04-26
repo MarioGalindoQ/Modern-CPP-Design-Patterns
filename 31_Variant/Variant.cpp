@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Variant.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * Demonstrates the use of std::variant and std::visit (C++17).

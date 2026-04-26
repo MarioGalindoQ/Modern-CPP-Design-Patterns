@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Bridge.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Bridge Pattern by decoupling a "Shape" 

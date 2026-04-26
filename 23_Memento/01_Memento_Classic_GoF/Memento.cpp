@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Memento.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the classic GoF Memento pattern.

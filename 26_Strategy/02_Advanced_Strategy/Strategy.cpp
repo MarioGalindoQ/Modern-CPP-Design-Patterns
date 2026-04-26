@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Strategy.cpp (Advanced Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This implementation demonstrates "Strategy Composition". A single context 

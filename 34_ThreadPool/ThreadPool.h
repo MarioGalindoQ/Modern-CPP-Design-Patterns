@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: ThreadPool.h
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This header provides a robust synchronization infrastructure for concurrent

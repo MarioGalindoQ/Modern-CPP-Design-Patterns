@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: ModuleLoader.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This is the Host application. It dynamically loads 'libModule.so' 

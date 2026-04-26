@@ -1,4 +1,5 @@
 // File: Playing.cpp
+// Author: Mario Galindo Queralt, Ph.D.
 
 #include "FSM.h"
 

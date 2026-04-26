@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Visitor.cpp (Simple Version)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program solves the "Double Dispatch" problem using the Visitable/Visitor 

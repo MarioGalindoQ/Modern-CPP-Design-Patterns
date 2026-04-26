@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: NullObject.cpp
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program demonstrates the Null Object pattern. We use a 'NullLogger' 

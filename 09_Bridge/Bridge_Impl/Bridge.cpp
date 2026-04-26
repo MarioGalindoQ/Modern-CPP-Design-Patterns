@@ -1,6 +1,7 @@
 /**
  * ============================================================================
  * File: Employee.cpp (Pimpl Idiom / Bridge)
+ * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
  * This program implements the Pimpl (Pointer to Implementation) idiom, which 
