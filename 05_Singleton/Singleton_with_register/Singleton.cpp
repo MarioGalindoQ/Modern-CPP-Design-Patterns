@@ -150,7 +150,7 @@ int main()
    std::cout << " Address of sA1: " << sA1 << "\n";
    std::cout << " Address of sA2: " << sA2 << "\n";
 
-   if (sA1 == sA2)
+   if(sA1 == sA2)
    {
       std::cout << " SUCCESS: Identity confirmed. Only one instance exists.\n";
    }
