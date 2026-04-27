@@ -28,16 +28,16 @@ classDiagram
    }
 
    %% Hierarchy
-   Singleton <|-- Service : Is_a
-   Service <|-- Singleton_A : Is_a
-   Service <|-- Singleton_B : Is_a
+   Singleton <|-- Service
+   Service <|-- Singleton_A
+   Service <|-- Singleton_B
 
    %% The Registry Relationship
    Singleton *-- "n" Singleton : 1 singletonMap (Static Data Segment)
 
    %% Documentation Notes
-   note for Singleton_A "Self-registers via \nstatic lambda"
-   note for Singleton "Instances persist in \nStatic Data Segment"
+   note for Singleton_A "Self-registers via static lambda"
+   note for Singleton "Instances persist in Static Data Segment"
 ```
 
 ### Key Architectural Features:
