@@ -57,11 +57,10 @@ public:
 //--------------------------------------------------------- Registry:
 class Registry
 {
-public:
+private:
    // Factory type: a function that returns a new Processor instance
    using Creator = std::function<std::shared_ptr<Processor>()>;
 
-private:
    static inline std::map<std::string, Creator> registryMap_;
 
 public:

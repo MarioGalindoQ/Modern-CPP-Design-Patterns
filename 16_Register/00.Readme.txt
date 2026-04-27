@@ -91,4 +91,13 @@ call for every request.
 constructor parameters or instantiation requirements of the 'Processor' 
 classes. It simply executes the stored function when needed.
 
+### Relationship with the Singleton Pattern
+- **05_Singleton**: The `REGISTRY_SINGLETON` configuration is a
+    professional-grade implementation of the Singleton pattern. While classic
+    Singletons often reside in the Static Data Segment, this version utilizes
+    **Heap allocation** via `std::shared_ptr`. This ensures that the Registry's
+    interface remains consistent across different instantiation strategies,
+    allowing the system to switch between shared resources (Singleton) and
+    independent instances (Prototype) without affecting the client's code.
+
 ---

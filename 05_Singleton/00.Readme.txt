@@ -46,4 +46,13 @@ smart pointers).
 - **Global Access:** While convenient, it should be used judiciously, as 
 excessive global state can make code harder to test and maintain.
 
+### Advanced Variations: Singleton in a Registry
+- **16_Register**: This pattern demonstrates a "third way" to implement a
+    Singleton. By using functional factories (`std::function`) and the
+    `REGISTRY_SINGLETON` policy, the registry manages shared instances on the
+    **Heap** using `std::shared_ptr`. This approach is specifically designed to
+    provide API uniformity: the client interacts with the service in the exact
+    same way whether the registry is providing a shared Singleton or a fresh
+    Prototype.
+
 ---
