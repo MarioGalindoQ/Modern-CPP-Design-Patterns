@@ -1,0 +1,22 @@
+//--------------------------------------------------------------------- Compiling (Optimized version)
+=== SINGLETON IMPLEMENTATION TEST ===
+
+CONFIGURATION: HEAP MODE ENABLED
+-------------------------------------
+
+Requesting instance for the first time...
+ [System] Singleton instance created at address: 0x5569780012c0
+ [Info] Using Heap-based implementation (unique_ptr).
+ -> Hello! I am the only instance of this class.
+
+Requesting instance for the second time...
+ [Info] Using Heap-based implementation (unique_ptr).
+ -> Hello! I am the only instance of this class.
+
+Verification:
+ Address of s1: 0x5569780012c0
+ Address of s2: 0x5569780012c0
+ SUCCESS: Identity confirmed. Only one instance exists.
+
+=== END OF MAIN ===
+ [System] Singleton instance destroyed.

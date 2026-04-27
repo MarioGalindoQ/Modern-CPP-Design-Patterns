@@ -56,8 +56,7 @@ public:
       static std::unique_ptr<Singleton> instance(new Singleton());
       std::cout << " [Info] Using Heap-based implementation (unique_ptr).\n";
       return *instance;
-#else
-      // APPROACH: Meyers' Singleton (Static/Data Segment)
+#else // APPROACH: Meyers' Singleton (Static/Data Segment)
       // Simplest, thread-safe (C++11+), and stack-efficient.
       static Singleton instance; 
       std::cout << " [Info] Using Meyers' implementation (Static Segment).\n";
