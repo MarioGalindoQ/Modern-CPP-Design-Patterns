@@ -1,10 +1,17 @@
- [System] Singleton_A registered.
- [System] Singleton_B registered.
-=== SINGLETON WITH AUTO-REGISTER ===
+ [System] Singleton_A registered as a Service.
+ [System] Singleton_B registered as a Service.
+=== SINGLETON WITH ENCAPSULATED AUTO-REGISTER ===
 
  -> Running Singleton_A::method_1
  -> Running Singleton_B::method_2
  [Error] Singleton_C not found in registry.
+
+Requesting sA instance for the second time...
+
+Verification:
+ Address of sA1: 0x55eb38d2a238
+ Address of sA2: 0x55eb38d2a238
+ SUCCESS: Identity confirmed. Only one instance exists.
 
 === END OF MAIN ===
  [System] Singleton_B destroyed.
