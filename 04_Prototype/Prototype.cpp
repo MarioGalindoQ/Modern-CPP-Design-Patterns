@@ -83,7 +83,7 @@ int main()
 
    {
       std::cout << "Creating a Derived prototype:\n";
-      std::unique_ptr<Derived> derived_1 = std::make_unique<Derived>();
+      std::unique_ptr<Base> derived_1 = std::make_unique<Derived>();
       printInfo(derived_1.get());
       
       std::cout << "Cloning Derived (via Base pointer in createClone):\n";
