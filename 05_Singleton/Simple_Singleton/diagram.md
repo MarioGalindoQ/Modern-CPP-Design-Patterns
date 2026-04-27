@@ -14,8 +14,8 @@ classDiagram
    %% We use the label to clarify the storage options
    Singleton *-- Singleton : 1 instance (Static or Heap)
 
-   note for Singleton "Configurable via #define:\n1. Meyers (Static Data
-   Segment)\n2. Heap (Managed by unique_ptr)"
+   note for Singleton "Configurable via #define: Meyers (Static Data
+   Segment) or Heap (Managed by unique_ptr)"
 ```
 
 ### Key Architectural Features:
