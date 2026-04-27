@@ -40,6 +40,16 @@ factory needs it, preventing memory leaks or dangling pointers.
 - **Performance:** Avoids repeated creation of identical objects by caching 
 the results of previous initializations.
 
+### Relationship with Singleton & Registry
+- **05_Singleton**: Lazy Initialization is the core mechanism used by most
+    modern Singletons (like Meyers' Singleton) to ensure the object is only
+    created when first accessed.
+- **16_Register**: While a classic Singleton restricts a class to one instance,
+    our implementation of Lazy Initialization acts as a **Multiton**. It ensures
+    a single instance exists for each unique key (e.g., one instance for
+    "Banana", one for "Apple"). This is a simplified, non-polymorphic version of
+    the Registry pattern found in folder 16_Register.
+
 ---
 # Lazy Initialization Pattern
 

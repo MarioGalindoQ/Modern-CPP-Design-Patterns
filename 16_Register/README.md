@@ -100,6 +100,14 @@ classes. It simply executes the stored function when needed.
     allowing the system to switch between shared resources (Singleton) and
     independent instances (Prototype) without affecting the client's code.
 
+### Related Concepts: Multitons and Lazy Loading
+- **06_LazyInitialization**: The logic behind our Registry (especially in
+    `REGISTRY_SINGLETON` mode) is an evolution of the Lazy Initialization
+    pattern. In folder 06_LazyInitialization, we demonstrate a "Multiton"—a
+    system that ensures a single instance exists for each unique key. The
+    Registry in folder 16_Register scales this concept by adding polymorphism,
+    factory functions, and configurable memory policies.
+
 ---
 # Registry Pattern
 

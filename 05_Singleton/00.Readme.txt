@@ -55,4 +55,13 @@ excessive global state can make code harder to test and maintain.
     same way whether the registry is providing a shared Singleton or a fresh
     Prototype.
 
+### Related Concepts: Lazy Initialization
+- **06_LazyInitialization**: Most Singletons (including the Meyers'
+    implementation used here) rely on the Lazy Initialization pattern. This
+    ensures that the global resource is only allocated when it is actually
+    needed, saving memory and improving startup performance. While this folder
+    05_Singleton focuses on the "Single Instance" constraint, folder
+    06_LazyInitialization explores the timing and on-demand creation logic in
+    more detail.
+
 ---
