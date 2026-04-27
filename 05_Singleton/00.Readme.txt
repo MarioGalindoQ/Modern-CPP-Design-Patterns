@@ -25,7 +25,7 @@ diagram (a single class), its implementation is trickier than it looks,
 especially regarding memory management and thread safety.
 
 ## Our Examples
-This folder contains two approaches
+This folder contains two approaches:
 
 1. **Simple_Singleton/:**
 A modern C++11 implementation (Meyers' Singleton). It is thread-safe, 
@@ -39,8 +39,10 @@ Singletons by name, using a map to register and retrieve instances
 automatically via global static initialization.
 
 ## Key Considerations
-- **Memory Management:** In C++, the Singleton can be allocated in the static 
-segment (Meyers' style) or the heap (using smart pointers). 
+- **Memory Management:** In C++, the Singleton can be allocated in the local 
+static segment (Meyers' style), the global **Static Data Segment** (persisting 
+for the duration of the process without heap overhead), or the heap (using 
+smart pointers).
 - **Global Access:** While convenient, it should be used judiciously, as 
 excessive global state can make code harder to test and maintain.
 
