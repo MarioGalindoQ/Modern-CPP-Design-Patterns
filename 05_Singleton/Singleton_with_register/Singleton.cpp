@@ -48,7 +48,7 @@ private:
    static inline std::map<std::string, Singleton*> singletonMap;
 
 protected:
-   static Singleton* getSingleton(std::string_view name)
+   static Singleton *getSingleton(std::string_view name)
    {
       auto it = singletonMap.find(std::string(name));
       if(it == singletonMap.end()) return nullptr;
@@ -75,7 +75,7 @@ public:
    using Singleton::Singleton;
    virtual ~Service() = default;
 
-   static Service* getService(std::string_view name)
+   static Service *getService(std::string_view name)
    {
       return static_cast<Service*>(getSingleton(name));
    }
@@ -143,7 +143,7 @@ int main()
    Service *sC = Service::getService("Singleton_C");
    if(!sC) std::cout << " [Error] Singleton_C not found in registry.\n";
 
-   std::cout << "\nRequesting sA instance for the second time...\n";
+   std::cout << "\nRequesting Singleton A instance for the second time...\n";
    Service *sA2 = Service::getService("Singleton_A");
 
    std::cout << "\nVerification:\n";

@@ -6,11 +6,11 @@
  -> Running Singleton_B::method_2
  [Error] Singleton_C not found in registry.
 
-Requesting sA instance for the second time...
+Requesting Singleton A instance for the second time...
 
 Verification:
- Address of sA1: 0x55eb38d2a238
- Address of sA2: 0x55eb38d2a238
+ Address of sA1: 0x557ca3c5a238
+ Address of sA2: 0x557ca3c5a238
  SUCCESS: Identity confirmed. Only one instance exists.
 
 === END OF MAIN ===
