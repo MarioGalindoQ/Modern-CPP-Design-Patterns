@@ -8,17 +8,30 @@
  * Registry mechanism. Unlike a standard Singleton (which manages one instance), 
  * this pattern manages a collection of named instances.
  * 
- * --- AUTO-REGISTRATION:
- * We use global static instances to trigger the constructor of our 
- * Singletons BEFORE the 'main()' function starts. This automatically 
- * populates the registry map, allowing us to retrieve specific instances 
- * by name ('Singleton_A', 'Singleton_B') without manual wiring.
+ * --- ENCAPSULATED AUTO-REGISTRATION:
+ * Registration is an encapsulated concern of each concrete class. We use a 
+ * private static boolean member initialized by an immediate lambda to trigger 
+ * the registration BEFORE the 'main()' function starts. 
+ * 
+ * --- COMPILATION & ACCESS CONTROL:
+ * By defining the static member's initialization after the class is fully 
+ * defined, we avoid "incomplete type" errors. This approach allows the 
+ * constructors to remain 'private', ensuring that instances are only created 
+ * through the controlled, automatic registration process.
  * 
  * --- ARCHITECTURAL NOTE:
  * This approach achieves decoupling: the registry handles the lifecycle 
  * and lookup, while the client simply requests instances by a unique 
  * identifier. This is a powerful technique for modular systems where 
  * components can register themselves dynamically.
+ *
+ * --- MEMORY MANAGEMENT & STORAGE:
+ * The Singleton instances in this example are stored in the **Static Data 
+ * Segment** (specifically the .data or .bss sections of the executable). 
+ * Unlike stack variables, they are not destroyed when a function ends; 
+ * and unlike heap variables, they do not require 'new' or 'delete'. They are 
+ * allocated by the system loader when the program starts and persist until 
+ * the process terminates.
  * ============================================================================
  */
 
@@ -26,48 +39,45 @@
 #include <string_view>
 #include <map>
 #include <iostream>
-#include <stdexcept> // invalid_argument
+#include <stdexcept>
 
 //--------------------------------------------------------------------- Singleton Base
 class Singleton
 {
 private:
-   // C++17 inline static: prevents the need for a .cpp to define the map
    static inline std::map<std::string, Singleton*> singletonMap;
 
 protected:
-   // Use string_view for efficient lookups without copies
    static Singleton* getSingleton(std::string_view name)
    {
       auto it = singletonMap.find(std::string(name));
-      if (it == singletonMap.end()) return nullptr;
+      if(it == singletonMap.end()) return nullptr;
       return it->second;
    }
 
 public:
-   virtual ~Singleton() = default; // Mandatory virtual destructor
+   virtual ~Singleton() = default;
 
    Singleton(const std::string& name)
    {
       auto [it, success] = singletonMap.insert({name, this});
-      if (!success) throw std::invalid_argument("Duplicate singleton name: " + name);
+      if(!success) throw std::invalid_argument("Duplicate singleton name: " + name);
    }
 
-   // Disable copy/move for safety
    Singleton(const Singleton&) = delete;
    Singleton& operator=(const Singleton&) = delete;
 };
 
-//-------------------------------------------------------------------------- Interface
-class Interface : public Singleton
+//---------------------------------------------------------------------------- Service
+class Service : public Singleton
 {
 public:
    using Singleton::Singleton;
-   virtual ~Interface() = default;
+   virtual ~Service() = default;
 
-   static Interface* getInterface(std::string_view name)
+   static Service* getService(std::string_view name)
    {
-      return static_cast<Interface*>(getSingleton(name));
+      return static_cast<Service*>(getSingleton(name));
    }
 
    virtual void method_1() { std::cout << "Default method_1\n"; }
@@ -75,44 +85,44 @@ public:
 };
 
 //------------------------------------------------------------------------ Singleton A
-class Singleton_A final : public Interface
+class Singleton_A final : public Service
 {
-public:
-   Singleton_A(const std::string& name) : Interface{name}
+private:
+   Singleton_A(const std::string& name) : Service{name}
    {
-      std::cout << " [System] Singleton_A registered.\n";
+      std::cout << " [System] Singleton_A registered as a Service.\n";
    }
 
    ~Singleton_A() override { std::cout << " [System] Singleton_A destroyed.\n"; }
 
-private:
    void method_1() override { std::cout << " -> Running Singleton_A::method_1\n"; }
+
+   static bool registered_; 
 };
 
-// Auto-register Singleton_A using a lambda
-static inline bool reg_A = []()
+bool Singleton_A::registered_ = []()
 {
    static Singleton_A instance{"Singleton_A"};
    return true;
 }();
 
 //------------------------------------------------------------------------ Singleton B
-class Singleton_B final : public Interface
+class Singleton_B final : public Service
 {
-public:
-   Singleton_B(const std::string& name) : Interface{name}
+private:
+   Singleton_B(const std::string& name) : Service{name}
    {
-      std::cout << " [System] Singleton_B registered.\n";
+      std::cout << " [System] Singleton_B registered as a Service.\n";
    }
     
    ~Singleton_B() override { std::cout << " [System] Singleton_B destroyed.\n"; }
 
-private:
    void method_2() override { std::cout << " -> Running Singleton_B::method_2\n"; }
+
+   static bool registered_;
 };
 
-// Auto-register Singleton_B using a lambda
-static inline bool reg_B = []()
+bool Singleton_B::registered_ = []()
 {
    static Singleton_B instance{"Singleton_B"};
    return true;
@@ -120,20 +130,36 @@ static inline bool reg_B = []()
 
 //------------------------------------------------------------------------------- Main
 
-int main() {
-    std::cout << "=== SINGLETON WITH AUTO-REGISTER ===\n\n";
+int main()
+{
+   std::cout << "=== SINGLETON WITH ENCAPSULATED AUTO-REGISTER ===\n" << std::endl;
 
-    Interface* sA = Interface::getInterface("Singleton_A");
-    if (sA) sA->method_1();
+   Service *sA1 = Service::getService("Singleton_A");
+   if(sA1) sA1->method_1();
     
-    Interface* sB = Interface::getInterface("Singleton_B");
-    if (sB) sB->method_2();
+   Service *sB = Service::getService("Singleton_B");
+   if(sB) sB->method_2();
 
-    // Testing non-existent
-    Interface* sC = Interface::getInterface("Singleton_C");
-    if (!sC) std::cout << " [Error] Singleton_C not found in registry.\n";
+   Service *sC = Service::getService("Singleton_C");
+   if(!sC) std::cout << " [Error] Singleton_C not found in registry.\n";
 
-    std::cout << "\n=== END OF MAIN ===\n";
+   std::cout << "\nRequesting sA instance for the second time...\n";
+   Service *sA2 = Service::getService("Singleton_A");
+
+   std::cout << "\nVerification:\n";
+   std::cout << " Address of sA1: " << sA1 << "\n";
+   std::cout << " Address of sA2: " << sA2 << "\n";
+
+   if (sA1 == sA2)
+   {
+      std::cout << " SUCCESS: Identity confirmed. Only one instance exists.\n";
+   }
+   else
+   {
+      std::cout << " FAILURE: Multiple instances detected!\n";
+   }
+
+   std::cout << "\n=== END OF MAIN ===\n";
 }
 
 //================================================================================ END
