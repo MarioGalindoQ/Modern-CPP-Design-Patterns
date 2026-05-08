@@ -22,7 +22,7 @@ class Base
 public:
 void interfaceMethod() 
 {
-   // 2. We safely downcast 'this' to the Derived type 'T' at compile-time
+   // 2. We safely downcast 'this' to the Derived type 'Derived' at compile-time
    static_cast<Derived*>(this)->implementationMethod();
    }
 };

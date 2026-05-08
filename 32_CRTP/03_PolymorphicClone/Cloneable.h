@@ -2,18 +2,18 @@
  * ============================================================================
  * File: Cloneable.h
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- INFRASTRUCTURE:
  * This utility provides a non-intrusive cloning mechanism using CRTP.
  * It uses 'dynamic_cast' to perform cross-casting between unrelated 
  * branches of a multiple inheritance hierarchy.
- * 
+ *
  * --- TYPE SAFETY (CRTP PROTECTION):
  * To prevent "identity hijacking" (e.g., Circle inheriting from 
  * Cloneable<Square>), the Mixin uses a private constructor and friendship.
- * Only the class specified in the template argument 'T' has permission 
- * to inherit from Cloneable<T>.
- * 
+ * Only the class specified in the template argument 'Concrete' has permission 
+ * to inherit from Cloneable<Concrete>.
+ *
  * --- ERROR HANDLING:
  * The 'Cloneable_clone' function is designed to fail-fast. If the baseSource 
  * object does not implement the Cloneable Mixin, it throws a 

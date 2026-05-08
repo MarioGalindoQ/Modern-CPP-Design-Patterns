@@ -5,20 +5,21 @@
  [Constructor] Created a new Circle
 
 --- PHASE 2: Printing addresses in originals ---
- [Drawing] Square at memory address: 0x55cb90c5f2c0
- [Drawing] Circle at memory address: 0x55cb90c5f300
+ [Drawing] Square at memory address: 0x55e0676682c0
+ [Drawing] Circle at memory address: 0x55e067668300
 
 --- PHASE 3: Copying into clones ---
  [Copy Constructor] Copied a Square
  [Copy Constructor] Copied a Circle
 
 --- PHASE 4: Printing addresses in clones ---
- [Drawing] Square at memory address: 0x55cb90c5f2e0
- [Drawing] Circle at memory address: 0x55cb90c5f360
+ [Drawing] Square at memory address: 0x55e0676682e0
+ [Drawing] Circle at memory address: 0x55e067668360
  [Success] All compatible objects cloned. Compare the addresses above.
 
 --- PHASE 5: Not cloneable error detection ---
  [Constructor] Created a new Triangle without the Cloneable Mixin
+ [Drawing] Triangle at memory address: 0x7ffe37a154f8
  Attempting to clone the Triangle...
  [Caught Expected Error] Object of type [8Triangle] is NOT cloneable.
 

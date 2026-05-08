@@ -122,7 +122,7 @@ public:
 
    void draw() const override
    {
-      std::cout << " [Drawing] Triangle at memory address: " << this << " (Static member)\n";
+      std::cout << " [Drawing] Triangle at memory address: " << this << "\n";
    }
 };
 
@@ -139,7 +139,7 @@ int main()
    originals.push_back(std::make_unique<Circle>());
 
    std::cout << "\n--- PHASE 2: Printing addresses in originals ---\n";
-   for (const auto& shape : originals) shape->draw();
+   for(const auto& shape : originals) shape->draw();
 
    try
    {
@@ -158,6 +158,7 @@ int main()
 
    std::cout << "\n--- PHASE 5: Not cloneable error detection ---\n";
    Triangle triangle;
+   triangle.draw();
    
    try
    {
