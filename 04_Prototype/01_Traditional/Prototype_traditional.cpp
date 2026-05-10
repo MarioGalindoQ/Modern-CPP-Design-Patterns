@@ -1,10 +1,33 @@
 /**
- * Prototype Pattern (Virtual Constructor)
+ * ============================================================================
+ * File: Prototype_traditional.cpp (Traditional Implementation)
  * Author: Mario Galindo Queralt, Ph.D.
  * 
- * This example demonstrates how to clone objects polymorphically.
- * We use smart pointers (std::unique_ptr) to ensure memory is 
- * automatically managed.
+ * --- DESIGN OVERVIEW:
+ * This program demonstrates the classic GoF Prototype pattern, specifically 
+ * implemented through what is known in C++ as the "Virtual Constructor" idiom.
+ * 
+ * --- THE PROBLEM:
+ * In C++, constructors cannot be virtual. If you hold a pointer to a base 
+ * class (e.g., 'Base*'), you cannot simply create a copy of the underlying 
+ * object (which might be a 'Derived' type) without knowing its concrete 
+ * class at the call site. This creates tight coupling and prevents the 
+ * polymorphic duplication of objects.
+ * 
+ * --- THE SOLUTION (VIRTUAL CONSTRUCTOR):
+ * The Prototype pattern delegates the responsibility of duplication to the 
+ * objects themselves. By defining a virtual 'clone()' method in the base 
+ * class and overriding it in every derived class, each object acts as its 
+ * own factory. 
+ * 
+ * --- TECHNICAL MECHANICS:
+ * 1. Polymorphic Copying: The 'clone()' method returns a new instance of 
+ *    the same type as the object it is called on, but through a base pointer.
+ * 2. Smart Pointers: We use 'std::unique_ptr' to ensure that the newly 
+ *    cloned objects are managed via RAII, preventing memory leaks.
+ * 3. Manual Overrides: This "Traditional" version requires every new 
+ *    derived class to manually implement 'clone()'.
+ * ============================================================================
  */
 
 #include <iostream>

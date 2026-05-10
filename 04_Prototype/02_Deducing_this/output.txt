@@ -1,0 +1,26 @@
+=== PROTOTYPE PATTERN SIMULATION ===
+
+Creating a Base prototype:
+ -> Object type: Base
+Cloning Base:
+ [Cleanup] Base object destroyed.
+ -> Object type: Base
+--- Base objects going out of scope ---
+ [Cleanup] Base object destroyed.
+ [Cleanup] Base object destroyed.
+
+------------------------------------------
+
+Creating a Derived prototype:
+ -> Object type: Derived
+Cloning Derived (via Base pointer in createClone):
+ [Cleanup] Derived object destroyed.
+ [Cleanup] Base object destroyed.
+ -> Object type: Derived
+--- Derived objects going out of scope ---
+ [Cleanup] Derived object destroyed.
+ [Cleanup] Base object destroyed.
+ [Cleanup] Derived object destroyed.
+ [Cleanup] Base object destroyed.
+
+=== END OF SIMULATION ===
