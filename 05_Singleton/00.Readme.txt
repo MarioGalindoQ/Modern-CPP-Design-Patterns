@@ -12,39 +12,41 @@ instance. If we instantiate more than one, we encounter problems such as:
 - Overuse of system resources (e.g., database connection pools).
 - Inconsistent results or data corruption.
 
-## Examples
-You may require only one object of a class when creating the context of an 
-application, a thread management pool, registry settings, or a driver to 
-connect to an input/output console. More than one object of that type would 
-clearly cause inconsistency.
-
 ## The Solution
 The Singleton pattern provides a mechanism to ensure a class has only one 
 instance. Although the Singleton is the simplest in terms of its class 
 diagram (a single class), its implementation is trickier than it looks, 
-especially regarding memory management and thread safety.
+especially regarding memory management, thread safety, and extensibility.
 
 ## Our Examples
-This folder contains two approaches:
+This folder illustrates the architectural evolution of the Singleton:
 
-1. **Simple_Singleton/:**
+1. **01_Simple_Singleton/:**
 A modern C++11 implementation (Meyers' Singleton). It is thread-safe, 
-elegant, and memory-safe. It uses a static local variable that is 
-initialized on first use and automatically cleaned up upon program 
-termination.
+elegant, and memory-safe. It uses a static local variable initialized on 
+first use and automatically cleaned up upon program termination.
 
-2. **Singleton_with_register/:**
+2. **02_Singleton_with_register/:**
 A "Multiton" or Registry approach. It allows managing a collection of 
 Singletons by name, using a map to register and retrieve instances 
 automatically via global static initialization.
 
+3. **03_Singleton_Hierarchy_Deducing/ (Modern C++23):**
+The most advanced version. It demonstrates a **Service Hierarchy** using the
+C++23 feature **"Deducing This"** (Explicit Object Parameters). It solves
+the problem of maintaining a **Fluent Interface** when Singletons inherit
+from a common base class, allowing base methods to return the derived
+Singleton type automatically without using CRTP.
+
 ## Key Considerations
-- **Memory Management:** In C++, the Singleton can be allocated in the local 
-static segment (Meyers' style), the global **Static Data Segment** (persisting 
-for the duration of the process without heap overhead), or the heap (using 
-smart pointers).
-- **Global Access:** While convenient, it should be used judiciously, as 
+- **Memory Management:** In C++, the Singleton can be allocated in the local
+static segment (Meyers' style), the global Static Data Segment, or the heap.
+- **Global Access:** While convenient, it should be used judiciously, as
 excessive global state can make code harder to test and maintain.
+- **Deducing This Advantage:** In C++23, we can centralize service management
+logic in a non-template base class. Methods like '.initialize()' or
+'.setup()' return the exact derived Singleton type, ensuring that method
+chaining (Fluent Interface) remains intact throughout the hierarchy.
 
 ### Advanced Variations: Singleton in a Registry
 - **16_Register**: This pattern demonstrates a "third way" to implement a
