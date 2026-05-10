@@ -4,21 +4,30 @@
  * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
- * This program implements the Prototype pattern using C++23 "Deducing This".
+ * This program implements a cutting-edge version of the Prototype pattern 
+ * using C++23 "Deducing This" (Explicit Object Parameters). It represents 
+ * the pinnacle of the pattern's evolution in C++.
  * 
- * --- THE ARCHITECTURAL EVOLUTION:
- * 1. Traditional (01): Every class (Circle, Square) must manually override 
- *    the 'clone()' method, leading to boilerplate and potential errors.
- * 2. CRTP (32/03): Automates cloning but introduces complex circular 
- *    template inheritance 'Cloneable<Derived>'.
- * 3. Deducing This (02): Automates cloning using a single, non-template 
- *    Mixin. The base class method captures the derived type automatically.
+ * --- THE ARCHITECTURAL EVOLUTION (INTERFACE PATTERN):
+ * 1. Infrastructure Layer (Mixin): 'SmartCloneable' is a non-template utility 
+ *    that provides the static cloning machinery.
+ * 
+ * 2. Interface Layer (Base): 'Base' is now a pure Interface (ABC). It defines 
+ *    the contract for the domain but cannot be instantiated. Crucially, 
+ *    cloning a 'Base' directly is impossible because abstract types cannot 
+ *    be created by the Mixin's 'make_unique' call.
+ * 
+ * 3. Implementation Layer (Derived): Concrete classes implement the interface 
+ *    and leverage the Mixin to satisfy the virtual cloning contract with 
+ *    zero boilerplate.
  *
  * --- TECHNICAL MECHANICS:
- * We use 'this auto self' (pass-by-value). When 'circle.clone()' is called:
- * - 'self' is deduced as 'Circle'.
- * - Because it's passed by value, a copy is automatically created.
- * - We then move this copy into a 'std::unique_ptr'.
+ * - Deducing This: 'clone(this auto self)' deduces the derived type at the 
+ *   call site.
+ * - Static Safety: Attempting to clone an abstract 'Base' results in a 
+ *   compile-time error, as 'decltype(self)' would be an abstract type.
+ * - Polymorphism: 'clone_polymorphic()' bridges the static machinery with 
+ *   traditional dynamic dispatch.
  * ============================================================================
  */
 
@@ -31,51 +40,53 @@ class SmartCloneable {
 public:
    virtual ~SmartCloneable() = default;
 
-   // C++23 Deducing This: captures the actual type (Base or Derived)
-   // Using "this auto self" (pass by value) force the copy
+   /**
+    * The 'this auto self' parameter captures the concrete type.
+    * If called on an abstract type, std::make_unique will fail to compile,
+    * providing perfect architectural enforcement.
+    * Guideline: "this auto self" (pass by value) ensures a deep copy is 
+    * automatically created as a function parameter.
+    */
    auto clone(this auto self) {
-      return std::make_unique<decltype(self)>(self);
+      return std::make_unique<decltype(self)>(std::move(self));
    }
-
-   // Polymorphic entry point required to clone from a Base pointer
-   virtual std::unique_ptr<class Base> clone_polymorphic() const = 0;
 };
 
-//------------------------------------------------------------------- Base:
+//--------------------------------------------------------- Base Interface:
 class Base : public SmartCloneable {
 public:
-   Base() = default;
-   Base(const Base&) = default;
-
+   // Pure Interface: No data, only contract.
    virtual ~Base() {
-      std::cout << " [Cleanup] Base object destroyed.\n";
+      std::cout << " [Cleanup] Interface Base destroyed.\n";
    }
 
-   void print() const {
-      std::cout << " -> Object type: Base\n";
-   }
+   virtual void print() const = 0; // Pure Virtual
 
-   // Implementation using the Deducing This helper
-   std::unique_ptr<Base> clone_polymorphic() const override {
-      return this->clone();
-   }
+   /**
+    * The Virtual Constructor Contract:
+    * Must be implemented by concrete classes.
+    */
+   virtual std::unique_ptr<Base> clone_polymorphic() const = 0;
 };
 
-//---------------------------------------------------------------- Derived:
+//------------------------------------------------------- Concrete Derived:
 class Derived : public Base {
 public:
    Derived() = default;
    Derived(const Derived& other) : Base(other) {}
 
    ~Derived() override {
-      std::cout << " [Cleanup] Derived object destroyed.\n";
+      std::cout << " [Cleanup] Concrete Derived destroyed.\n";
    }
 
-   void print() const {
-      std::cout << " -> Object type: Derived\n";
+   void print() const override {
+      std::cout << " -> Object type: Concrete Derived\n";
    }
 
-   // Even in Derived, we just call the same deducing clone
+   /**
+    * Implementation using the Mixin's static logic.
+    * Returns a unique_ptr<Derived> which is then upcasted to unique_ptr<Base>.
+    */
    std::unique_ptr<Base> clone_polymorphic() const override {
       return this->clone();
    }
@@ -83,35 +94,37 @@ public:
 
 //------------------------------------------------------------------- Main:
 int main() {
-   std::cout << "=== PROTOTYPE PATTERN SIMULATION ===\n";
+   std::cout << "=== PROTOTYPE PATTERN SIMULATION: C++23 DEDUCING THIS ===\n";
 
    {
-      std::cout << "\nCreating a Base prototype:\n";
-      Base original;
-      original.print();
+      std::cout << "\n--- PHASE 1: Polymorphic Cloning via Interface ---\n";
+      // We cannot do: Base b; or b.clone(); -> It would not compile.
+      
+      std::unique_ptr<Base> original = std::make_unique<Derived>();
+      std::cout << "Original object (managed via Interface pointer):\n";
+      original->print();
 
-      std::cout << "Cloning Base:\n";
-      auto copy = original.clone_polymorphic();
+      std::cout << "Cloning via virtual contract:\n";
+      auto copy = original->clone_polymorphic();
       copy->print();
 
-      std::cout << "--- Base objects going out of scope ---\n";
-   } // Scope ends, destructors called
+      std::cout << "--- Objects going out of scope ---\n";
+   } 
 
-   std::cout << "\n------------------------------------------\n";
+   std::cout << "\n----------------------------------------------------------\n";
 
    {
-      std::cout << "\nCreating a Derived prototype:\n";
+      std::cout << "\n--- PHASE 2: Static Covariance (Direct Access) ---\n";
       Derived original;
       original.print();
 
-      std::cout << "Cloning Derived (via Base pointer in createClone):\n";
-      // To simulate the base pointer behavior:
-      Base* ptr = &original;
-      auto copy = ptr->clone_polymorphic();
-      static_cast<Derived*>(copy.get())->print();
+      std::cout << "Cloning via Deducing This:\n";
+      // Returns std::unique_ptr<Derived> directly.
+      auto specificClone = original.clone();
+      specificClone->print();
 
-      std::cout << "--- Derived objects going out of scope ---\n";
-   } // Scope ends, destructors called
+      std::cout << "--- Objects going out of scope ---\n";
+   } 
 
    std::cout << "\n=== END OF SIMULATION ===\n";
 }

@@ -1,26 +1,30 @@
-=== PROTOTYPE PATTERN SIMULATION ===
+=== PROTOTYPE PATTERN SIMULATION: C++23 DEDUCING THIS ===
 
-Creating a Base prototype:
- -> Object type: Base
-Cloning Base:
- [Cleanup] Base object destroyed.
- -> Object type: Base
---- Base objects going out of scope ---
- [Cleanup] Base object destroyed.
- [Cleanup] Base object destroyed.
+--- PHASE 1: Polymorphic Cloning via Interface ---
+Original object (managed via Interface pointer):
+ -> Object type: Concrete Derived
+Cloning via virtual contract:
+ [Cleanup] Concrete Derived destroyed.
+ [Cleanup] Interface Base destroyed.
+ -> Object type: Concrete Derived
+--- Objects going out of scope ---
+ [Cleanup] Concrete Derived destroyed.
+ [Cleanup] Interface Base destroyed.
+ [Cleanup] Concrete Derived destroyed.
+ [Cleanup] Interface Base destroyed.
 
-------------------------------------------
+----------------------------------------------------------
 
-Creating a Derived prototype:
- -> Object type: Derived
-Cloning Derived (via Base pointer in createClone):
- [Cleanup] Derived object destroyed.
- [Cleanup] Base object destroyed.
- -> Object type: Derived
---- Derived objects going out of scope ---
- [Cleanup] Derived object destroyed.
- [Cleanup] Base object destroyed.
- [Cleanup] Derived object destroyed.
- [Cleanup] Base object destroyed.
+--- PHASE 2: Static Covariance (Direct Access) ---
+ -> Object type: Concrete Derived
+Cloning via Deducing This:
+ [Cleanup] Concrete Derived destroyed.
+ [Cleanup] Interface Base destroyed.
+ -> Object type: Concrete Derived
+--- Objects going out of scope ---
+ [Cleanup] Concrete Derived destroyed.
+ [Cleanup] Interface Base destroyed.
+ [Cleanup] Concrete Derived destroyed.
+ [Cleanup] Interface Base destroyed.
 
 === END OF SIMULATION ===

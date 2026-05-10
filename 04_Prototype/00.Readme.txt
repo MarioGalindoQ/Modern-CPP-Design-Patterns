@@ -13,9 +13,9 @@ configured (e.g., loaded from a file, initialized with complex data),
 it is often more efficient to copy that object rather than reconstructing 
 it from zero.
 
-Furthermore, in C++, we often need to clone objects through a base class 
-pointer without knowing their concrete type, but the language does not 
-provide built-in virtual constructors.
+Furthermore, in C++, we often need to clone objects polymorphically through a
+base class pointer without knowing their concrete type, but the language does
+not provide built-in virtual constructors.
 
 ## The Solution
 The Prototype pattern suggests copying an existing object (the prototype) 
@@ -38,10 +38,14 @@ idiom where every derived class must manually override a 'clone()' method.
 While effective, it leads to significant boilerplate code.
 
 2. **02_Deducing_this/ (Modern C++23):**
-The most advanced and cleanest implementation. It uses C++23 **"Deducing This"** 
-(Explicit Object Parameters) to implement the cloning logic once in a 
-base Mixin. By using 'this auto self', the compiler automatically captures 
-the derived type, eliminating manual overrides and the need for the CRTP idiom.
+The most advanced implementation. It demonstrates a clean **Separation of 
+Concerns**:
+- An **Infrastructure Layer** (Mixin) handles the static cloning mechanics 
+  using C++23 "Deducing This" without being a template.
+- A **Business Layer** (Interface) defines the polymorphic domain contract 
+  as a pure abstract class.
+This allows injecting cloning capabilities into any hierarchy with zero 
+boilerplate and absolute type safety.
 
 ## Technical Evolution (Comparison)
 C++ offers three main ways to automate or implement this pattern:
@@ -52,12 +56,14 @@ C++ offers three main ways to automate or implement this pattern:
   Eliminates boilerplate but introduces complex circular template dependencies.
 - **Deducing This (Example 02):** Automated cloning via a simple Mixin and 
   'this auto self'. It is the modern C++23 replacement for CRTP, offering 
-  the cleanest syntax and absolute type safety.
+  the cleanest syntax and a decoupled architecture.
 
 ## Key Benefits
 - **Efficiency:** Saves costly resources by avoiding redundant initialization.
-- **Dynamic Configuration:** Allows the system to work with objects of any 
-  concrete class without being tightly coupled to them.
+- **Decoupling:** The client works with an abstract Interface, unaware of 
+  the concrete classes or the underlying cloning machinery.
+- **Architecture:** Separates infrastructure concerns from business logic, 
+  allowing for highly reusable and maintainable codebases.
 - **Reduced Boilerplate:** Modern versions (C++23) allow injecting cloning 
   capabilities into entire hierarchies with a single method definition.
 
