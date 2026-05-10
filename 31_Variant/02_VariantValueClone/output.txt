@@ -1,0 +1,27 @@
+=== VARIANT & VALUE SEMANTICS: AUTOMATIC CLONING ===
+
+--- PHASE 1: Creating new objects ---
+ [Constructor] Created a new Square
+ [Move] Moved a Square
+ [Move] Moved a Square
+ [Constructor] Created a new Circle
+ [Move] Moved a Circle
+ [Move] Moved a Circle
+ [Move] Moved a Square
+
+--- PHASE 2: Printing addresses in originals ---
+ [Drawing] Square at memory address: 0x557c25b4a2e0
+ [Drawing] Circle at memory address: 0x557c25b4a2f0
+
+--- PHASE 3: Copying into clones ---
+ [Copy Constructor] Copied a Square
+ [Copy Constructor] Copied a Circle
+ [Move] Moved a Square
+
+--- PHASE 4: Printing addresses in clones ---
+ [Drawing] Square at memory address: 0x557c25b4a310
+ [Drawing] Circle at memory address: 0x557c25b4a320
+ [Success] All objects cloned automatically via value semantics.
+           Compare the addresses above.
+
+=== SIMULATION COMPLETED ===
