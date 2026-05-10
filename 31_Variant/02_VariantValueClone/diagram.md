@@ -43,7 +43,7 @@ classDiagram
    Client *-- "n" ShapeVariant : owns
 
    %% Interaction via std::visit
-   Client ..> ShapeVariant : std::visit
+   Client ..> ShapeVariant : visit
 
 ```
 
