@@ -35,8 +35,8 @@ classDiagram
    }
 
    %% Relationships
-   Square --|> Shape : Square is a Shape
-   Circle --|> Shape : Circle is a Shape
+   Square --|> Shape
+   Circle --|> Shape
 
    Square --|> Cloneable~Square~
    Circle --|> Cloneable~Circle~
