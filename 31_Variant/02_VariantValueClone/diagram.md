@@ -52,9 +52,9 @@ This diagram illustrates the Modern Prototype Pattern using Value Semantics.
 Unlike the traditional approach (see 32_CRTP/03_PolymorphicClone), we do not use
 heap-allocated pointers or a virtual 'clone()' method.
 
-1. Inheritance for Interface: Square and Circle inherit from Shape
+**1. Inheritance for Interface:** Square and Circle inherit from Shape
    to maintain a consistent contract, but polymorphism is resolved statically.
-2. Value Semantics: The ShapeVariant alias represents a type-safe union
+**2. Value Semantics:** The ShapeVariant alias represents a type-safe union
    that stores the objects directly (usually on the stack or in-place within
    the container).
 3. Automatic Deep Copy: Cloning is achieved through the standard assignment
