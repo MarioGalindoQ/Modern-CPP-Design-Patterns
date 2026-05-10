@@ -38,14 +38,14 @@ classDiagram
    Square --|> Shape : Square is a Shape
    Circle --|> Shape : Circle is a Shape
 
-   Square --|> Cloneable~Square~ : Square is a Cloneable
-   Circle --|> Cloneable~Circle~ : Circle is a Cloneable
+   Square --|> Cloneable~Square~
+   Circle --|> Cloneable~Circle~
 
-   ShapeVariant ..> Square : references
-   ShapeVariant ..> Circle : references
+   ShapeVariant ..> Square
+   ShapeVariant ..> Circle
 
    %% The Client owns a collection of variants containing unique_ptrs
-   Client *-- "n" ShapeVariant : owns
+   Client *-- "n" ShapeVariant
 
    %% Interaction via std::visit for static dispatch
    Client ..> ShapeVariant : visit
