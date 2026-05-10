@@ -14,7 +14,7 @@ a change, all client objects need to be modified accordingly. This approach
 creates tight coupling and violates the open/closed principle.
 
 ## The Solution
-The Builder pattern introduces a level of separation to address this problem
+The Builder pattern introduces a level of separation to address this problem:
 1. **Builders:** The different steps in the construction process are declared 
 as methods of a common interface, to be implemented by different concrete 
 builders.
@@ -29,57 +29,56 @@ the fully constructed object from the builder (often facilitated by a
 'getObject' or 'build' method declared in the Builder interface).
 
 ## Our Examples
-This folder illustrates two approaches to implementing the Builder
+This folder illustrates three distinct architectural approaches to the Builder:
 
 1. **01_Static_example/:**
-Shows a "Fluent Builder" where the builder manages a complicated 
-constructor. It uses a conversion operator (operator Car) and a 
-.build() method to return the final object by value (on the stack).
+Shows a "Flat Fluent Builder" that manages a complicated constructor on the 
+stack. It uses 'return *this' for method chaining and an implicit conversion 
+operator for a seamless building process.
 
 2. **02_Dynamic_example/:**
-A similar approach, but the builder is designed to return a 
-'std::unique_ptr<Car>'. This is the preferred way when the object 
-is complex, requires polymorphic components, or must live in the heap.
+A heap-based approach returning a 'std::unique_ptr<Car>'. Ideal for complex 
+objects with polymorphic components or life cycles that exceed the local scope.
+
+3. **03_Static_Deducing_example/ (Modern C++23):**
+The most advanced version. It demonstrates how to implement a **Hierarchical 
+Builder** using the C++23 feature **"Deducing This"** (Explicit Object 
+Parameters). It solves the problem of "losing the derived type" in 
+inheritance chains without the complexity of the CRTP idiom.
 
 ## Memory & Performance Trade-offs (Engineering Note)
-While both examples share a similar "Fluent" interface, they serve different architectural needs:
+While all examples share a "Fluent" interface, they serve different needs:
 
-- **Stack Version (Static):**
-  - **Performance:** Offers maximum speed due to cache locality and zero heap
-      allocation overhead.
-  - **Memory:** Uses `std::variant` and `std::array` to achieve "Stack
-      Polymorphism."
+- **Static/Stack Versions (01 and 03):**
+  - **Performance:** Maximum speed due to cache locality and zero heap overhead.
+  - **Deducing This Advantage (03):** Allows the builder to be split into 
+      multiple specialized classes (e.g., PhysicalProps -> CarBuilder). 
+      Methods in the base class automatically return the derived type 
+      using 'this auto&& self', enabling hierarchical fluent interfaces.
+  - **Memory:** Uses 'std::variant' and 'std::array' for Stack Polymorphism.
   - **Constraint:** Strictly limited by the System Stack size. Best for
       high-frequency, local operations with a predictable number of objects.
   - **Semantics:** Typically supports Value Semantics (Copy/Move) as long as its
       components allow it.
 
-- **Heap Version (Dynamic):**
-
-  - **Scalability:** Only limited by total available RAM. Ideal for large
-      objects or massive collections that would otherwise trigger a *Stack
-      Overflow*.
-  - **Flexibility:** Uses `std::unique_ptr` for "Dynamic Polymorphism," allowing
-      for more complex and stable pointer-based hierarchies.
-  - **Cost:** Higher latency due to `new/delete` operations and potential cache
-      misses from pointer indirection.
+- **Dynamic/Heap Version (02):**
+  - **Scalability:** Limited only by available RAM; prevents Stack Overflow 
+      for very large objects.
+  - **Flexibility:** Uses 'std::unique_ptr' for traditional Dynamic 
+      Polymorphism.
+  - **Cost:** Higher latency due to heap allocation and pointer indirection.
   - **Semantics:** Often Move-Only (Identity Semantics), ensuring that complex
       resources are never accidentally cloned.
 
-**MGQ NOTE:** Both implementations follow the **"Rule of Seven"** for lifecycle
-  management, ensuring that regardless of where the object lives (Stack or
-  Heap), its construction, transfer, and destruction are explicitly controlled
-  and exception-safe (`noexcept`).
+**MGQ NOTE:** All implementations follow the **"Rule of Seven"** for lifecycle 
+management, ensuring that regardless of whether the object lives on the Stack 
+or Heap, its construction, transfer, and destruction are explicitly controlled 
+and exception-safe ('noexcept').
 
 ## Key Benefits
-- **Encapsulation:** Eliminates the need for a client object to deal with the 
-construction steps. The details of how the object is built are completely 
-hidden from the client.
-- **Modularity:** The design becomes highly modular, with each implementation 
-contained in a different builder object. Adding a new implementation 
-(a new builder) becomes much easier.
-- **Finer Control:** The object construction process becomes independent of the 
-components that make up the object, providing more control over the overall 
-assembly process.
+- **Encapsulation:** Clients do not deal with construction steps.
+- **Modularity:** Adding a new builder implementation is easy and non-intrusive.
+- **Finer Control:** Construction process is independent of the actual 
+components, providing total control over assembly.
 
 ---
