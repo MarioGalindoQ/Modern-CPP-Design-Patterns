@@ -1,0 +1,21 @@
+=== VARIANT & HEAP STORAGE: CRTP CLONING SYSTEM ===
+
+--- PHASE 1: Creating new objects ---
+ [Constructor] Created a new Square on the Heap
+ [Constructor] Created a new Circle on the Heap
+
+--- PHASE 2: Printing addresses in originals ---
+ [Drawing] Square at memory address: 0x5598766bb2c0
+ [Drawing] Circle at memory address: 0x5598766bb300
+
+--- PHASE 3: Copying into clones ---
+ [Copy Constructor] Copied a Square
+ [Copy Constructor] Copied a Circle
+
+--- PHASE 4: Printing addresses in clones ---
+ [Drawing] Square at memory address: 0x5598766bb2e0
+ [Drawing] Circle at memory address: 0x5598766bb370
+ [Success] All heap-allocated objects cloned via CRTP Mixin.
+           Compare the addresses above.
+
+=== SIMULATION COMPLETED ===

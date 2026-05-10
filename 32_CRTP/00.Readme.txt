@@ -64,7 +64,7 @@ base class is 100% safe. The compiler knows the exact types involved during
 compilation, allowing it to inline the function calls (Zero-Overhead Principle).
 
 ## Our Examples
-This folder is divided into three classic industry use cases for CRTP
+This folder is divided into four industry use cases for CRTP:
 
 1. **01_StaticPolymorphism/:**
 Demonstrates how to emulate virtual function calls at compile-time. 
@@ -76,12 +76,19 @@ many instances of a specific derived class are alive without sharing
 the count between different types.
 
 3. **03_PolymorphicClone/:**
-Automates the 'clone()' method (Prototype pattern). Using CRTP, we write 
-the cloning logic once in the base class, and it automatically handles 
-the correct return types for every subclass.
+A sophisticated implementation of the Prototype pattern using Multiple 
+Inheritance and Cross-Casting. It shows how CRTP can automate cloning 
+even when the business interface (Shape) is unaware of the cloning mechanism.
+
+4. **04_VariantHeapClone/:**
+A modern hybrid approach. It demonstrates how to use a CRTP Mixin to 
+clone objects stored as unique_ptrs within a 'std::variant'. This 
+eliminates the need for virtual functions or cross-casting by using 
+'std::visit' for static dispatch.
 
 ## Other Examples
-See 24_Observer/02_CRTP_Basic, 24_Observer/03_CRTP_Smart_Pointers and 24_Observer/04_CRTP_Topics
+See 24_Observer/02_CRTP_Basic, 24_Observer/03_CRTP_Smart_Pointers and 
+24_Observer/04_CRTP_Topics.
 
 ## Key Benefits
 - **Zero Runtime Overhead:** No virtual tables, enabling aggressive inlining.
