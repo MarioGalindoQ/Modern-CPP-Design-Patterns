@@ -33,14 +33,14 @@ classDiagram
    }
 
    %% Relationships
-   Square --|> Shape : Square is a Shape
-   Circle --|> Shape : Circle is a Shape
+   Square --|> Shape
+   Circle --|> Shape
 
-   ShapeVariant ..> Square : uses
-   ShapeVariant ..> Circle : uses
+   ShapeVariant ..> Square
+   ShapeVariant ..> Circle
 
    %% The Client owns the collection of variants by value
-   Client *-- "n" ShapeVariant : owns
+   Client *-- "n" ShapeVariant
 
    %% Interaction via std::visit
    Client ..> ShapeVariant : visit
