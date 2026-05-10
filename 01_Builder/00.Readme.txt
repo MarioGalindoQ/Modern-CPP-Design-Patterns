@@ -31,16 +31,16 @@ the fully constructed object from the builder (often facilitated by a
 ## Our Examples
 This folder illustrates three distinct architectural approaches to the Builder:
 
-1. **01_Static_example/:**
+1. **01_Static/:**
 Shows a "Flat Fluent Builder" that manages a complicated constructor on the 
 stack. It uses 'return *this' for method chaining and an implicit conversion 
 operator for a seamless building process.
 
-2. **02_Dynamic_example/:**
+2. **02_Dynamic/:**
 A heap-based approach returning a 'std::unique_ptr<Car>'. Ideal for complex 
 objects with polymorphic components or life cycles that exceed the local scope.
 
-3. **03_Static_Deducing_example/ (Modern C++23):**
+3. **03_Static_Deducing_this/ (Modern C++23):**
 The most advanced version. It demonstrates how to implement a **Hierarchical 
 Builder** using the C++23 feature **"Deducing This"** (Explicit Object 
 Parameters). It solves the problem of "losing the derived type" in 
