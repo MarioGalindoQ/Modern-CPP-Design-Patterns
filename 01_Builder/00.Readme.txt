@@ -31,12 +31,12 @@ the fully constructed object from the builder (often facilitated by a
 ## Our Examples
 This folder illustrates two approaches to implementing the Builder
 
-1. **Static_example/:**
+1. **01_Static_example/:**
 Shows a "Fluent Builder" where the builder manages a complicated 
 constructor. It uses a conversion operator (operator Car) and a 
 .build() method to return the final object by value (on the stack).
 
-2. **Dynamic_example/:**
+2. **02_Dynamic_example/:**
 A similar approach, but the builder is designed to return a 
 'std::unique_ptr<Car>'. This is the preferred way when the object 
 is complex, requires polymorphic components, or must live in the heap.
