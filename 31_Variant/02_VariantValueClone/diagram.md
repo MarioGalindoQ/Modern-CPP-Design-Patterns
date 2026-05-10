@@ -54,16 +54,13 @@ heap-allocated pointers or a virtual 'clone()' method.
 
     1. Inheritance for Interface: Square and Circle inherit from Shape
        to maintain a consistent contract, but polymorphism is resolved statically.
-
     2. Value Semantics: The ShapeVariant alias represents a type-safe union
        that stores the objects directly (usually on the stack or in-place within
        the container).
-
     3. Automatic Deep Copy: Cloning is achieved through the standard assignment
        operator (clones = originals). The std::variant infrastructure
        automatically dispatches the appropriate Copy or Move constructors for the
        contained types.
-
     4. Optimization: The use of noexcept in move constructors is crucial here,
        as it allows std::vector to move elements efficiently during reallocation
        without falling back to expensive copies.
