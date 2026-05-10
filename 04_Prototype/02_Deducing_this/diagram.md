@@ -22,12 +22,12 @@ classDiagram
    }
 
    %% Relationships based on your symbology
-   Derived --|> Base : Derived is a Base
-   Base --|> SmartCloneable : Base is a SmartCloneable
+   Derived --|> Base
+   Base --|> SmartCloneable
 
    %% The Client uses the classes to perform cloning
-   Client ..> Base : uses
-   Client ..> Derived : uses
+   Client ..> Base
+   Client ..> Derived
 ```
 
 ### Design Note:
