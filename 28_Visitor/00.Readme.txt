@@ -16,7 +16,7 @@ violating the Open/Closed Principle.
 We have divided the study of this pattern into two logical domains to cover 
 both its mechanical and architectural facets:
 
-1. **Double_Dispatch/:**
+1. **01_Double_Dispatch/:**
 Focuses on the "handshake" mechanism. These examples solve the problem of 
 resolving types for two interacting objects (e.g., shape collisions).
    - **01_Visitor_Simple/:** Basic recursive virtual call approach.
@@ -24,7 +24,7 @@ resolving types for two interacting objects (e.g., shape collisions).
    - **03_Visitor_RTTI/:** Acyclic Visitor using dynamic_cast to break dependencies.
    - **04_Visitor_Modern_Variant/:** C++17 'std::variant' and 'std::visit' approach.
 
-2. **Extending_Behaviors/:**
+2. **02_Extending_Behaviors/:**
 Focuses on the architectural power of the pattern. These examples use 
 Visitor to add new operations (Export, Text Extraction) to a stable 
 Document structure, demonstrating how to keep object classes clean and 
@@ -34,7 +34,7 @@ focused while centralizing algorithmic logic.
 
 ---
 ## SEE ALSO STATIC VISITOR
-For a compile-time version of this pattern, refer to the '15_Mixin/Advanced' 
+For a compile-time version of this pattern, refer to the '15_Mixin/02_Advanced' 
 pattern example. It demonstrates how to iterate over components with zero
 runtime overhead using Variadic Templates and Fold Expressions (C++17).
 
