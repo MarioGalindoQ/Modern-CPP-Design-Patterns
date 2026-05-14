@@ -75,6 +75,8 @@ public:
    // C++23: Every method in the base returns the outermost decorator!
    auto&& setID(this auto&& self, int id) noexcept
    {
+      // Mandatory: 'self' is required because Deducing This suppresses
+      // the implicit 'this' pointer and class-member lookup.
       self.sensorID_ = id;
       return std::forward<decltype(self)>(self);
    }
@@ -109,6 +111,8 @@ public:
    // Runtime Calibration: Window size can be adjusted on the fly
    auto&& setWindowSize(this auto&& self, int size) noexcept
    {
+      // Mandatory: 'self' is required because Deducing This suppresses
+      // the implicit 'this' pointer and class-member lookup.
       self.windowSize_ = (size > 10) ? 10 : (size < 1) ? 1 : size; // Constraint check
       return std::forward<decltype(self)>(self);
    }
@@ -145,6 +149,8 @@ public:
    // Runtime Calibration: Alarm limits are dynamic
    auto&& setAlarmLimit(this auto&& self, double limit) noexcept
    {
+      // Mandatory: 'self' is required because Deducing This suppresses
+      // the implicit 'this' pointer and class-member lookup.
       self.limit_ = limit;
       return std::forward<decltype(self)>(self);
    }
