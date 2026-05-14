@@ -58,20 +58,23 @@
  * AnalogSensor: Models the physical hardware.
  * It contains a simulated buffer of raw voltage readings.
  */
-class AnalogSensor {
+class AnalogSensor
+{
 private:
    int sensorID_{0};
    size_t readIndex_{0};
 
    // Simulated deterministic hardware readings (Voltages)
    // In real life, these values ​​are not deterministic.
-   static constexpr std::array<double, 16> simulatedData_{
+   static constexpr std::array<double, 16> simulatedData_
+   {
       1.2, 1.5, 2.8, 2.5, 1.1, 0.9, 3.2, 3.5, 1.8, 1.4, 2.1, 3.2, 1.5, 1.1, 0.2, 0.5,
    };
 
 public:
    // C++23: Every method in the base returns the outermost decorator!
-   auto&& setID(this auto&& self, int id) noexcept {
+   auto&& setID(this auto&& self, int id) noexcept
+   {
       self.sensorID_ = id;
       return std::forward<decltype(self)>(self);
    }
@@ -79,7 +82,8 @@ public:
    /**
     * Returns the next raw value from the hardware buffer.
     */
-   double readRaw() {
+   double readRaw()
+   {
       double val = simulatedData_[readIndex_];
       readIndex_ = (readIndex_ + 1) % simulatedData_.size(); // Wrap around
       return val;
@@ -96,13 +100,15 @@ public:
  * based on a configurable window size.
  */
 template <typename Decorated>
-class Averager : public Decorated {
+class Averager : public Decorated
+{
 private:
    int windowSize_{1};
 
 public:
    // Runtime Calibration: Window size can be adjusted on the fly
-   auto&& setWindowSize(this auto&& self, int size) noexcept {
+   auto&& setWindowSize(this auto&& self, int size) noexcept
+   {
       self.windowSize_ = (size > 10) ? 10 : (size < 1) ? 1 : size; // Constraint check
       return std::forward<decltype(self)>(self);
    }
@@ -111,11 +117,10 @@ public:
     * Performs the average calculation by pulling multiple raw values 
     * from the underlying sensor logic.
     */
-   double read(this auto&& self) {
+   double read(this auto&& self)
+   {
       double sum = 0.0;
-      for (int i = 0; i < self.windowSize_; ++i) {
-         sum += self.readRaw(); 
-      }
+      for(int i = 0; i < self.windowSize_; ++i) sum += self.readRaw(); 
       double average = sum / self.windowSize_;
       std::cout << " [Filter] Averaged " << self.windowSize_ 
                 << " samples. Result: " << average << "V\n";
@@ -131,13 +136,15 @@ public:
  * limit.
  */
 template <typename Decorated>
-class ThresholdAlarm : public Decorated {
+class ThresholdAlarm : public Decorated
+{
 private:
    double limit_{5.0};
 
 public:
    // Runtime Calibration: Alarm limits are dynamic
-   auto&& setAlarmLimit(this auto&& self, double limit) noexcept {
+   auto&& setAlarmLimit(this auto&& self, double limit) noexcept
+   {
       self.limit_ = limit;
       return std::forward<decltype(self)>(self);
    }
@@ -145,13 +152,17 @@ public:
    /**
     * High-level logic that coordinates the reading and the safety check.
     */
-   void monitor(this auto&& self) {
+   void monitor(this auto&& self)
+   {
       double currentVal = self.read(); // Static dispatch to Averager
-      if (currentVal > self.limit_) {
+      if (currentVal > self.limit_)
+      {
          std::cout << " [ALARM] Sensor " << self.getID() 
                    << " reporting " << currentVal << "V. EXCEEDS LIMIT (" 
                    << self.limit_ << "V)!\n";
-      } else {
+      }
+      else
+      {
          std::cout << " [Monitor] Sensor " << self.getID() 
                    << " is stable at " << currentVal << "V.\n";
       }
@@ -159,7 +170,8 @@ public:
 };
 
 //------------------------------------------------------------------- Main:
-int main() {
+int main()
+{
    std::cout << "=== INDUSTRIAL SENSOR ANALYTICS (CALIBRATABLE STATIC DECORATORS) ===\n"
              << std::endl;
 
