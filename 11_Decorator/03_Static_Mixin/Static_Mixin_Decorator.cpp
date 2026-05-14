@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * File: Static_Decorator.cpp
+ * File: Static_Mixin_Decorator.cpp
  * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
