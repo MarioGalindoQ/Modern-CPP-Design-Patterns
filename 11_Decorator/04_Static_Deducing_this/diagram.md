@@ -28,8 +28,8 @@ classDiagram
    }
 
    %% Static Inheritance-based Decoration (Mixins)
-   Averager --|> AnalogSensor : Averager is an AnalogSensor
-   ThresholdAlarm --|> Averager : ThresholdAlarm is an Averager
+   Averager --|> AnalogSensor
+   ThresholdAlarm --|> Averager
 
    %% Interaction logic
    Client ..> ThresholdAlarm : configures and monitors
