@@ -19,35 +19,45 @@ accessor method) to determine if the resource has already been created:
 3. Cache/Return: Store the instance and return it to the caller for this 
 and all subsequent requests.
 
-## Our Example
-We implement a 'Fruit' factory that acts as a Flyweight/Lazy cache. 
-- The factory maintains an internal map of shared 'Fruit' objects.
-- Objects are created only on-demand ('Lazy').
-- Once created, they are stored ('Cached') for future requests.
+## Our Examples
+This folder illustrates two distinct architectural levels of Lazy Initialization:
 
-## Memory Management Note
-We use 'std::shared_ptr' instead of 'std::unique_ptr' because the Flyweight 
-objects (like 'Apple' or 'Banana') are intended to be **shared** among many 
-client objects simultaneously. 
-- 'std::shared_ptr' allows the factory to maintain a cache while letting 
-multiple clients hold a reference to the same object. 
-- This ensures the object lives as long as at least one client or the 
-factory needs it, preventing memory leaks or dangling pointers.
+1. **01_Lazy_Traditional/:**
+Demonstrates "Factory-Level" Lazy Initialization. It uses a 'Fruit' factory 
+that acts as a Flyweight/Lazy cache, managing a collection of shared 
+instances via 'std::map' and 'std::shared_ptr'.
+
+2. **02_Lazy_Deducing_this/ (Modern C++23):**
+Demonstrates "Object-Level" Lazy Initialization. It uses a **Transparent 
+Infrastructure Mixin** and C++23 **"Deducing This"**. This allows heavy 
+objects to exist as lightweight shells that automatically trigger their 
+internal resource loading upon the first functional call, without using 
+virtual functions or the CRTP idiom.
+
+## The C++23 Advantage (Technical Evolution)
+Traditional object-level lazy loading usually requires:
+- **Manual Checks:** Repeating the 'if(!initialized)' logic in every method.
+- **Virtual Functions:** Incurs the cost of a VTable and dynamic dispatch.
+- **CRTP:** Incurs complex circular template syntax.
+
+With **"Deducing This" (Explicit Object Parameters)**, we achieve **Static 
+Dispatch Polymorphism**. A non-template base class (the Mixin) can "reach 
+down" into the derived class at compile-time to trigger initialization. 
+This provides the performance of static code with the elegance of a reusable 
+infrastructure layer, keeping the business logic clean and transparent.
 
 ## Key Benefits
 - **Improved Startup:** Avoids heavy initialization at program launch.
 - **Memory Efficiency:** Defers resource allocation, keeping the footprint low.
-- **Performance:** Avoids repeated creation of identical objects by caching 
-the results of previous initializations.
+- **Transparency:** Modern implementations allow lazy loading to be invisible 
+  to the end-user (The "Transparent Lazy Load" idiom).
 
 ### Relationship with Singleton & Registry
-- **05_Singleton**: Lazy Initialization is the core mechanism used by most
-    modern Singletons (like Meyers' Singleton) to ensure the object is only
-    created when first accessed.
-- **16_Register**: While a classic Singleton restricts a class to one instance,
-    our implementation of Lazy Initialization acts as a **Multiton**. It ensures
-    a single instance exists for each unique key (e.g., one instance for
-    "Banana", one for "Apple"). This is a simplified, non-polymorphic version of
-    the Registry pattern found in folder 16_Register.
+- **05_Singleton**: Lazy Initialization is the core mechanism used by most 
+modern Singletons (like Meyers' Singleton) to ensure the object is only 
+created when first accessed.
+- **16_Register**: While a classic Singleton restricts a class to one 
+instance, our implementation of Lazy Initialization acts as a **Multiton** 
+(a simplified version of the Registry pattern).
 
 ---

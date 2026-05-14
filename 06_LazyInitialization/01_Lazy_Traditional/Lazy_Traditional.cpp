@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * File: LazyInitialization.cpp
+ * File: Lazy_Traditional.cpp
  * Author: Mario Galindo Queralt, Ph.D.
  * 
  * --- DESIGN OVERVIEW:
