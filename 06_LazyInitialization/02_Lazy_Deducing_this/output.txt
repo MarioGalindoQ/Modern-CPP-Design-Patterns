@@ -1,22 +1,21 @@
-=== MODERN LAZY INITIALIZATION: DEDUCING THIS ===
+=== MODERN LAZY INITIALIZATION: DEDUCING THIS (TRANSPARENT) ===
 
 --- PHASE 1: Object Creation ---
- [System] HeavyResource shell created: MainDatabase (Resource NOT loaded yet)
- Object is now alive but dormant.
+ [System] HeavyResource created (dormant): MainDatabase (Resource NOT loaded yet)
 
---- PHASE 2: First Access ---
- [Mixin] First access detected. Triggering lazy load...
- [System] Loading heavy data from disk/network for: MainDatabase...
+--- PHASE 2: Transparent Access (First Call) ---
+ [Mixin] Lazy check: Resource not loaded. Initializing now...
+ [System] Loading heavy data for: MainDatabase...
  [System] Processing data: 42 in MainDatabase
 
---- PHASE 3: Subsequent Access ---
+--- PHASE 3: Subsequent Access (No reload) ---
  [System] Data updated to: 100 in MainDatabase
  [System] Processing data: 100 in MainDatabase
 
---- PHASE 4: Temporary Object Lazy Access ---
- [System] HeavyResource shell created: TemporaryLog (Resource NOT loaded yet)
- [Mixin] First access detected. Triggering lazy load...
- [System] Loading heavy data from disk/network for: TemporaryLog...
- [System] Processing data: 42 in TemporaryLog
+--- PHASE 4: Temporary Object Access ---
+ [System] HeavyResource created (dormant): TemporaryBuffer (Resource NOT loaded yet)
+ [Mixin] Lazy check: Resource not loaded. Initializing now...
+ [System] Loading heavy data for: TemporaryBuffer...
+ [System] Processing data: 42 in TemporaryBuffer
 
 === SIMULATION COMPLETED ===
