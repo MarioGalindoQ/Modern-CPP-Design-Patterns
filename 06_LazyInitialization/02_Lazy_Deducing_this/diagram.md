@@ -20,13 +20,13 @@ classDiagram
    }
 
    %% Relationships based on your symbology
-   HeavyResource --|> LazyComponent : HeavyResource is a LazyComponent
+   HeavyResource --|> LazyComponent
    
    %% The Mixin interacts with the Derived class via Static Dispatch
    LazyComponent ..> HeavyResource : invokes (Static Dispatch)
 
    %% The Client interacts with the Business Layer normally
-   Client ..> HeavyResource : uses
+   Client ..> HeavyResource
 ```
 
 ### Design Note:
