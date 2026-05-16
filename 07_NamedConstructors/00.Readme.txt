@@ -25,12 +25,12 @@ have descriptive names (Named Constructors).
 ## Our Examples
 This folder demonstrates two distinct use cases for this idiom
 
-1. **SameParameters/:**
+1. **01_SameParameters/:**
 Demonstrates how to solve the constructor overloading ambiguity. A 'Point' 
 class offers 'rectangular(x, y)' and 'polar(radius, angle)' named 
 constructors. The client code becomes infinitely more readable.
 
-2. **CreatedOnlyWithNew/:**
+2. **02_CreatedOnlyWithNew/:**
 Demonstrates memory allocation control. By keeping the constructors 
 private, the client cannot allocate the object on the stack (e.g., 
 'Fred f;'). They are forced to use 'Fred::create()', which allocates 
