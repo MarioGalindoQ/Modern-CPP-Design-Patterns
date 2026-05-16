@@ -36,12 +36,12 @@ while being iterated).
 
 ## This folder contains two distinct architectural approaches
 
-1. **Iterator_GoF/ (Object-Oriented Approach):**
+1. **01_Iterator_GoF/ (Object-Oriented Approach):**
 Implements the classic Gang of Four pattern using virtual interfaces 
 (e.g., 'first()', 'next()', 'isDone()'). This is the standard in 
 languages like Java or C#.
 
-2. **Iterator_STL/ (Modern C++ Idiomatic Approach):**
+2. **02_Iterator_STL/ (Modern C++ Idiomatic Approach):**
 In C++, iterators rarely use virtual functions due to performance 
 overhead. Instead, they use "Duck Typing" (Operator Overloading: 
 'operator++', 'operator*', 'operator!='). This allows our custom 
