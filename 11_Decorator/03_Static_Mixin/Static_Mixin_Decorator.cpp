@@ -52,6 +52,24 @@ public:
    {
       return 2.0;
    }
+
+protected:
+   // Centralized formatting description logic
+   std::string formatDescription(std::string current, const std::string& ingredient) const
+   {
+      size_t andPos = current.find(" and ");
+
+      if(andPos != std::string::npos)
+      {
+         current.replace(andPos, 5, ", ");
+         return current + " and " + ingredient;
+      }
+      if(current.find(" with ") != std::string::npos)
+      {
+         return current + " and " + ingredient;
+      }
+      return current + " with " + ingredient;
+   }
 };
 
 //--------------------------------------------------------- Static Decorator A:
@@ -61,20 +79,7 @@ class Milk : public Decorated // Static Decorator "is a" Decorated,
 public:
    std::string getDescription() const
    {
-      std::string current = Decorated::getDescription();
-      size_t andPos = current.find(" and ");
-      size_t withPos = current.find(" with ");
-
-      if(andPos != std::string::npos)
-      {
-         current.replace(andPos, 5, ", ");
-         return current + " and Milk";
-      }
-      if(withPos != std::string::npos)
-      {
-         return current + " and Milk";
-      }
-      return current + " with Milk";
+      return Decorated::formatDescription(Decorated::getDescription(), "Milk");
    }
 
    double getCost() const
@@ -90,20 +95,7 @@ class Sugar : public Decorated // Static Decorator "is a" Decorated,
 public:
    std::string getDescription() const
    {
-      std::string current = Decorated::getDescription();
-      size_t andPos = current.find(" and ");
-      size_t withPos = current.find(" with ");
-
-      if(andPos != std::string::npos)
-      {
-         current.replace(andPos, 5, ", ");
-         return current + " and Sugar";
-      }
-      if(withPos != std::string::npos)
-      {
-         return current + " and Sugar";
-      }
-      return current + " with Sugar";
+      return Decorated::formatDescription(Decorated::getDescription(), "Sugar");
    }
 
    double getCost() const
@@ -119,20 +111,7 @@ class Vanilla : public Decorated // Static Decorator "is a" Decorated,
 public:
    std::string getDescription() const
    {
-      std::string current = Decorated::getDescription();
-      size_t andPos = current.find(" and ");
-      size_t withPos = current.find(" with ");
-
-      if(andPos != std::string::npos)
-      {
-         current.replace(andPos, 5, ", ");
-         return current + " and Vanilla";
-      }
-      if(withPos != std::string::npos)
-      {
-         return current + " and Vanilla";
-      }
-      return current + " with Vanilla";
+      return Decorated::formatDescription(Decorated::getDescription(), "Vanilla");
    }
 
    double getCost() const
@@ -157,7 +136,7 @@ int main()
    std::cout << " Static Cost: $" << sweetLatte.getCost() << std::endl;
 
    // Recipe 3: Vanilla Dream (Vanilla<Sugar<Milk<Coffee_ToBeDecorated>>>)
-   // Now this will correctly print: "Coffee_ToBeDecorated with Milk, Sugar and Vanilla"
+   // Now this will correctly print: "Coffee with Milk, Sugar and Vanilla"
    Vanilla<Sugar<Milk<Coffee_ToBeDecorated>>> vanillaDream;
    std::cout << "\n Recipe 3 (Vanilla Dream): " << vanillaDream.getDescription() << std::endl;
    std::cout << " Static Cost: $" << vanillaDream.getCost() << std::endl;
