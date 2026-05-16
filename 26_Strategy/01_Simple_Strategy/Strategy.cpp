@@ -84,23 +84,24 @@ int main()
 {
    std::cout << "=== STRATEGY PATTERN (SIMPLE VERSION) ===\n" << std::endl;
 
-   std::vector<int> data = {30, 21, 6, 14, 8, 11, 10, 26, 12};
+   std::vector<int> data1 = {30, 21, 6, 14, 8, 11, 10, 26, 12};
+   std::vector<int> data2 = data1;
    Sorter sorter;
 
    // 1. Use Bubble Sort
    sorter.setStrategy(std::make_unique<BubbleSort>());
-   sorter.sortVector(data);
+   sorter.sortVector(data1);
 
    std::cout << " Result: ";
-   for (int n : data) std::cout << n << " ";
+   for (int n : data1) std::cout << n << " ";
    std::cout << "\n\n";
 
    // 2. Use Shell Sort
    sorter.setStrategy(std::make_unique<ShellSort>());
-   sorter.sortVector(data);
+   sorter.sortVector(data2);
 
    std::cout << " Result: ";
-   for (int n : data) std::cout << n << " ";
+   for (int n : data2) std::cout << n << " ";
    std::cout << "\n" << std::endl;
 
    std::cout << "=== SIMULATION COMPLETED ===" << std::endl;
