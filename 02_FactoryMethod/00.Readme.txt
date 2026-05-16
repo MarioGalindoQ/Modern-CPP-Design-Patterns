@@ -21,18 +21,18 @@ larger and faster as the player reaches higher levels.
 ## Our Examples
 This folder contains two approaches to creating objects
 
-1. **FactoryMethod_GoF/:**
-Demonstrates the classic "Gang of Four" Factory Method. It uses an 
-abstract factory interface and specific concrete factories for each level. 
-This follows the Open/Closed Principle: you can add new levels by creating 
-new factory subclasses without modifying existing game logic.
-
-2. **SimpleFactoryMethod/:**
+1. **01_SimpleFactoryMethod/:**
 Demonstrates a "Simple Factory" (Parameterized Factory). It uses a single 
 factory class with a 'switch' or 'if' statement to instantiate objects 
 based on an internal state (the current level). While intuitive, it violates 
 the Open/Closed Principle because adding a new level requires modifying 
 the factory class itself.
+
+2. **02_FactoryMethod_GoF/:**
+Demonstrates the classic "Gang of Four" Factory Method. It uses an 
+abstract factory interface and specific concrete factories for each level. 
+This follows the Open/Closed Principle: you can add new levels by creating 
+new factory subclasses without modifying existing game logic.
 
 Instead of implementing a full game engine, this program serves as a summary 
 of what would happen in a much longer, complete game. Whenever a meteor is 
