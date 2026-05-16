@@ -25,18 +25,36 @@
 class SortAndPrint
 {
 private:
-   // Steps requiring peculiar implementations are private placeholders
+   // Steps requiring peculiar implementations are private placeholders.
+   // Derived classes override these to provide the "how".
    virtual void sort(std::vector<int>& data) = 0;
    virtual void print(const std::vector<int>& data) const = 0;
 
 public:
    virtual ~SortAndPrint() = default;
 
-   // This is the Template Method (The algorithm skeleton)
+   /**
+    * THE TEMPLATE METHOD (Algorithm Skeleton)
+    * This method implements the Non-Virtual Interface (NVI) idiom.
+    * It defines a stable sequence of steps that subclasses cannot bypass.
+    */
    void sortAndPrintVector(std::vector<int>& data)
    {
-      sort(data);
-      print(data);
+      // 1. [INVARIANT CODE] Pre-processing:
+      // Perform mandatory administrative tasks such as input validation, 
+      // logging the start of the operation, or starting performance timers.
+      
+      sort(data); // Call to the specific "how" (variant part)
+
+      // 2. [INVARIANT CODE] Intermediate Logic:
+      // Execute global consistency checks or verify invariants to ensure 
+      // the algorithm step (sort) left the system in a valid state.
+      
+      print(data); // Call to the second specific step (variant part)
+
+      // 3. [INVARIANT CODE] Post-processing:
+      // Finalize administrative actions such as measuring elapsed time, 
+      // reporting telemetry metrics, or releasing global resources.
    }
 };
 
