@@ -43,14 +43,14 @@ understanding the architectural differences in this folder.
 This directory contains two sub-folders solving the exact same problem 
 (following the exact same Grammar.txt), but using different paradigms:
 
-1. **Interpreter_GoF_AST/:**
+1. **01_Interpreter_GoF_AST/:**
 The pure Gang of Four pattern. The parser builds an Abstract Syntax 
 Tree (AST) in memory. Every mathematical operation is a polymorphic 
 C++ object (e.g., AddNode, SinNode). 
    - Pro: Highly extensible, clean OOP design (Easy to add a Visitor).
    - Con: Slower execution due to recursive virtual function calls.
 
-2. **Interpreter_Stack_Machine/ (Legacy Implementation):**
+2. **02_Interpreter_Stack_Machine/ (Legacy Implementation):**
 An industrial-style approach. The parser compiles the string into a 
 linear array of "Bytecode" instructions. A virtual machine uses a Stack 
 and a giant switch-statement to evaluate the bytecode.
