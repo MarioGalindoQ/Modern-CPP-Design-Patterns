@@ -26,12 +26,12 @@ the two to grow independently.
 This directory illustrates the two most important ways the Bridge pattern is applied
 in the C++ industry:
 
-1. **Bridge_GoF/**:
+1. **01_Bridge_GoF/**:
 The classic architectural implementation. It demonstrates how to decouple logical
 shapes (Circle, Square) from rendering platforms (Vector, Raster). This is the
 standard approach to avoid class explosion.
 
-2. **Bridge_Impl/**:
+2. **02_Bridge_Impl/**:
 The "Pimpl" (Pointer to Implementation) idiom. This is a C++-specific optimization
 of the Bridge pattern used as a "compilation firewall". It decouples the class
 interface from its internal members to speed up compilation times and hide
