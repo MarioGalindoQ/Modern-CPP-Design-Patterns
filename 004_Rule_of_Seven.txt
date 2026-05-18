@@ -2,8 +2,9 @@
 MGQ SYSTEM ARCHITECTURE - C++ ROBUST CLASS DESIGN (THE RULE OF SEVEN)
 Author: Mario Galindo Queralt, Ph.D.
 ================================================================================
-Version: 2.5 (Debian MGQ-Hybrid Standard)
-Date: May 20, 2022
+Version: 2.6 (Debian MGQ-Hybrid Standard)
+Created:  May 20, 2022
+Modified: May 18, 2026
 --------------------------------------------------------------------------------
 
 1. THE SEVEN CORE FUNCTIONS (MNEMONIC MAPPING)
@@ -12,47 +13,47 @@ To ensure object integrity, every class must be audited against the MGQ-7
 lifecycle functions. This prevents "hidden" compiler behavior and ensures 
 total control over resource management.
 
-ID | MNEMONIC | FUNCTION NAME            | TECHNICAL SIGNATURE
----|----------|--------------------------|-------------------------------------
-1  | DC       | Default Constructor      | Class();
-2  | CC       | Copy Constructor         | Class(const Class& other);
-3  | MC       | Move Constructor         | Class(Class&& other) noexcept;
-4  | CA       | Copy Assignment          | Class& operator=(const Class& other);
-5  | MA       | Move Assignment          | Class& operator=(Class&& other) noexcept;
-6  | De       | Destructor               | ~Class();
-7  | PC       | Particular Constructor   | Class(Type param1, param2...);
+ID | MNEMONIC | FUNCTION NAME          | TECHNICAL SIGNATURE
+---|----------|------------------------|-------------------------------------
+1  | DC       | Default Constructor    | Class();
+2  | CC       | Copy Constructor       | Class(const Class& other);
+3  | MC       | Move Constructor       | Class(Class&& other) noexcept;
+4  | CA       | Copy Assignment        | Class& operator=(const Class& other);
+5  | MA       | Move Assignment        | Class& operator=(Class&& other) noexcept;
+6  | De       | Destructor             | ~Class();
+7  | PC       | Particular Constructor | Class(Type param1, param2...);
 
 2. OPERATIONAL PROTOCOLS: RULE OF ZERO VS. FIVE
 -----------------------------------------------
 - RULE OF ZERO: If the class contains only RAII-compliant members (string, 
-  vector), the compiler generates IDs 1-6 automatically. Only ID 7 (PC) 
+  vector), the compiler generates IDs 1 to 6 automatically. Only ID 7:PC 
   is required for custom initialization.
-- RULE OF FIVE: If ID 6 (De) is manually defined, the compiler inhibits the 
-  automatic generation of Move operations (IDs 3 & 5). To restore them, 
-  IDs 2, 3, 4, 5, and 6 must be explicitly defined.
+- RULE OF FIVE: If ID 6:De is manually defined, the compiler inhibits the 
+  automatic generation of Move operations (IDs 3:MC & 5:MA). To restore them, 
+  IDs 2:CC, 3:MC, 4:CA, 5:MA, and 6:De must be explicitly defined.
 - MGQ STANDARD: We explicitly declare IDs 1 through 6 (using =default or =delete) 
   to ensure the "Checklist" is visible and the design intent is clear.
 
 3. RESOURCE MANAGEMENT STRATEGIES
 ---------------------------------
 - MOVE-ONLY OBJECTS (e.g., unique_ptr members): 
-  IDs 2 (CC) and 4 (CA) must be set to '= delete' (Unique resources cannot 
-  be cloned). IDs 3 (MC) and 5 (MA) must be set to '= default' with 
+  IDs 2:CC and 4:CA must be set to '= delete' (Unique resources cannot 
+  be cloned). IDs 3:MC and 5:MA must be set to '= default' with 
   the 'noexcept' qualifier for efficiency.
 - DEEP COPY / PIMPL IDIOM: 
-  IDs 2 and 4 must be manually implemented to duplicate internal state. 
-  ID 6 (De) must be defined in the implementation file (.cpp) to handle 
+  IDs 2:CC and 4:CA must be manually implemented to duplicate internal state. 
+  ID 6:De must be defined in the implementation file (.cpp) to handle 
   incomplete types and ensure proper cleanup.
 
 4. TECHNICAL REQUIREMENTS & BEST PRACTICES
 ------------------------------------------
-- NOEXCEPT MANDATE: Move operations (IDs 3 & 5) must be marked 'noexcept'. 
+- NOEXCEPT MANDATE: Move operations (IDs 3:MC & 5:MA) must be marked 'noexcept'. 
   This allows STL containers (std::vector) to perform fast-path reallocations 
   instead of expensive and slow copies.
-- BUILDER PATTERN INTEGRITY: When using Builders, ID 1 (DC) must be set to 
-  '= delete'. This forces the use of the Builder or a Particular Constructor (7), 
+- BUILDER PATTERN INTEGRITY: When using Builders, ID 1:DC must be set to 
+  '= delete'. This forces the use of the Builder or a Particular Constructor (7:PC), 
   preventing the instantiation of unconfigured or invalid objects.
-- VIRTUAL SAFETY: For any Base Class in an inheritance hierarchy, ID 6 (De) 
+- VIRTUAL SAFETY: For any Base Class in an inheritance hierarchy, ID 6:De 
   must be declared 'virtual ~Class() = default;'.
 
 5. AUDIT EXAMPLE: ROBUST MOVE-ONLY CLASS
@@ -61,15 +62,15 @@ The following implementation demonstrates a MGQ-compliant Move-Only Car class:
 
 class Car {
 public:
-   Car() = delete;                          // 1 DC: No unconfigured cars
-   Car(const Car&) = delete;                // 2 CC: No cloning allowed
-   Car(Car&&) noexcept = default;           // 3 MC: Efficient transfer
-   Car& operator=(const Car&) = delete;     // 4 CA: No copy assignment
-   Car& operator=(Car&&) noexcept = default;// 5 MA: Efficient re-assignment
-   ~Car() = default;                        // 6 De: Standard cleanup
-                                            
-private:                                    // 7 PC: Controlled birth
-   Car(float w, Engine e, Wheels v);        // (Private: Accessed by Builder)
+   Car()                          = delete;  // 1:DC - No unconfigured cars
+   Car(const Car&)                = delete;  // 2:CC - No cloning allowed
+   Car(Car&&) noexcept            = default; // 3:MC - Efficient transfer
+   Car& operator=(const Car&)     = delete;  // 4:CA - No copy assignment
+   Car& operator=(Car&&) noexcept = default; // 5:MA - Efficient re-assignment
+   ~Car()                         = default; // 6:De - Standard cleanup
+
+private:                                     // Private: Accessed by Builder
+   Car(float w, Engine e, Wheels v);         // 7:PC - Controlled birth
    friend class Builder;
 };
 
