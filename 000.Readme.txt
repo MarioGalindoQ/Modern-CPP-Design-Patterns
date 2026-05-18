@@ -35,13 +35,13 @@ concerns such as:
   and C++20 Abbreviated Templates.
 * **The "Rule of Seven":** A unique educational approach to tracing an object's
   full lifecycle:
-   - 1 DC: Default Constructor
-   - 2 CC: Copy Constructor
-   - 3 MC: Move Constructor
-   - 4 CA: Copy Assigment
-   - 5 MA: Move Assigment
-   - 6 De: Destructor
-   - 7 PC: Particular Constructor
+   - 1:DC - Default Constructor
+   - 2:CC - Copy Constructor
+   - 3:MC - Move Constructor
+   - 4:CA - Copy Assigment
+   - 5:MA - Move Assigment
+   - 6:De - Destructor
+   - 7:PC - Particular Constructor
 
 For more information about author's "Rule of Seven", refer to
 '004_Rule_of_Seven.txt' file
