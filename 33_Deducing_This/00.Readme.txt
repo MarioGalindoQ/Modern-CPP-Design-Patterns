@@ -1,0 +1,50 @@
+# DEDUCING THIS (C++23 FEATURE)
+**Author:** Mario Galindo Queralt, Ph.D.
+
+## Intent
+To provide a simpler, more readable, and more powerful alternative to the 
+Curiously Recurring Template Pattern (CRTP) for achieving static 
+polymorphism and code reuse.
+
+## The Problem with CRTP (Pattern 32)
+While the Curiously Recurring Template Pattern is a highly efficient 
+technique, it has always been criticized for its confusing syntax:
+1. **The "Curious" Inheritance**: Writing `class Derived : public Base<Derived>` 
+   is counter-intuitive for many developers.
+2. **Incomplete Types**: Accessing members of the derived class inside the 
+   base class often leads to complex "incomplete type" errors during 
+   compilation.
+3. **Redundancy**: If a class needs to inherit from multiple CRTP bases, the 
+   inheritance list becomes bloated and hard to manage.
+
+## The Solution: "Deducing This" (Explicit Object Parameters)
+Introduced in the **C++23 standard**, "Deducing This" allows a member 
+function to take the object instance (`this`) as an explicit first 
+parameter. 
+
+The magic lies in the fact that this explicit `self` parameter can be a 
+template. When a derived class calls a base class method, the compiler 
+automatically **deduces** the type of the derived class, eliminating the 
+need for the base class itself to be a template.
+
+### Comparison:
+- **Classic CRTP**: `class Circle : public Cloneable<Circle>`
+- **Deducing This**: `class Circle : public Cloneable` (where 'Cloneable' is a regular class).
+
+## Key Benefits
+- **Cleaner Syntax**: Inheritance becomes standard and straightforward.
+- **Improved Compilation**: Better error messages and fewer issues with 
+  incomplete types.
+- **Unified Logic**: One base class can handle different cv-qualifiers 
+  (const, volatile) and value categories (lvalue, rvalue) with a single 
+  templated method.
+- **Performance**: Just like CRTP, it provides Zero-Overhead static dispatch 
+  and allows for aggressive compiler inlining.
+
+----------------------------------------------------------------------------
+STATUS: IN DEVELOPMENT
+----------------------------------------------------------------------------
+This pattern and its corresponding code examples (automated cloning and 
+static polymorphism) are currently under development and will be added 
+to the repository soon.
+============================================================================

@@ -1,0 +1,51 @@
+=== COMPONENT REGISTRY (DOD / SINGLETON / SIMULATION) ===
+
+--- Processing Frame 1 ---
+ [System] Updating Physics...
+  -> [Mario] moved to (1, 2)
+  -> [Enemy Guard] moved to (8.5, 9)
+  -> [Aggressive Drone] moved to (5, 3.5)
+ [System] Updating AI Decisions...
+  -> [Mario] is searching for the treasure.
+  -> [Enemy Guard] is patrolling the area.
+  -> [Aggressive Drone] is patrolling the area.
+
+--- Processing Frame 2 ---
+ [System] Updating Physics...
+  -> [Mario] moved to (2, 4)
+  -> [Enemy Guard] moved to (7, 10)
+  -> [Aggressive Drone] moved to (3, 4.5)
+ [System] Updating AI Decisions...
+  -> [Mario] is searching for the treasure.
+  -> [Enemy Guard] is patrolling the area.
+  -> [Aggressive Drone] is ATTACKING!
+
+--- Processing Frame 3 ---
+ [System] Updating Physics...
+  -> [Mario] moved to (3, 6)
+  -> [Enemy Guard] moved to (5.5, 11)
+  -> [Aggressive Drone] moved to (1, 5.5)
+ [System] Updating AI Decisions...
+  -> [Mario] is in DEFENSE stance (Shields Up and Firing).
+  -> [Enemy Guard] is patrolling the area.
+  -> [Aggressive Drone] is ATTACKING!
+
+--- Processing Frame 4 ---
+ [System] Updating Physics...
+  -> [Mario] moved to (4, 8)
+  -> [Enemy Guard] moved to (4, 12)
+ [System] Updating AI Decisions...
+  -> [Mario] is in DEFENSE stance (Shields Up and Firing).
+  -> [Enemy Guard] is patrolling the area.
+  -> [Aggressive Drone] HAS CRASHED (Dead).
+
+--- Processing Frame 5 ---
+ [System] Updating Physics...
+  -> [Mario] moved to (5, 10)
+  -> [Enemy Guard] moved to (2.5, 13)
+ [System] Updating AI Decisions...
+  -> [Mario] is searching for the treasure.
+  -> [Enemy Guard] is patrolling the area.
+  -> [Aggressive Drone] HAS CRASHED (Dead).
+
+=== SIMULATION COMPLETED ===

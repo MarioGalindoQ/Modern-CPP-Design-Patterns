@@ -64,6 +64,6 @@ While not a GoF pattern itself, 'std::variant' is the modern foundation for:
 - **Command Pattern:** Encapsulating requests as variant objects, see 
   19_Command/02_Modern_Variant/.
 - **Error Handling:** Returning a variant containing either a Result or 
-  an Error (the 'Expected' idiom), see 33_ErrorHandling/01_ErrorHandling_Variant/.
+  an Error (the 'Expected' idiom), see 34_ErrorHandling/01_ErrorHandling_Variant/.
 
 ---
