@@ -37,7 +37,7 @@ and static component buckets.
 2. **Data Normalization**: We separate heavy metadata ('Label' components) from lean mathematical
 data ('Position' and 'Velocity' structs) to maximize cache line utility.
 3. **Specialized Systems**: 
-   - **MovementSystem**: Processes Physics only for living entities.
+   - **PhysicsSystem**: Processes Physics only for living entities.
    - **AISystem**: Handles decision-making and logic reports.
    - **ScenarioSystem**: Acts as a "Director", mutating data over time (e.g., Drone attacks ->
        Mario defends -> Drone dies).
@@ -51,6 +51,8 @@ data ('Position' and 'Velocity' structs) to maximize cache line utility.
     with maximum efficiency.
 
 ## Cross-References
+- **Pattern 01 (Builder)**: A Fluent Static Builder is used to guarantee "Parallel Array Alignment",
+  ensuring that every entity is simultaneously initialized across all component data buckets.
 - **Pattern 05 (Singleton)**: The Registry uses a Meyers Singleton to ensure a consistent "World
     State".
 - **Pattern 13 (Flyweight)**: The 'Label' component mimics the sharing of identity data to keep

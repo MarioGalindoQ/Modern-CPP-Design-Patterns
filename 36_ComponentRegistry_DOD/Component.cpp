@@ -34,6 +34,13 @@
  *    line. Human-readable names or metadata are relegated to a separate 
  *    'Label' component, processed only when necessary (e.g., during logging).
  * 
+ * --- PARALLEL ARRAY BUILDER:
+ * To ensure data integrity, we utilize a Static Builder pattern (Pattern 01). 
+ * This builder guarantees "Parallel Array Alignment": every time an entity 
+ * is built, a new entry is pushed into EVERY component vector simultaneously. 
+ * This allows Systems to use a shared index 'i' to access related data across 
+ * different buckets in O(1) time without searching for IDs.
+ * 
  * --- SINGLETON ARCHITECTURE:
  * The 'Registry' is implemented as a Meyers Singleton. This centralizes 
  * identity management and data storage, ensuring a single, consistent 
@@ -56,29 +63,10 @@
 
 //--------------------------------------------------------- Component Types:
 // Pure data structures (POD) for maximum cache efficiency.
-struct Label
-{
-   uint32_t entityId;
-   std::string name;
-};
-
-struct Position
-{
-   uint32_t entityId;
-   float x, y;
-};
-
-struct Velocity
-{
-   uint32_t entityId;
-   float vx, vy;
-};
-
-struct AIControl
-{
-   uint32_t entityId;
-   int state; // 0: Idle, 1: Patrol, 2: Attack, 3: Defense, 4: Dead
-};
+struct Label     { uint32_t entityId; std::string name; };
+struct Position  { uint32_t entityId; float x, y; };
+struct Velocity  { uint32_t entityId; float vx, vy; };
+struct AIControl { uint32_t entityId; int state; }; // 0:Idle, 1:Patrol, 2:Attack, 3:Defense, 4:Dead
 
 //--------------------------------------------------------- Component Registry:
 class Registry
@@ -105,22 +93,58 @@ public:
    Registry(const Registry&)            = delete;
    Registry& operator=(const Registry&) = delete;
 
-   // Centralized entity creation with identity guarantee
-   uint32_t createEntity(std::string name = "")
+   // Implementation of the Static Builder for Entity Creation
+   class EntityBuilder
    {
-      uint32_t id = nextEntityId_++;
-      if(!name.empty()) addComponent(Label{id, std::move(name)});
-      return id;
-   }
+   private:
+      uint32_t    id_;
+      std::string name_{"Unknown"};
+      float       x_{0}, y_{0}, vx_{0}, vy_{0};
+      int         state_{0};
 
-   // Resolves an Entity ID to its Label name for human-readable output
-   std::string getEntityName(uint32_t id)
+   public:
+      explicit EntityBuilder(uint32_t id) : id_{id} { }
+
+      EntityBuilder& setName(std::string name)
+      {
+         name_ = std::move(name);
+         return *this;
+      }
+
+      EntityBuilder& setPosition(float x, float y)
+      {
+         x_ = x; y_ = y;
+         return *this;
+      }
+
+      EntityBuilder& setVelocity(float vx, float vy)
+      {
+         vx_ = vx; vy_ = vy;
+         return *this;
+      }
+
+      EntityBuilder& setAIState(int state)
+      {
+         state_ = state;
+         return *this;
+      }
+
+      // The build method ensures all parallel arrays are updated at once
+      uint32_t build()
+      {
+         auto& world = Registry::getInstance();
+         world.addComponent(Label{id_, std::move(name_)});
+         world.addComponent(Position{id_, x_, y_});
+         world.addComponent(Velocity{id_, vx_, vy_});
+         world.addComponent(AIControl{id_, state_});
+         return id_;
+      }
+   };
+
+   // Entry point to start the fluent building process
+   EntityBuilder createEntity()
    {
-      auto& labels = getComponents<Label>();
-      for(const auto& label : labels)
-         if(label.entityId == id) return label.name;
-      
-      return "Entity " + std::to_string(id);
+      return EntityBuilder{nextEntityId_++};
    }
 
    template<class ComponentType>
@@ -139,7 +163,7 @@ public:
 
 //--------------------------------------------------------- Systems:
 
-class MovementSystem
+class PhysicsSystem
 {
 public:
    void update()
@@ -148,25 +172,19 @@ public:
       auto& positions  = world.getComponents<Position>();
       auto& velocities = world.getComponents<Velocity>();
       auto& aiStates   = world.getComponents<AIControl>();
+      auto& labels     = world.getComponents<Label>();
 
       std::cout << " [System] Updating Physics...\n";
       
+      // Using shared index 'i' for O(1) access to parallel arrays
       for(size_t i = 0; i < positions.size(); ++i)
       {
-         uint32_t id = positions[i].entityId;
-         
-         // Logic: Check if the entity is dead in the AI data bucket
-         bool isDead = false;
-         for(const auto& ai : aiStates)
-            if(ai.entityId == id && ai.state == 4) isDead = true;
-
-         if(isDead) continue;
+         if(aiStates[i].state == 4) continue; // Dead
 
          positions[i].x += velocities[i].vx;
          positions[i].y += velocities[i].vy;
          
-         std::string name = world.getEntityName(id);
-         std::cout << "  -> [" << name << "] moved to ("
+         std::cout << "  -> [" << labels[i].name << "] moved to ("
                    << positions[i].x << ", " << positions[i].y << ")\n";
       }
    }
@@ -187,12 +205,13 @@ public:
    {
       auto& world    = Registry::getInstance();
       auto& aiStates = world.getComponents<AIControl>();
-      
+      auto& labels   = world.getComponents<Label>();
+
       std::cout << " [System] Updating AI Decisions...\n";
-      for(const auto& ai : aiStates)
+      for(size_t i = 0; i < aiStates.size(); ++i)
       {
-         std::string name = world.getEntityName(ai.entityId);
-         switch (ai.state)
+         const std::string& name = labels[i].name;
+         switch(aiStates[i].state)
          {
             case 0: std::cout << "  -> [" << name << "] is searching for the treasure.\n";                break;
             case 1: std::cout << "  -> [" << name << "] is patrolling the area.\n";                       break;
@@ -204,24 +223,35 @@ public:
    }
 };
 
-// ScenarioSystem: Handles the world timeline and state mutations.
+// ScenarioSystem: Handles the world timeline by identifying entities by their Labels.
 class ScenarioSystem
 {
 public:
-   void update(int frame, uint32_t marioId, uint32_t droneId)
+   void update(int frame)
    {
       auto& world    = Registry::getInstance();
       auto& aiStates = world.getComponents<AIControl>();
+      auto& labels   = world.getComponents<Label>();
 
+      // Data mutation logic based on aligned indices
       // In a real simulation, this system would analyze the environment 
       // (proximity, line of sight, health) to trigger state changes. 
       // For this example, we simulate these triggers based on the frame timeline.
-      for(auto& ai : aiStates)
+      for(size_t i = 0; i < labels.size(); ++i)
       {
-         if(frame == 2 && ai.entityId == droneId) ai.state = 2; // Drone starts attack
-         if(frame == 3 && ai.entityId == marioId) ai.state = 3; // Mario detects danger and shields
-         if(frame == 4 && ai.entityId == droneId) ai.state = 4; // Drone receives critical damage
-         if(frame == 5 && ai.entityId == marioId) ai.state = 0; // Threat neutralized, back to Idle
+         // Logic for Mario
+         if(labels[i].name == "Mario")
+         {
+            if(frame == 3) aiStates[i].state = 3; // Mario detects danger and shields
+            if(frame == 5) aiStates[i].state = 0; // Threat neutralized, back to Idle
+         }
+
+         // Logic for the Drone
+         if(labels[i].name == "Aggressive Drone")
+         {
+            if(frame == 2) aiStates[i].state = 2; // Drone starts attack
+            if(frame == 4) aiStates[i].state = 4; // Drone receives critical damage
+         }
       }
    }
 };
@@ -229,42 +259,56 @@ public:
 //--------------------------------------------------------- Main Simulation:
 int main()
 {
-   std::cout << "=== COMPONENT REGISTRY (DOD / SINGLETON / SIMULATION) ===\n" << std::endl;
+   std::cout << "=== COMPONENT REGISTRY (DOD / SINGLETON / BUILDER) ===\n" << std::endl;
 
    Registry& world = Registry::getInstance();
 
-   // 1. Create Entities using automatic ID generation
-   auto mario = world.createEntity("Mario");
-   world.addComponent(Position{mario, 0.0f, 0.0f});
-   world.addComponent(Velocity{mario, 1.0f, 2.0f});
-   world.addComponent(AIControl{mario, 0}); 
+   // 1. Create Entities using the Fluent Static Builder (Pattern 01)
+   // This ensures all parallel vectors are perfectly aligned.
 
-   auto guard = world.createEntity("Enemy Guard");
-   world.addComponent(Position{guard, 10.0f, 8.0f});
-   world.addComponent(Velocity{guard, -1.5f, 1.0f});
-   world.addComponent(AIControl{guard, 1}); 
+   [[maybe_unused]]
+   auto mario = world.createEntity()
+                     .setName("Mario")
+                     .setPosition(0.0f, 0.0f)
+                     .setVelocity(1.0f, 2.0f)
+                     .setAIState(0)
+                     .build();
 
-   auto drone = world.createEntity("Aggressive Drone");
-   world.addComponent(Position{drone, 7.0f, 2.5f});
-   world.addComponent(Velocity{drone, -2.0f, 1.0f});
-   world.addComponent(AIControl{drone, 1}); 
+   [[maybe_unused]]
+   auto guard = world.createEntity()
+                     .setName("Enemy Guard")
+                     .setPosition(10.0f, 8.0f)
+                     .setVelocity(-1.5f, 1.0f)
+                     .setAIState(1)
+                     .build();
 
-   // 2. Systems Initialization
+   [[maybe_unused]]
+   auto drone = world.createEntity()
+                     .setName("Aggressive Drone")
+                     .setPosition(7.0f, 2.5f)
+                     .setVelocity(-2.0f, 1.0f)
+                     .setAIState(1)
+                     .build();
+
+// 2. Systems Initialization
    ScenarioSystem scenario;
-   MovementSystem physics;
+   PhysicsSystem  physics;
    AISystem       intelligence;
 
-   // 3. Main Loop: Processing 6 frames of simulation
+   // 3. Main Loop: Processing 5 frames of aligned simulation
    for(int frame = 1; frame <= 5; ++frame)
    {
       std::cout << "--- Processing Frame " << frame << " ---\n";
 
       // The ScenarioSystem manages data mutations for this frame
-      scenario.update(frame, mario, drone);
+      scenario.update(frame);
 
-      // Execute standard systems over the mutated data
+      // The PhysicsSystem manages the physical simulation
       physics.update();
+
+      // The AISystem manages the game's artificial intelligence
       intelligence.update();
+
       std::cout << std::endl;
    }
 

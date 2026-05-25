@@ -1,4 +1,4 @@
-=== COMPONENT REGISTRY (DOD / SINGLETON / SIMULATION) ===
+=== COMPONENT REGISTRY (DOD / SINGLETON / BUILDER) ===
 
 --- Processing Frame 1 ---
  [System] Updating Physics...

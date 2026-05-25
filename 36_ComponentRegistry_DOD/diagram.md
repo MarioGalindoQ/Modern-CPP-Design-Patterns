@@ -6,10 +6,22 @@ classDiagram
       -uint32_t nextEntityId_
       -static inline vectors
       +getInstance() Registry&
-      +createEntity(string) uint32_t
+      +createEntity() EntityBuilder
       +getEntityName(uint32_t) string
       +addComponent(T&&)
       +getComponents() vector~T~&
+   }
+
+   class EntityBuilder {
+      -uint32_t id_
+      -string name_
+      -float x, y, vx, vy
+      -int state_
+      +setName(string) EntityBuilder&
+      +setPosition(float, float) EntityBuilder&
+      +setVelocity(float, float) EntityBuilder&
+      +setAIState(int) EntityBuilder&
+      +build() uint32_t
    }
 
    class Position {
@@ -34,7 +46,7 @@ classDiagram
       +string name
    }
 
-   class MovementSystem {
+   class PhysiscsSystem {
       +update()
    }
 
@@ -43,7 +55,7 @@ classDiagram
    }
 
    class ScenarioSystem {
-      +update(int, uint, uint)
+      +update(int)
    }
 
    class Client {
@@ -56,25 +68,33 @@ classDiagram
    Registry *-- "n" AIControl
    Registry *-- "n" Label
 
+   %% The Builder is the factory for aligned entities
+   Registry ..> EntityBuilder : creates
+   EntityBuilder ..> Registry : pushes data to
+   EntityBuilder ..> Position : initializes
+   EntityBuilder ..> Velocity : initializes
+
    %% Systems use the Registry to access or mutate data
-   MovementSystem ..> Registry : requests data
+   PhysicsSystem ..> Registry : requests data
    AISystem ..> Registry : requests data
    ScenarioSystem ..> Registry : mutates state
 
    %% Client orchestrates the simulation
    Client --> Registry : accesses
-   Client --> MovementSystem : executes
+   Client ..> EntityBuilder : configures entities
+   Client --> PhysicsSystem : executes
    Client --> AISystem : executes
    Client --> ScenarioSystem : manages timeline
 ```
 
 ### Design Note:
-This diagram illustrates the Data-Oriented Design (DOD) architecture. The 
-'Registry' (Meyers Singleton) acts as the central owner of all component 
-vectors, ensuring that data of the same type is stored contiguously in 
-memory. The 'Systems' are decoupled from each other and from the entities 
-themselves; they only interact with the Registry to pull or mutate specific 
-data buckets. This layout maximizes CPU cache efficiency by enabling 
-sequential access patterns and eliminating virtual function overhead.
+This diagram illustrates the complete Data-Oriented Design (DOD) architecture. 
+The 'Registry' (Meyers Singleton) acts as the central owner of all component 
+vectors. A Fluent 'EntityBuilder' is introduced to guarantee 'Parallel Array 
+Alignment': it ensures that every time an entity is created, all corresponding 
+data buckets are updated simultaneously, allowing 'Systems' to use a shared 
+index 'i' for O(1) cross-component access. This layout maximizes CPU cache 
+efficiency by enabling sequential access patterns and eliminating virtual 
+function overhead.
 
 **Author:** Mario Galindo Queralt, Ph.D.
