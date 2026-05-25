@@ -139,28 +139,6 @@ public:
 
 //--------------------------------------------------------- Systems:
 
-// ScenarioSystem: Handles the world timeline and state mutations.
-class ScenarioSystem
-{
-public:
-   void update(int frame, uint32_t marioId, uint32_t droneId)
-   {
-      auto& world    = Registry::getInstance();
-      auto& aiStates = world.getComponents<AIControl>();
-
-      // In a real simulation, this system would analyze the environment 
-      // (proximity, line of sight, health) to trigger state changes. 
-      // For this example, we simulate these triggers based on the frame timeline.
-      for(auto& ai : aiStates)
-      {
-         if(frame == 2 && ai.entityId == droneId) ai.state = 2; // Drone starts attack
-         if(frame == 3 && ai.entityId == marioId) ai.state = 3; // Mario detects danger and shields
-         if(frame == 4 && ai.entityId == droneId) ai.state = 4; // Drone receives critical damage
-         if(frame == 5 && ai.entityId == marioId) ai.state = 0; // Threat neutralized, back to Idle
-      }
-   }
-};
-
 class MovementSystem
 {
 public:
@@ -194,6 +172,14 @@ public:
    }
 };
 
+/**
+ * AISystem along with ScenarioSystem, manages the intelligence for 
+ * decision-making regarding game events. In a complex application, these 
+ * systems can be implemented using Artificial Intelligence (AI) algorithms 
+ * (e.g., Finite State Machines, Behavior Trees, or Neural Networks) to 
+ * analyze data buckets and determine tactical actions.
+ */
+
 class AISystem
 {
 public:
@@ -208,12 +194,34 @@ public:
          std::string name = world.getEntityName(ai.entityId);
          switch (ai.state)
          {
-            case 0: std::cout << "  -> [" << name << "] is searching for the treasure.\n";                            break;
+            case 0: std::cout << "  -> [" << name << "] is searching for the treasure.\n";                break;
             case 1: std::cout << "  -> [" << name << "] is patrolling the area.\n";                       break;
             case 2: std::cout << "  -> [" << name << "] is ATTACKING!\n";                                 break;
             case 3: std::cout << "  -> [" << name << "] is in DEFENSE stance (Shields Up and Firing).\n"; break;
             case 4: std::cout << "  -> [" << name << "] HAS CRASHED (Dead).\n";                           break;
          }
+      }
+   }
+};
+
+// ScenarioSystem: Handles the world timeline and state mutations.
+class ScenarioSystem
+{
+public:
+   void update(int frame, uint32_t marioId, uint32_t droneId)
+   {
+      auto& world    = Registry::getInstance();
+      auto& aiStates = world.getComponents<AIControl>();
+
+      // In a real simulation, this system would analyze the environment 
+      // (proximity, line of sight, health) to trigger state changes. 
+      // For this example, we simulate these triggers based on the frame timeline.
+      for(auto& ai : aiStates)
+      {
+         if(frame == 2 && ai.entityId == droneId) ai.state = 2; // Drone starts attack
+         if(frame == 3 && ai.entityId == marioId) ai.state = 3; // Mario detects danger and shields
+         if(frame == 4 && ai.entityId == droneId) ai.state = 4; // Drone receives critical damage
+         if(frame == 5 && ai.entityId == marioId) ai.state = 0; // Threat neutralized, back to Idle
       }
    }
 };
