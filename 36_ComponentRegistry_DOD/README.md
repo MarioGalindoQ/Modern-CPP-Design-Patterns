@@ -119,7 +119,7 @@ classDiagram
       +string name
    }
 
-   class PhysiscsSystem {
+   class PhysicsSystem {
       +update()
    }
 
