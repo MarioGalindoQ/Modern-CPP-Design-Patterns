@@ -83,7 +83,7 @@ private:
    // We use this second template to ensure that even if getComponents is called 
    // with references or const types, they all map to the same physical vector.
    template<class ComponentType>
-   std::vector<ComponentType>& getInternalVector() noexcept
+   std::vector<ComponentType>& getInternalVector()
    {
       static std::vector<ComponentType> componentVector;
       return componentVector;
@@ -144,7 +144,7 @@ public:
    }
 
    template<class ComponentType>
-   std::vector<std::decay_t<ComponentType>>& getComponents() noexcept
+   std::vector<std::decay_t<ComponentType>>& getComponents()
    {
       return getInternalVector<std::decay_t<ComponentType>>();
    }
