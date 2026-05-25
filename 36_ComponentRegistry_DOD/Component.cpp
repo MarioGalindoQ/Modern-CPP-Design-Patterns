@@ -69,13 +69,19 @@ struct Velocity  { uint32_t entityId; float vx, vy; };
 struct AIControl { uint32_t entityId; int state; }; // 0:Idle, 1:Patrol, 2:Attack, 3:Defense, 4:Dead
 
 //--------------------------------------------------------- Component Registry:
-class Registry
+class Registry // A Meyers' Singleton class
 {
 private:
    uint32_t nextEntityId_{1};
 
    Registry() = default;
 
+   Registry(const Registry&)            = delete;
+   Registry& operator=(const Registry&) = delete;
+
+   // Internal storage: one static vector per unique component type.
+   // We use this second template to ensure that even if getComponents is called 
+   // with references or const types, they all map to the same physical vector.
    template<class ComponentType>
    std::vector<ComponentType>& getInternalVector()
    {
@@ -90,10 +96,7 @@ public:
       return instance;
    }
 
-   Registry(const Registry&)            = delete;
-   Registry& operator=(const Registry&) = delete;
-
-   // Implementation of the Static Builder for Entity Creation
+   // Implementation of the Inertnal Static Builder for Entity Creation
    class EntityBuilder
    {
    private:
@@ -102,9 +105,14 @@ public:
       float       x_{0}, y_{0}, vx_{0}, vy_{0};
       int         state_{0};
 
-   public:
+      // Private constructor: ensures only Registry can start the building process.
+      // This protects the integrity of the nextEntityId_ counter.
       explicit EntityBuilder(uint32_t id) : id_{id} { }
+      
+      // We grant friendship to the outer class
+      friend class Registry;
 
+   public:
       EntityBuilder& setName(std::string name)
       {
          name_ = std::move(name);
@@ -129,7 +137,8 @@ public:
          return *this;
       }
 
-      // The build method ensures all parallel arrays are updated at once
+      // The build method ensures all parallel arrays are updated at once.
+      // This alignment is what allows O(1) access by index in the systems.
       uint32_t build()
       {
          auto& world = Registry::getInstance();
@@ -163,6 +172,39 @@ public:
 
 //--------------------------------------------------------- Systems:
 
+// ScenarioSystem: Handles the world timeline by identifying entities by their Labels.
+class ScenarioSystem
+{
+public:
+   void update(int frame)
+   {
+      auto& world    = Registry::getInstance();
+      auto& aiStates = world.getComponents<AIControl>();
+      auto& labels   = world.getComponents<Label>();
+
+      // Data mutation logic based on aligned indices
+      // In a real simulation, this system would analyze the environment 
+      // (proximity, line of sight, health) to trigger state changes. 
+      // For this example, we simulate these triggers based on the frame timeline.
+      for(size_t i = 0; i < labels.size(); ++i)
+      {
+         // Logic for Mario
+         if(labels[i].name == "Mario")
+         {
+            if(frame == 3) aiStates[i].state = 3; // Mario detects danger and shields
+            if(frame == 5) aiStates[i].state = 0; // Threat neutralized, back to Idle
+         }
+
+         // Logic for the Drone
+         if(labels[i].name == "Aggressive Drone")
+         {
+            if(frame == 2) aiStates[i].state = 2; // Drone starts attack
+            if(frame == 4) aiStates[i].state = 4; // Drone receives critical damage
+         }
+      }
+   }
+};
+
 class PhysicsSystem
 {
 public:
@@ -179,7 +221,7 @@ public:
       // Using shared index 'i' for O(1) access to parallel arrays
       for(size_t i = 0; i < positions.size(); ++i)
       {
-         if(aiStates[i].state == 4) continue; // Dead
+         if(aiStates[i].state == 4) continue; // Skip processing for dead entities
 
          positions[i].x += velocities[i].vx;
          positions[i].y += velocities[i].vy;
@@ -223,39 +265,6 @@ public:
    }
 };
 
-// ScenarioSystem: Handles the world timeline by identifying entities by their Labels.
-class ScenarioSystem
-{
-public:
-   void update(int frame)
-   {
-      auto& world    = Registry::getInstance();
-      auto& aiStates = world.getComponents<AIControl>();
-      auto& labels   = world.getComponents<Label>();
-
-      // Data mutation logic based on aligned indices
-      // In a real simulation, this system would analyze the environment 
-      // (proximity, line of sight, health) to trigger state changes. 
-      // For this example, we simulate these triggers based on the frame timeline.
-      for(size_t i = 0; i < labels.size(); ++i)
-      {
-         // Logic for Mario
-         if(labels[i].name == "Mario")
-         {
-            if(frame == 3) aiStates[i].state = 3; // Mario detects danger and shields
-            if(frame == 5) aiStates[i].state = 0; // Threat neutralized, back to Idle
-         }
-
-         // Logic for the Drone
-         if(labels[i].name == "Aggressive Drone")
-         {
-            if(frame == 2) aiStates[i].state = 2; // Drone starts attack
-            if(frame == 4) aiStates[i].state = 4; // Drone receives critical damage
-         }
-      }
-   }
-};
-
 //--------------------------------------------------------- Main Simulation:
 int main()
 {
@@ -290,7 +299,7 @@ int main()
                      .setAIState(1)
                      .build();
 
-// 2. Systems Initialization
+   // 2. Systems Initialization
    ScenarioSystem scenario;
    PhysicsSystem  physics;
    AISystem       intelligence;
