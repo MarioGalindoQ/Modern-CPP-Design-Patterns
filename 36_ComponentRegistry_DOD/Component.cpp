@@ -83,7 +83,7 @@ private:
    // We use this second template to ensure that even if getComponents is called 
    // with references or const types, they all map to the same physical vector.
    template<class ComponentType>
-   std::vector<ComponentType>& getInternalVector()
+   std::vector<ComponentType>& getInternalVector() noexcept
    {
       static std::vector<ComponentType> componentVector;
       return componentVector;
@@ -113,29 +113,10 @@ public:
       friend class Registry;
 
    public:
-      EntityBuilder& setName(std::string name)
-      {
-         name_ = std::move(name);
-         return *this;
-      }
-
-      EntityBuilder& setPosition(float x, float y)
-      {
-         x_ = x; y_ = y;
-         return *this;
-      }
-
-      EntityBuilder& setVelocity(float vx, float vy)
-      {
-         vx_ = vx; vy_ = vy;
-         return *this;
-      }
-
-      EntityBuilder& setAIState(int state)
-      {
-         state_ = state;
-         return *this;
-      }
+      EntityBuilder& setName(std::string name)       { name_ = std::move(name); return *this; }
+      EntityBuilder& setPosition(float x, float y)   { x_ = x; y_ = y;          return *this; }
+      EntityBuilder& setVelocity(float vx, float vy) { vx_ = vx; vy_ = vy;      return *this; }
+      EntityBuilder& setAIState(int state)           { state_ = state;          return *this; }
 
       // The build method ensures all parallel arrays are updated at once.
       // This alignment is what allows O(1) access by index in the systems.
@@ -159,12 +140,11 @@ public:
    template<class ComponentType>
    void addComponent(ComponentType&& component)
    {
-      using CleanComponentType = std::decay_t<ComponentType>;
-      getInternalVector<CleanComponentType>().emplace_back(std::forward<ComponentType>(component));
+      getComponents<ComponentType>().push_back(std::forward<ComponentType>(component));
    }
 
    template<class ComponentType>
-   std::vector<std::decay_t<ComponentType>>& getComponents()
+   std::vector<std::decay_t<ComponentType>>& getComponents() noexcept
    {
       return getInternalVector<std::decay_t<ComponentType>>();
    }
@@ -176,7 +156,7 @@ public:
 class ScenarioSystem
 {
 public:
-   void update(int frame)
+   void update(int frame) const
    {
       auto& world    = Registry::getInstance();
       auto& aiStates = world.getComponents<AIControl>();
@@ -208,7 +188,7 @@ public:
 class PhysicsSystem
 {
 public:
-   void update()
+   void update() const
    {
       auto& world      = Registry::getInstance();
       auto& positions  = world.getComponents<Position>();
@@ -243,7 +223,7 @@ public:
 class AISystem
 {
 public:
-   void update()
+   void update() const
    {
       auto& world    = Registry::getInstance();
       auto& aiStates = world.getComponents<AIControl>();
