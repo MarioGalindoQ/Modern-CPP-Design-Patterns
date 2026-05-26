@@ -49,9 +49,9 @@ public:
 
    // --- THE RULE OF SEVEN (MGQ Mnemonic System) ---
    Car()                          = delete;  // 1 DC: No default car to force the use of the Builder
-   Car(const Car&)                = delete;  // 2 CC: Not possible because unique_ptrs can't be moved
+   Car(const Car&)                = delete;  // 2 CC: Not possible because unique_ptrs can't be copied
    Car(Car&&) noexcept            = default; // 3 MC: Possible because unique_ptrs can be moved
-   Car& operator=(const Car&)     = delete;  // 4 CA: Not possible because unique_ptrs can't be moved
+   Car& operator=(const Car&)     = delete;  // 4 CA: Not possible because unique_ptrs can't be copied
    Car& operator=(Car&&) noexcept = default; // 5 MA: Possible because unique_ptrs can be moved
    ~Car()                         = default; // 6 De: Destructor
 
@@ -76,7 +76,7 @@ private:
         color_{std::move(color)}, type_{type}, engine_{std::move(engine)},
         wheels_{std::move(wheels)} { }
 
-   friend class Builder; // Only Builder can build Cars
+   friend class Builder; // Only local Builder class can build Cars
 
 public:
    void print() const
@@ -121,11 +121,11 @@ public:
          Type type;
          if(power_ > 400) type = (wheelCount_ > 4) ? Type::Truck : Type::Sport;
          else             type = Type::Family;
-      
+ 
          Wheels_vector wheels;
          if(wheelCount_>4) wheels = buildWheels<HeavyDutyWheel>();
          else              wheels = buildWheels<StandardWheel>();
-      
+
          return std::unique_ptr<Car>(new Car{weight_, length_, width_, doorCount_, std::move(color_),
                                              type, std::make_unique<Engine>(power_),
                                              std::move(wheels)});
