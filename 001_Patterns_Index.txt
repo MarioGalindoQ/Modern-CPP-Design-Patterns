@@ -50,6 +50,7 @@ IV. MODERN C++: ARCHITECTURE, CONCURRENCY & PERFORMANCE
 34_ErrorHandling     : Manages operation outcomes via the 'Result' pattern (std::expected).
 35_ThreadPool        : Manages a set of persistent worker threads to execute tasks concurrently.
 36_ComponentRegistry : High-performance data management using Data-Oriented Design (DOD).
+37_TypeErasure       : Open, non-intrusive polymorphism through value wrappers.
 
 **Author:** Mario Galindo Queralt, Ph.D.
 
