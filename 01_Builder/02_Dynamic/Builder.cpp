@@ -82,9 +82,10 @@ public:
    void print() const
    {
       std::cout << "Car: weight = " << weight_ << ", length = " << length_ << ", width = " << width_
-                << ", doorCount = " << doorCount_ << ", wheels = " << wheels_.size() << ", color = " << color_
-                << ", enginePower = " << engine_->get_power() << ", type = "
-                << (type_==Type::Family ? "Family" : type_==Type::Truck ? "Truck" : "Sport") << std::endl;
+                << ", doorCount = " << doorCount_ << ", wheels = " << wheels_.size() << ", color = "
+                << color_ << ", enginePower = " << engine_->get_power() << ", type = "
+                << (type_==Type::Family ? "Family" : type_==Type::Truck ? "Truck" : "Sport")
+                << std::endl;
    }
 
    class Builder final // Use Builder to manage such complicated constructor.
@@ -121,7 +122,7 @@ public:
          Type type;
          if(power_ > 400) type = (wheelCount_ > 4) ? Type::Truck : Type::Sport;
          else             type = Type::Family;
- 
+
          Wheels_vector wheels;
          if(wheelCount_>4) wheels = buildWheels<HeavyDutyWheel>();
          else              wheels = buildWheels<StandardWheel>();
@@ -164,4 +165,4 @@ int main()
    car->print();
 }
 
-//============================================================================================= END
+//================================================================================= END

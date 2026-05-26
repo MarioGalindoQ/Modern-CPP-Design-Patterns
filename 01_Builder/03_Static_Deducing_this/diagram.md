@@ -1,4 +1,4 @@
-# Builder Pattern (Modern C++23 Deducing This)
+# Builder Pattern (Modern C++23 Deducing This - Multi-Mixin)
 
 ```mermaid
 classDiagram
@@ -20,32 +20,41 @@ classDiagram
    }
 
    class PhysicalProps {
-      +float weight_
-      +float length_
-      +float width_
+      #float weight_
+      #float length_
+      #float width_
       +setWeight(this auto&& self, float) auto&&
       +setLength(this auto&& self, float) auto&&
       +setWidth(this auto&& self, float) auto&&
    }
 
-   class Builder {
-      -int doorCount_
-      -string color_
-      -int power_
-      -int wheelCount_
-      +setDoorCount(this auto&& self, int) auto&&
-      +setColor(this auto&& self, string) auto&&
+   class MechanicalProps {
+      #int power_
       +setPower(this auto&& self, int) auto&&
-      +setWheelCount(this auto&& self, int) auto&&
-      +build() Car
    }
 
-   %% Hierarchical Builder Relationship
-   Builder --|> PhysicalProps
+   class AestheticProps {
+      #int doorCount_
+      #string color_
+      #int wheelCount_
+      +setDoorCount(this auto&& self, int) auto&&
+      +setColor(this auto&& self, string) auto&&
+      +setWheelCount(this auto&& self, int) auto&&
+   }
+
+   class Builder {
+      +build() Car
+      +operator Car() const
+   }
+
+   %% Multi-Mixin Inheritance based on your symbology
+   Builder --|> PhysicalProps : Builder is a PhysicalProps
+   Builder --|> MechanicalProps : Builder is a MechanicalProps
+   Builder --|> AestheticProps : Builder is an AestheticProps
 
    %% Car Composition
-   Car *-- Engine
-   Car *-- "8" WheelVariant
+   Car *-- Engine : Car Has an Engine (owner)
+   Car *-- "8" WheelVariant : Car Has 8 Wheels (owner)
 
    %% Dependencies
    Builder ..> Car : builds
@@ -54,21 +63,27 @@ classDiagram
 ```
 
 ### Design Note:
-This diagram illustrates the **Modern Hierarchical Builder** enabled by C++23's 
-**Deducing This** feature. 
+This diagram illustrates the **Advanced Multi-Mixin Builder** enabled by C++23's 
+**Deducing This** feature.
 
-1. **Simplified Hierarchy:** Unlike Example 01 (Flat Builder) or a traditional 
-   CRTP implementation, `PhysicalProps` is a standard class (not a template). 
-   It can be inherited by any number of specialized Builders.
-2. **Explicit Object Parameter:** By using `this auto&& self` in the base class 
-   setters, the methods automatically capture and return the derived `Builder` 
-   type. This preserves the **Fluent Interface** throughout the entire 
-   inheritance chain without "losing" the derived type.
-3. **Value Category Awareness:** The use of `auto&&` ensures that the Builder 
-   correctly handles both lvalues and temporaries (rvalues), making the 
-   chaining robust and efficient.
-4. **Stack-Based Architecture:** The design remains faithful to the Zero-Heap 
-   philosophy, using `std::variant` and `std::array` for stack-polymorphism 
-   within the `Car` product.
+1. **Multi-Mixin Composition:** The 'Builder' no longer holds state directly. Instead, 
+   it is composed through multiple inheritance from specialized classes: 
+   'PhysicalProps', 'MechanicalProps', and 'AestheticProps'. This achieves a 
+   clean separation of concerns.
+2. **Interface Persistence across Hierarchies:** In traditional C++, splitting 
+   setters into multiple base classes would break the fluent chain (a method 
+   in 'PhysicalProps' would return a reference to itself, losing access to 
+   'MechanicalProps' methods). "Deducing This" ensures that 'self' always refers 
+   to the 'Builder', merging all parent APIs into a single, seamless Fluent 
+   Interface.
+3. **Protected Encapsulation:** By using 'class' with 'protected' data members 
+   in the Mixins, we ensure that the internal state is accessible to the 
+   'Builder' for the final assembly, but completely hidden from the 'Client', 
+   who must use the public API.
+4. **Zero-Overhead Static Dispatch:** The entire hierarchy is resolved at 
+   compile-time. There are no virtual tables or pointers involved in the 
+   builder's structure, adhering to the C++ zero-overhead principle.
 
 **Author:** Mario Galindo Queralt, Ph.D.
+
+---

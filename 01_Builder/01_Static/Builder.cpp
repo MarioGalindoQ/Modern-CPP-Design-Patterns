@@ -96,9 +96,10 @@ public:
    void print() const
    {
       std::cout << "Car: weight = " << weight_ << ", length = " << length_ << ", width = " << width_
-                << ", doorCount = " << doorCount_ << ", wheels = " << activeWheels_ << ", color = " << color_
-                << ", enginePower = " << engine_.get_power() << ", type = "
-                << (type_==Type::Family ? "Family" : type_==Type::Truck ? "Truck" : "Sport") << std::endl;
+                << ", doorCount = " << doorCount_ << ", wheels = " << activeWheels_ << ", color = "
+                << color_ << ", enginePower = " << engine_.get_power() << ", type = "
+                << (type_==Type::Family ? "Family" : type_==Type::Truck ? "Truck" : "Sport")
+                << std::endl;
    }
 
    class Builder final // Use Builder to manage such complicated constructor.
@@ -128,7 +129,7 @@ public:
          else             type = Type::Family;
 
          Car::Wheels_array wheels;
-         for(int i{0}; i<wheelCount_; ++i)
+         for(int i{0}; i < wheelCount_; ++i)
          {
             if(wheelCount_ > 4) wheels[i] = HeavyDutyWheel{};
             else                wheels[i] = StandardWheel{};
@@ -147,8 +148,6 @@ public:
 //------------------------------------------------------------------------------- Main
 int main()
 {
-   // No 'auto car' or 'unique_ptr'. We use 'Car' directly on the stack.
-   
    // Example 1: Default-ish construction
    Car car = Car::Builder{}; // calling .build() is not necessary due to implicit conversion.
    car.print();
@@ -172,9 +171,10 @@ int main()
                        .setPower(900);
    car.print();
 
-   // Demonstration of Copying (possible in Stack version, unlike Heap version)
+   // Demonstration of Copying
    Car car2 = car; // Calls 2 CC (Copy Constructor)
    std::cout << "Car 2 (Copy of Car):\n";
    car2.print();
 }
+
 //================================================================================ END
