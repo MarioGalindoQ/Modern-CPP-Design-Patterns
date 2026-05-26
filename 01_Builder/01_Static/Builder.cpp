@@ -90,7 +90,7 @@ private:
         color_{std::move(color)}, type_{type}, engine_{engine}, 
         activeWheels_{activeWheels}, wheels_{wheels} { }
 
-   friend class Builder; // Only Builder can build Cars
+   friend class Builder; // Only local Builder class can build Cars
 
 public:
    void print() const
@@ -126,14 +126,14 @@ public:
          Type type;
          if(power_ > 400) type = (wheelCount_ > 4) ? Type::Truck : Type::Sport;
          else             type = Type::Family;
-      
+
          Car::Wheels_array wheels;
          for(int i{0}; i<wheelCount_; ++i)
          {
             if(wheelCount_ > 4) wheels[i] = HeavyDutyWheel{};
             else                wheels[i] = StandardWheel{};
          }
-      
+
          return Car{weight_, length_, width_, doorCount_, std::move(color_),
                     type, Engine(power_), wheelCount_, wheels};
       } // Build
