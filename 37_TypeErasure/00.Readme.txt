@@ -1,0 +1,66 @@
+# TYPE ERASURE PATTERN (ARCHITECTURAL)
+**Author:** Mario Galindo Queralt, Ph.D.
+
+## Intent
+To provide **Open, Non-Intrusive Polymorphism**. Type Erasure allows unrelated classes to be
+treated as a single type without requiring them to inherit from a common base class (GoF) or be
+part of a predefined fixed list (std::variant).
+
+## The Problem: Intrusive vs. Closed Design
+In software architecture, developers often face a dilemma when trying to store different objects
+in a single container:
+
+1. **Traditional OOP (GoF)**: Requires all classes to inherit from a base interface (e.g., class
+Dog : public Animal).
+   - *The Issue*: It is **Intrusive**. You cannot easily use classes from external libraries or
+      legacy code that you cannot modify.
+2. **Type-safe Unions (std::variant)**:
+   - *The Issue*: It is **Closed**. You must know every possible type at compile-time. Adding a
+      new type requires modifying the variant definition.
+
+## The Solution: The Type Erasure Triad
+Type Erasure bridges the gap by creating a "Value Wrapper" that hides implementation details. It
+consists of three distinct layers:
+1. **The Wrapper**: The public-facing class that the user interacts with. It behaves like a
+value-type and does not use inheritance in its public API.
+2. **The StorageInterface (Concept)**: A private, internal abstract interface that defines the
+required behavior through virtual methods.
+3. **The Model<T>**: An internal template that implements the StorageInterface for any specific
+type 'T' that satisfies the expected contract.
+
+## The "Rule of Seven" and Lifecycle Management
+Because Type Erasure relies on a bridge to a hidden implementation via an opaque pointer (usually
+unique_ptr<StorageInterface>), it serves as the ultimate test for the **Rule of Seven**. To ensure
+the wrapper behaves as a true "Value" (and not just a pointer), we must implement:
+- **Deep Copy**: Utilizing a virtual 'clone_v()' method to duplicate the erased type.
+- **Efficient Moves**: Transferring the internal pointer to ensure zero-cost transitions.
+- **Strict Destruction**: Guaranteeing the opaque implementation is released safely.
+
+## Our Examples
+
+### 01_NonIntrusiveSerialization/
+Demonstrates how to build an "Archive" of objects that can be saved to a stream.
+- **Scenario**: Classes like 'User' and 'NetworkConfig' have NO common base.
+- **Key Feature**: Uses **C++20 Concepts** to verify the presence of a '.serialize()' method at
+    the container's entry point.
+- **Value**: Highlights how to add capabilities to existing classes without touching their source
+    code.
+
+### 02_TaskQueue/
+Demonstrates a high-performance execution pipeline for heterogeneous tasks.
+- **Scenario**: A queue that can hold anything "Callable" (Lambdas, Functors, or Function
+    Pointers).
+- **Key Feature**: Implements a custom container that replaces the need for 'std::function',
+    proving that we can store complex logic by value.
+- **Value**: Ideal for Thread Pools or Event loops where task types are unknown but their
+    execution interface is fixed.
+
+## Key Benefits
+- **Non-Intrusive**: Works with any type (including third-party types) as long as they satisfy the
+    expected contract.
+- **Value Semantics**: Objects are managed like simple values (stored in vectors, copied, moved)
+    while retaining full polymorphic behavior.
+- **Static Safety**: When combined with C++20 Concepts, errors are caught at compile-time with
+    clear, actionable messages.
+
+---
