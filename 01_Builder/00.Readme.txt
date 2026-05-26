@@ -31,30 +31,31 @@ the fully constructed object from the builder (often facilitated by a
 ## Our Examples
 This folder illustrates three distinct architectural approaches to the Builder:
 
-1. **01_Static/:**
+1. **01_Static_example/:**
 Shows a "Flat Fluent Builder" that manages a complicated constructor on the 
 stack. It uses 'return *this' for method chaining and an implicit conversion 
 operator for a seamless building process.
 
-2. **02_Dynamic/:**
+2. **02_Dynamic_example/:**
 A heap-based approach returning a 'std::unique_ptr<Car>'. Ideal for complex 
 objects with polymorphic components or life cycles that exceed the local scope.
 
-3. **03_Static_Deducing_this/ (Modern C++23):**
-The most advanced version. It demonstrates how to implement a **Hierarchical 
+3. **03_Static_Deducing_this_example/ (Modern C++23):**
+The most advanced version. It demonstrates how to implement a **Multi-Mixin 
 Builder** using the C++23 feature **"Deducing This"** (Explicit Object 
-Parameters). It solves the problem of "losing the derived type" in 
-inheritance chains without the complexity of the CRTP idiom.
+Parameters). It allows the Builder to inherit state and setters from 
+specialized parents (Physical, Mechanical, Aesthetic) without losing the 
+derived type in the fluent chain and without the complexity of the CRTP idiom.
 
 ## Memory & Performance Trade-offs (Engineering Note)
 While all examples share a "Fluent" interface, they serve different needs:
 
 - **Static/Stack Versions (01 and 03):**
   - **Performance:** Maximum speed due to cache locality and zero heap overhead.
-  - **Deducing This Advantage (03):** Allows the builder to be split into 
-      multiple specialized classes (e.g., PhysicalProps -> CarBuilder). 
-      Methods in the base class automatically return the derived type 
-      using 'this auto&& self', enabling hierarchical fluent interfaces.
+  - **Deducing This Advantage (03):** Allows the builder to be composed of 
+      multiple specialized Mixin classes. Methods in any base class 
+      automatically return the derived type using 'this auto&& self', 
+      enabling hierarchical and multi-inheritance fluent interfaces.
   - **Memory:** Uses 'std::variant' and 'std::array' for Stack Polymorphism.
   - **Constraint:** Strictly limited by the System Stack size. Best for
       high-frequency, local operations with a predictable number of objects.
