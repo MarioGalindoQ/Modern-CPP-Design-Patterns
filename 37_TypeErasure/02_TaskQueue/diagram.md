@@ -4,7 +4,7 @@
 classDiagram
    class AnyTask {
       -unique_ptr~StorageInterface~ pimpl_
-      +AnyTask(BusinessType&&)
+      +AnyTask(TaskType&&)
       +AnyTask(const AnyTask&)
       +run()
    }
@@ -15,8 +15,8 @@ classDiagram
       +clone_v()* unique_ptr~StorageInterface~
    }
 
-   class Model~BusinessType~ {
-      -BusinessType function_
+   class Model~TaskType~ {
+      -TaskType function_
       +execute_v()
       +clone_v() unique_ptr~StorageInterface~
    }
@@ -39,14 +39,14 @@ classDiagram
    AnyTask *-- "1" StorageInterface : pimpl_
 
    %% The Model implements the StorageInterface
-   Model~BusinessType~ --|> StorageInterface : Is_a
+   Model~TaskType~ --|> StorageInterface : Is_a
 
    %% The Model owns the actual callable logic
-   Model~BusinessType~ *-- "1" BusinessType : function_
+   Model~TaskType~ *-- "1" TaskType : function_
 
    %% Various types can be used to instantiate the Model
-   Model~BusinessType~ ..> LogWorker : instantiated with
-   Model~BusinessType~ ..> Lambda : instantiated with
+   Model~TaskType~ ..> LogWorker : instantiated with
+   Model~TaskType~ ..> Lambda : instantiated with
 
    %% The Client manages the task queue by value
    Client *-- "n" AnyTask : taskQueue

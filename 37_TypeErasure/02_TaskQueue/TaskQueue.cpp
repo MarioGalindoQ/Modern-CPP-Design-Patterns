@@ -50,15 +50,15 @@ private:
       virtual std::unique_ptr<StorageInterface> clone_v() const = 0;
    };
 
-   template <class BusinessType>
+   template <class TaskType>
    class Model final : public StorageInterface
    {
    private:
-      BusinessType function_;
+      TaskType function_;
 
    public:
-      explicit Model(BusinessType&& value) : function_{std::move(value)} { }
-      explicit Model(const BusinessType& value) : function_{value} { }
+      explicit Model(TaskType&& value) : function_{std::move(value)} { }
+      explicit Model(const TaskType& value) : function_{value} { }
 
       void execute_v() override
       {
@@ -67,7 +67,7 @@ private:
 
       std::unique_ptr<StorageInterface> clone_v() const override 
       { 
-         return std::unique_ptr<Model<BusinessType>>(new Model<BusinessType>(function_)); 
+         return std::unique_ptr<Model<TaskType>>(new Model<TaskType>(function_)); 
       }
    };
 
@@ -80,9 +80,9 @@ public:
    AnyTask() = delete;
 
    // [7] Conversion Constructor (Template): Captures any Callable type.
-   template <Callable BusinessType>
-   AnyTask(BusinessType&& object)
-      : pimpl_{std::make_unique<Model<std::decay_t<BusinessType>>>(std::forward<BusinessType>(object))}
+   template <Callable TaskType>
+   AnyTask(TaskType&& object)
+      : pimpl_{std::make_unique<Model<std::decay_t<TaskType>>>(std::forward<TaskType>(object))}
    {
       std::cout << " [Rule of Seven] (7) Task captured via StorageInterface.\n";
    }
@@ -133,7 +133,7 @@ public:
    }
 };
 
-//--------------------------------------------------------- 2. Custom Functors:
+//--------------------------------------------------- 2. Custom Functor (Task):
 // Example of a class that is NOT designed for this system but is compatible.
 class LogWorker
 {
