@@ -2,28 +2,28 @@
  * ============================================================================
  * File: Serialization.cpp
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- DESIGN OVERVIEW:
- * This program demonstrates the Type Erasure pattern. It achieves "Open 
- * Polymorphism" by allowing unrelated classes to be treated as a single 
+ * This program demonstrates the Type Erasure pattern. It achieves "Open
+ * Polymorphism" by allowing unrelated classes to be treated as a single
  * type without requiring a common base class (non-intrusive).
- * 
+ *
  * --- C++20 CONCEPTS:
- * We use a formal compile-time contract (concept) to ensure that only classes 
- * providing a 'serialize' method can be wrapped, improving compiler error 
+ * We use a formal compile-time contract (concept) to ensure that only classes
+ * providing a 'serialize' method can be wrapped, improving compiler error
  * messages without adding runtime overhead.
- * 
+ *
  * --- THE ARCHITECTURAL TRIAD:
- * 1. The Wrapper (SerializableEntity): The public-facing class that the 
+ * 1. The Wrapper (SerializableEntity): The public-facing class that the
  *    user interacts with. It manages the "Rule of Seven".
- * 2. The StorageInterface (Base): A private, internal abstract interface that 
+ * 2. The StorageInterface (Base): A private, internal abstract interface that
  *    defines the behavior to be erased.
- * 3. The Model (Template): A private, internal template that implements 
+ * 3. The Model (Template): A private, internal template that implements
  *    the StorageInterface for any specific type (BusinessType).
- * 
+ *
  * --- THE RULE OF SEVEN:
- * Type Erasure is the ultimate test for object lifecycle management. We 
- * implement all seven key methods to ensure deep copies, efficient moves, 
+ * Type Erasure is the ultimate test for object lifecycle management. We
+ * implement all seven key methods to ensure deep copies, efficient moves,
  * and safe destruction of the opaque internal pointer.
  * ============================================================================
  */
@@ -54,7 +54,7 @@ private:
 
 public:
    explicit User(std::string name) : name_{std::move(name)} { }
-   
+
    void serialize(std::ostream& os) const
    {
       os << "{ \"user\": \"" << name_ << "\" }";
@@ -89,7 +89,8 @@ private:
       virtual std::unique_ptr<StorageInterface> clone_v() const = 0;
    };
 
-   template <class BusinessType>
+   // Only accepts types that satisfy the 'Serializable' contract.
+   template <Serializable BusinessType>
    class Model final : public StorageInterface
    {
    private:
@@ -104,9 +105,9 @@ private:
          data_.serialize(os);
       }
 
-      std::unique_ptr<StorageInterface> clone_v() const override 
-      { 
-         return std::unique_ptr<Model<BusinessType>>(new Model<BusinessType>(data_)); 
+      std::unique_ptr<StorageInterface> clone_v() const override
+      {
+         return std::unique_ptr<Model<BusinessType>>(new Model<BusinessType>(data_));
       }
    };
 
@@ -118,7 +119,7 @@ public:
    // [1] Default Constructor: Disabled.
    SerializableEntity() = delete;
 
-   // [7] Conversion Constructor (Constrained with Concept): 
+   // [7] Conversion Constructor (Constrained with Concept):
    // Only accepts types that satisfy the 'Serializable' contract.
    template <Serializable BusinessType>
    SerializableEntity(BusinessType&& object)
@@ -147,9 +148,9 @@ public:
    }
 
    // [4] Move Constructor: Zero-cost pointer transfer
-   SerializableEntity(SerializableEntity&& other) noexcept : pimpl_{std::move(other.pimpl_)} 
-   { 
-      std::cout << " [Rule of Seven] (4) Move Constructor.\n"; 
+   SerializableEntity(SerializableEntity&& other) noexcept : pimpl_{std::move(other.pimpl_)}
+   {
+      std::cout << " [Rule of Seven] (4) Move Constructor.\n";
    }
 
    // [5] Move Assignment: Efficient ownership transfer
@@ -186,7 +187,7 @@ int main()
    archive.push_back(User{"Bjarne"});
 
    std::cout << "\n--- PHASE 2: Demonstrating Deep Copy (Rule 2) ---\n";
-   auto archive_backup = archive; 
+   auto archive_backup = archive;
 
    std::cout << "\n--- PHASE 3: Processing the Archive ---\n";
    for (const auto& entity : archive)

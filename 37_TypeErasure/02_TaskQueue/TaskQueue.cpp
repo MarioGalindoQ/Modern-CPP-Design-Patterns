@@ -2,20 +2,20 @@
  * ============================================================================
  * File: TaskQueue.cpp
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- DESIGN OVERVIEW:
- * This program demonstrates Type Erasure applied to an execution pipeline. 
- * We create an 'AnyTask' wrapper that can store and execute any "Callable" 
- * object (lambdas, functors, or function pointers) without a shared 
+ * This program demonstrates Type Erasure applied to an execution pipeline.
+ * We create an 'AnyTask' wrapper that can store and execute any "Callable"
+ * object (lambdas, functors, or function pointers) without a shared
  * inheritance hierarchy.
- * 
+ *
  * --- C++20 CONCEPTS:
- * We define a 'Callable' concept to ensure that only types providing 
+ * We define a 'Callable' concept to ensure that only types providing
  * an 'operator()' can be wrapped as a task.
- * 
+ *
  * --- THE RULE OF SEVEN:
- * 'AnyTask' manages its internal 'StorageInterface' via unique_ptr, 
- * implementing the full lifecycle to allow tasks to be stored in 
+ * 'AnyTask' manages its internal 'StorageInterface' via unique_ptr,
+ * implementing the full lifecycle to allow tasks to be stored in
  * standard containers, moved between queues, or duplicated.
  * ============================================================================
  */
@@ -50,7 +50,7 @@ private:
       virtual std::unique_ptr<StorageInterface> clone_v() const = 0;
    };
 
-   template <class TaskType>
+   template <Callable TaskType>
    class Model final : public StorageInterface
    {
    private:
@@ -65,9 +65,9 @@ private:
          function_();
       }
 
-      std::unique_ptr<StorageInterface> clone_v() const override 
-      { 
-         return std::unique_ptr<Model<TaskType>>(new Model<TaskType>(function_)); 
+      std::unique_ptr<StorageInterface> clone_v() const override
+      {
+         return std::unique_ptr<Model<TaskType>>(new Model<TaskType>(function_));
       }
    };
 
@@ -108,7 +108,7 @@ public:
 
    // [4] Move Constructor
    AnyTask(AnyTask&& other) noexcept : pimpl_{std::move(other.pimpl_)} 
-   { 
+   {
       std::cout << " [Rule of Seven] (4) Task Move Constructor.\n"; 
    }
 
