@@ -17,9 +17,9 @@
 5 MA: Move assignment
 
 Print:
-e1: Jimmy
-e2: Jimmy
-e3: Jimmy
-e4: No name
+e1: Jimmy, 1-653-9
+e2: Jimmy, 1-653-9
+e3: Jimmy, 1-653-9
+e4: No name, No id
 
 ------ END:

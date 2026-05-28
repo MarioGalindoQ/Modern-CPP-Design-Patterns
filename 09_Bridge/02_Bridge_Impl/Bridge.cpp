@@ -2,25 +2,25 @@
  * ============================================================================
  * File: Employee.cpp (Pimpl Idiom / Bridge)
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- DESIGN OVERVIEW:
- * This program implements the Pimpl (Pointer to Implementation) idiom, which 
- * is a specific C++ application of the Bridge pattern. 
- * 
+ * This program implements the Pimpl (Pointer to Implementation) idiom, which
+ * is a specific C++ application of the Bridge pattern.
+ *
  * --- MEMORY MANAGEMENT:
- * We use 'std::unique_ptr' to manage the 'pimpl' object. Unlike raw pointers, 
- * this ensures that the implementation is cleaned up automatically, 
+ * We use 'std::unique_ptr' to manage the 'pimpl' object. Unlike raw pointers,
+ * this ensures that the implementation is cleaned up automatically,
  * respecting RAII principles and preventing memory leaks.
- * 
+ *
  * --- INVARIANT:
- * The 'pimpl' pointer must never be nullptr. To enforce this, we manually 
- * implement the move constructor and move assignment operator to ensure 
- * that moved-from objects are immediately re-initialized with a valid 
+ * The 'pimpl' pointer must never be nullptr. To enforce this, we manually
+ * implement the move constructor and move assignment operator to ensure
+ * that moved-from objects are immediately re-initialized with a valid
  * implementation, preventing crashes when accessed after a move operation.
- * 
+ *
  * --- COMPILATION FIREWALL:
  * The definition of 'struct Employee::Impl' is hidden in this .cpp file.
- * Changes to 'Impl' do not require recompilation of any client code that 
+ * Changes to 'Impl' do not require recompilation of any client code that
  * only includes 'Employee.h'.
  * ============================================================================
  */
@@ -40,10 +40,10 @@ public:
    // In Pimpl with unique_ptr, we must manually define Copy logic
    // because unique_ptr is move-only.
    Employee(const Employee& other);                // 2 CC: Copy constructor (Deep Copy)
-   Employee& operator=(const Employee& other);     // 4 CA: Copy assignment      
+   Employee& operator=(const Employee& other);     // 4 CA: Copy assignment
 
    // Move logic can be defaulted, but must be defined in the .cpp
-   Employee(Employee&& other) noexcept;            // 3 MC: Move constructor    
+   Employee(Employee&& other) noexcept;            // 3 MC: Move constructor
    Employee& operator=(Employee&& other) noexcept; // 5 MA: Move assignment
 
    ~Employee(); // Defined in .cpp where Impl is complete // 6 De: Destructor
@@ -61,7 +61,7 @@ private:
 struct Employee::Impl
 {
    std::string name_{"No name"};
-   std::string id_;
+   std::string id_{"No id"};
 
    Impl() = default; // 1 DC: Default constructor
    Impl(std::string name, std::string id) : name_{std::move(name)}, id_{std::move(id)} {} // 7 PC
@@ -160,7 +160,7 @@ void Employee::setName(std::string name)
 //------------------------------------------------------------------------------- Main
 int main()
 {
-   std::cout << "1 DC: Employee():\n";   
+   std::cout << "1 DC: Employee():\n";
    Employee e1;                     // 1 DC: Employee()
 
    std::cout << "\n7 PC: Employee(std::string name, std::string id):\n";
@@ -173,17 +173,17 @@ int main()
    Employee e4{std::move(e2)};      // 3 MC: Employee(Employee&& other)
 
    std::cout << "\n4 CA: operator=(Employee const& other):\n";
-   e2 = e4;                         // 4 CA: operator=(Employee const& other) (3 -> 5 -> 7)
+   e2 = e4;                         // 4 CA: operator=(Employee const& other)
 
    std::cout << "\n5 MA: operator=(Employee&& other):\n";
-   e1 = std::move(e4);              // 5 MA: operator=(Employee&& other) (2 -> 6 -> 7)
+   e1 = std::move(e4);              // 5 MA: operator=(Employee&& other)
 
    std::cout << "\nPrint:\n";
-   std::cout << "e1: " << e1.getName() << '\n';
-   std::cout << "e2: " << e2.getName() << '\n';
-   std::cout << "e3: " << e3.getName() << '\n';
-   std::cout << "e4: " << e4.getName() << '\n';
-  
+   std::cout << "e1: " << e1.getName() << ", " << e1.getId() << '\n';
+   std::cout << "e2: " << e2.getName() << ", " << e2.getId() << '\n';
+   std::cout << "e3: " << e3.getName() << ", " << e3.getId() << '\n';
+   std::cout << "e4: " << e4.getName() << ", " << e4.getId() << '\n';
+
    std::cout << "\n------ END:\n";  // 6 De: ~Employee()
 }
 
