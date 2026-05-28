@@ -12,11 +12,11 @@ To ensure a completely honest hardware profiling setup and eliminate compiler op
 biases, both tests inside `Polymorphic_bottleneck.cpp` execute the exact same computational
 workload (1,000,000,000 total operations):
 
-1. **TEST 1 (Predictable Memory Access)**: 
+1. **TEST 1 (Predictable Memory Access)**:
    Iterates over a stable pointer reference. The hardware predictor can easily cache the virtual
    call destination.
 
-2. **TEST 2 (Chaotic Memory Access)**: 
+2. **TEST 2 (Chaotic Memory Access)**:
    Iterates through an array of 10,000 **randomly shuffled** heterogeneous objects. This forces
    the hardware predictor into a state of permanent misprediction.
 
@@ -28,27 +28,27 @@ workload (1,000,000,000 total operations):
       degradation).
 
 ## Conclusion
-This architectural analysis demonstrates that what truly destroys performance is 
-data disorder, not the use of virtual methods themselves. 
+This architectural analysis demonstrates that what truly destroys performance is
+a lot of unordered data, not the use of virtual methods themselves.
 
-If your application data is well-ordered and memory access patterns are 
-predictable, a design utilizing polymorphism is perfect. It remains efficient, 
-stable, and should not be viewed with distrust. In these scenarios, the 
+If your application data is few or well-ordered and memory access patterns are
+predictable, a design utilizing polymorphism is perfect. It remains efficient,
+stable, and should not be viewed with distrust. In these scenarios, the
 hardware branch predictor and the software abstractions work in perfect harmony.
 
-However, if your specific domain forces a disordered data layout that cannot be 
-easily sorted or aligned, you must seriously consider shifting toward 
-Data-Oriented Design (DOD). It is vital to remember that in software engineering, 
-there is no "silver bullet." Classical OOP algorithms are remarkably clear, 
-intuitive to program, and easy to maintain. In contrast, DOD and ECS solutions 
+However, if your specific domain forces a large disordered data layout that cannot
+be easily sorted or aligned, you must seriously consider shifting toward
+Data-Oriented Design (DOD). It is vital to remember that in software engineering,
+there is no "silver bullet." Classical OOP algorithms are remarkably clear,
+intuitive to program, and easy to maintain. In contrast, DOD and ECS solutions
 can be significantly harder to manage and reason about.
 
-The ultimate guide for choosing between these paradigms must be a deep 
-understanding of how the computer operates at a hardware level, coupled with 
-rigorous empirical timing. As Donald Knuth famously stated, "premature 
-optimization is the root of all evil." We should prioritize clean, maintainable 
-OOP modeling as the default, and only transition to the complexity of DOD when 
-actual performance measurements prove that the hardware bottlenecks are 
+The ultimate guide for choosing between these paradigms must be a deep
+understanding of how the computer operates at a hardware level, coupled with
+rigorous empirical timing. As Donald Knuth famously stated, "premature
+optimization is the root of all evil." We should prioritize clean, maintainable
+OOP modeling as the default, and only transition to the complexity of DOD when
+actual performance measurements prove that the hardware bottlenecks are
 unacceptable for the task at hand.
 
 ---
