@@ -10,7 +10,7 @@ high-speed alternative: Data-Oriented Design (DOD).
 
 ### [01_OOP_Polymorphic_Bottleneck/](./01_OOP_Polymorphic_Bottleneck)
 **The Problem Analysis.** 
-A scientific micro-benchmark that profiles the hardware cost of dynamic dispatch. It demonstrates
+A numeric micro-benchmark that profiles the hardware cost of dynamic dispatch. It demonstrates
 how "Chaotic Memory Access" and branch mispredictions can lead to a 2000%+ performance penalty in
 traditional OOP structures.
 
