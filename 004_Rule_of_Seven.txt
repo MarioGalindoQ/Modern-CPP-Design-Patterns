@@ -74,7 +74,70 @@ private:                                     // Private: Accessed by Builder
    friend class Builder;
 };
 
-6. ENGINEERING IMPACT
+6. FULL IMPLEMENTATION TEMPLATE (THE MATRIX RESOURCE)
+-----------------------------------------------------
+The following 'Matrix' class demonstrates the manual implementation of the 
+MGQ-7 functions to manage a dynamic heap resource (double* buffer). This 
+serves as the ultimate reference for high-performance resource management:
+
+class Matrix {
+private:
+   size_t rows_{0}, cols_{0};
+   double* data_{nullptr};
+
+public:
+   // 1:DC - Default Constructor: Minimal empty state.
+   Matrix() = default;
+
+   // 2:CC - Copy Constructor: Performs a Deep Copy of the entire buffer.
+   Matrix(const Matrix& other) 
+      : rows_{other.rows_}, cols_{other.cols_}, 
+        data_{other.data_ ? new double[rows_ * cols_] : nullptr} {
+      if (data_) std::copy_n(other.data_, rows_ * cols_, data_);
+   }
+
+   // 3:MC - Move Constructor: Steals the pointer from the source (O(1)).
+   Matrix(Matrix&& other) noexcept 
+      : rows_{other.rows_}, cols_{other.cols_}, data_{other.data_} {
+      other.data_ = nullptr; // Leave source in a safe, empty state
+      other.rows_ = other.cols_ = 0;
+   }
+
+   // 4:CA - Copy Assignment: Robust implementation using Copy-and-Swap.
+   Matrix& operator=(const Matrix& other) {
+      if (this != &other) {
+         Matrix temp(other); // Reuses 2:CC logic
+         this->swap(temp);   // Transactional swap
+      }
+      return *this;
+   }
+
+   // 5:MA - Move Assignment: High efficiency via pointer swap.
+   Matrix& operator=(Matrix&& other) noexcept {
+      if (this != &other) this->swap(other);
+      return *this;
+   }
+
+   // 6:De - Destructor: Ensures no memory leaks.
+   ~Matrix() {
+      delete[] data_;
+   }
+
+   // 7:PC - Parametric Constructor: Controlled allocation and initialization.
+   Matrix(size_t r, size_t c, double fill = 0.0) 
+      : rows_{r}, cols_{c}, data_{new double[r * c]} {
+      std::fill_n(data_, r * c, fill);
+   }
+
+   // Helper for Assignment and Move logic
+   void swap(Matrix& other) noexcept {
+      std::swap(rows_, other.rows_);
+      std::swap(cols_, other.cols_);
+      std::swap(data_, other.data_);
+   }
+};
+
+7. ENGINEERING IMPACT
 ---------------------
 - Memory Safety: Eliminates resource leaks and dangling pointer vulnerabilities.
 - Performance: Forces move semantics across high-load systems, reducing latency.

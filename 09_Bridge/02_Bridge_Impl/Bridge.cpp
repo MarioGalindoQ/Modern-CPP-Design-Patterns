@@ -68,7 +68,9 @@ private:
 
 public:
    Impl() = default; // 1 DC: Default constructor
-   Impl(std::string name, std::string id) : name_{std::move(name)}, id_{std::move(id)} {} // 7 PC
+
+   // 7 PC: Parametric Constructor
+   Impl(std::string name, std::string id) : name_{std::move(name)}, id_{std::move(id)} {}
 
    // --- RULE OF FIVE vs. RULE OF ZERO ---
    // According to the "Rule of Zero", we could leave all five of the following
