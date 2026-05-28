@@ -1,25 +1,30 @@
-1 DC: Employee():
-1 DC: Default constructor
+=== BRIDGE (PIMPL) PATTERN SIMULATION ===
 
-7 PC: Employee(std::string name, std::string id):
-7 PC: Particular constructor
+ 1 DC: Employee():
+ 1 DC: Default constructor
 
-2 CC: Employee(Employee const& other):
-2 CC: Copy constructor
+ 7 PC: Employee(std::string name, std::string id):
+ 7 PC: Particular constructor
 
-3 MC: Employee(Employee&& other):
-3 MC: Move constructor
+ 2 CC: Employee(Employee const& other):
+ 2 CC: Copy constructor
 
-4 CA: operator=(Employee const& other):
-4 CA: Copy assignment
+ 3 MC: Employee(Employee&& other):
+ 3 MC: Move constructor
 
-5 MA: operator=(Employee&& other):
-5 MA: Move assignment
+ 4 CA: operator=(Employee const& other):
+ 4 CA: Copy assignment
 
-Print:
-e1: Jimmy, 1-653-9
-e2: Jimmy, 1-653-9
-e3: Jimmy, 1-653-9
-e4: No name, No id
+ 5 MA: operator=(Employee&& other):
+ 5 MA: Move assignment
 
------- END:
+ Print:
+ e1: Jimmy, 1-653-9
+ e2: Jimmy, 1-653-9
+ e3: Jimmy, 1-653-9
+ e4: No name, No id
+
+ Fill and Print e4:
+ e4: Mario, 3-593-1
+
+=== SIMULATION COMPLETED ===

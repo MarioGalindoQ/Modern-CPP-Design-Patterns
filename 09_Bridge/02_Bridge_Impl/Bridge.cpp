@@ -19,7 +19,7 @@
  * implementation, preventing crashes when accessed after a move operation.
  *
  * --- COMPILATION FIREWALL:
- * The definition of 'struct Employee::Impl' is hidden in this .cpp file.
+ * The definition of 'class Employee::Impl' is hidden in this .cpp file.
  * Changes to 'Impl' do not require recompilation of any client code that
  * only includes 'Employee.h'.
  * ============================================================================
@@ -49,20 +49,24 @@ public:
    ~Employee(); // Defined in .cpp where Impl is complete // 6 De: Destructor
 
    std::string getName() const;
+   void setName(std::string&& name);
+
    std::string getId() const;
-   void setName(std::string name);
+   void setId(std::string&& id);
 
 private:
-   struct Impl; 
+   class Impl;
    std::unique_ptr<Impl> pimpl; // The Bridge. This pointer can't be nullptr!
 };
 
 //------------------------------------------------- Nested Struct Definition:
-struct Employee::Impl
+class Employee::Impl
 {
+private:
    std::string name_{"No name"};
    std::string id_{"No id"};
 
+public:
    Impl() = default; // 1 DC: Default constructor
    Impl(std::string name, std::string id) : name_{std::move(name)}, id_{std::move(id)} {} // 7 PC
 
@@ -82,6 +86,12 @@ struct Employee::Impl
    Impl& operator=(const Impl&)     = default;  // 4 CA: Copy Assignment
    Impl& operator=(Impl&&) noexcept = default;  // 5 MA: Move Assignment
    ~Impl()                          = default;  // 6 De: Destructor
+
+   std::string getName() const {return name_;}
+   void setName(std::string&& name) {name_ = std::move(name);}
+
+   std::string getId() const {return id_;}
+   void setId(std::string&& id) {id_ = std::move(id);}
 };
 
 //------------------------------------------------- Employee Implementation:
@@ -89,27 +99,27 @@ struct Employee::Impl
 // 1 DC: Default constructor
 Employee::Employee() : pimpl{std::make_unique<Impl>()}
 {
-   std::cout << "1 DC: Default constructor\n";
+   std::cout << " 1 DC: Default constructor\n";
 }
 
 // 7 PC: Particular constructor
-Employee::Employee(std::string name, std::string id) 
+Employee::Employee(std::string name, std::string id)
    : pimpl{std::make_unique<Impl>(std::move(name), std::move(id))}
 {
-   std::cout << "7 PC: Particular constructor\n";
+   std::cout << " 7 PC: Particular constructor\n";
 }
 
 // 2 CC: Copy constructor (Deep Copy)
-Employee::Employee(const Employee& other) 
+Employee::Employee(const Employee& other)
    : pimpl{std::make_unique<Impl>(*other.pimpl)}
 {
-   std::cout << "2 CC: Copy constructor\n";
+   std::cout << " 2 CC: Copy constructor\n";
 }
 
 // 4 CA: Copy assignment
 Employee& Employee::operator=(const Employee& other)
 {
-   std::cout << "4 CA: Copy assignment\n";
+   std::cout << " 4 CA: Copy assignment\n";
    if (this != &other)
    {
       *pimpl = *other.pimpl; // Uses default Impl copy assignment operator
@@ -118,19 +128,19 @@ Employee& Employee::operator=(const Employee& other)
 }
 
 // 3 MC: Move constructor
-Employee::Employee(Employee&& other) noexcept 
+Employee::Employee(Employee&& other) noexcept
    : pimpl{std::move(other.pimpl)} // Transfers ownership via unique_ptr move constructor
 {
-   std::cout << "3 MC: Move constructor\n";
-// Instead of leaving 'other.pimpl' as nullptr (default move constructor behavior), 
+   std::cout << " 3 MC: Move constructor\n";
+// Instead of leaving 'other.pimpl' as nullptr (default move constructor behavior),
 // we re-initialize it to maintain our "Can't be nullptr" invariant.
-   other.pimpl = std::make_unique<Impl>(); 
+   other.pimpl = std::make_unique<Impl>();
 }
 
 // 5 MA: Move assignment
 Employee& Employee::operator=(Employee&& other) noexcept
 {
-   std::cout << "5 MA: Move assignment\n";
+   std::cout << " 5 MA: Move assignment\n";
    if (this != &other)
    {
       // Using swap is an elegant way to maintain the non-null invariant
@@ -144,47 +154,59 @@ Employee::~Employee() = default;
 
 std::string Employee::getName() const
 {
-   return pimpl->name_; // Here the bridge is used
+   return pimpl->getName(); // Here the bridge is used
+}
+
+void Employee::setName(std::string&& name)
+{
+   pimpl->setName(std::move(name)); // Here the bridge is used
 }
 
 std::string Employee::getId() const
 {
-   return pimpl->id_; // Here the bridge is used
+   return pimpl->getId(); // Here the bridge is used
 }
 
-void Employee::setName(std::string name)
+void Employee::setId(std::string&& id)
 {
-   pimpl->name_ = std::move(name); // Here the bridge is used
+   pimpl->setId(std::move(id)); // Here the bridge is used
 }
 
 //------------------------------------------------------------------------------- Main
 int main()
 {
-   std::cout << "1 DC: Employee():\n";
+   std::cout << "=== BRIDGE (PIMPL) PATTERN SIMULATION ===\n\n";
+
+   std::cout << " 1 DC: Employee():\n";
    Employee e1;                     // 1 DC: Employee()
 
-   std::cout << "\n7 PC: Employee(std::string name, std::string id):\n";
+   std::cout << "\n 7 PC: Employee(std::string name, std::string id):\n";
    Employee e2{"Jimmy", "1-653-9"}; // 7 PC: Employee(std::string name, std::string id)
 
-   std::cout << "\n2 CC: Employee(Employee const& other):\n";
+   std::cout << "\n 2 CC: Employee(Employee const& other):\n";
    Employee e3{e2};                 // 2 CC: Employee(Employee const& other)
 
-   std::cout << "\n3 MC: Employee(Employee&& other):\n";
+   std::cout << "\n 3 MC: Employee(Employee&& other):\n";
    Employee e4{std::move(e2)};      // 3 MC: Employee(Employee&& other)
 
-   std::cout << "\n4 CA: operator=(Employee const& other):\n";
+   std::cout << "\n 4 CA: operator=(Employee const& other):\n";
    e2 = e4;                         // 4 CA: operator=(Employee const& other)
 
-   std::cout << "\n5 MA: operator=(Employee&& other):\n";
+   std::cout << "\n 5 MA: operator=(Employee&& other):\n";
    e1 = std::move(e4);              // 5 MA: operator=(Employee&& other)
 
-   std::cout << "\nPrint:\n";
-   std::cout << "e1: " << e1.getName() << ", " << e1.getId() << '\n';
-   std::cout << "e2: " << e2.getName() << ", " << e2.getId() << '\n';
-   std::cout << "e3: " << e3.getName() << ", " << e3.getId() << '\n';
-   std::cout << "e4: " << e4.getName() << ", " << e4.getId() << '\n';
+   std::cout << "\n Print:\n";
+   std::cout << " e1: " << e1.getName() << ", " << e1.getId() << '\n';
+   std::cout << " e2: " << e2.getName() << ", " << e2.getId() << '\n';
+   std::cout << " e3: " << e3.getName() << ", " << e3.getId() << '\n';
+   std::cout << " e4: " << e4.getName() << ", " << e4.getId() << '\n';
 
-   std::cout << "\n------ END:\n";  // 6 De: ~Employee()
+   std::cout << "\n Fill and Print e4:\n";
+   e4.setName("Mario");
+   e4.setId("3-593-1");
+   std::cout << " e4: " << e4.getName() << ", " << e4.getId() << '\n';
+
+   std::cout << "\n=== SIMULATION COMPLETED ===\n";  // 6 De: ~Employee()
 }
 
 //================================================================================ END
