@@ -3,9 +3,9 @@
 
 ![C++ Standard](https://img.shields.io/badge/C%2B%2B-17%2F20%2F23-blue?style=for-the-badge&logo=c%2B%2B)
 ![License](https://img.shields.io/badge/License-Free%20Use-green?style=for-the-badge)
-![Patterns](https://img.shields.io/badge/Patterns-36-orange?style=for-the-badge)
+![Patterns](https://img.shields.io/badge/Patterns-37-orange?style=for-the-badge)
 
-Welcome to a comprehensive educational repository of **36 Design Patterns and C++ Idioms**. This
+Welcome to a comprehensive educational repository of **37 Design Patterns and C++ Idioms**. This
 project represents a bridge between classic software architecture (the *Gang of Four* legacy with
 C++98/11) and Modern C++ best practices (with C++14/17/20/23).
 
