@@ -32,13 +32,19 @@ classDiagram
 ```
 
 ### Design Note:
-This diagram represents the classical Object-Oriented (OOP) structure used in 
-the benchmark. The 'Client' (main function) manages a heterogeneous 
-collection of 'Base' pointers, interleaved with 'DerivedA' and 'DerivedB' 
-instances. This setup is designed to trigger hardware branch mispredictions 
-within the CPU's Branch Target Buffer (BTB) when the virtual function 
-'virt()' is called on a shuffled vector. Unlike the Data-Oriented approach 
-in Example 02, this design prioritizes abstraction over memory locality, 
-resulting in the measured performance bottleneck.
+This diagram illustrates the classical Object-Oriented (OOP) hierarchy used to 
+profile the cost of dynamic dispatch. While this structure represents the 
+gold standard for code maintainability and intuitive domain modeling, the 
+benchmark reveals its sensitivity to data organization. 
+
+The 'Client' manages a heterogeneous collection of pointers where 'DerivedA' 
+and 'DerivedB' instances are interleaved. This specific setup is intended 
+to prove that the hardware Branch Target Buffer (BTB) handles polymorphism 
+with near-zero overhead when access is predictable, but suffers massive 
+mispredictions when the layout is shuffled (chaotic). Ultimately, this 
+design is not "slow" by definition, but it prioritizes abstraction over 
+memory locality—a trade-off that, as Donald Knuth suggested, should only 
+be abandoned for the complexity of DOD when empirical data proves a 
+critical bottleneck.
 
 **Author:** Mario Galindo Queralt, Ph.D.

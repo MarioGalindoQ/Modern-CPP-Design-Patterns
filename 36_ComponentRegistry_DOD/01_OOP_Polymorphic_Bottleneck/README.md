@@ -28,9 +28,28 @@ workload (1,000,000,000 total operations):
       degradation).
 
 ## Conclusion
-Data disorder, not the `virtual` keyword, is what destroys performance. This benchmark provides
-the raw empirical justification for shifting towards **Data-Oriented Design (DOD)** and
-**Entity-Component-Systems (ECS)**, where data is kept sorted and contiguous.
+This architectural analysis demonstrates that what truly destroys performance is 
+data disorder, not the use of virtual methods themselves. 
+
+If your application data is well-ordered and memory access patterns are 
+predictable, a design utilizing polymorphism is perfect. It remains efficient, 
+stable, and should not be viewed with distrust. In these scenarios, the 
+hardware branch predictor and the software abstractions work in perfect harmony.
+
+However, if your specific domain forces a disordered data layout that cannot be 
+easily sorted or aligned, you must seriously consider shifting toward 
+Data-Oriented Design (DOD). It is vital to remember that in software engineering, 
+there is no "silver bullet." Classical OOP algorithms are remarkably clear, 
+intuitive to program, and easy to maintain. In contrast, DOD and ECS solutions 
+can be significantly harder to manage and reason about.
+
+The ultimate guide for choosing between these paradigms must be a deep 
+understanding of how the computer operates at a hardware level, coupled with 
+rigorous empirical timing. As Donald Knuth famously stated, "premature 
+optimization is the root of all evil." We should prioritize clean, maintainable 
+OOP modeling as the default, and only transition to the complexity of DOD when 
+actual performance measurements prove that the hardware bottlenecks are 
+unacceptable for the task at hand.
 
 ---
 # Polymorphic Bottleneck Analysis Diagram
@@ -67,13 +86,19 @@ classDiagram
 ```
 
 ### Design Note:
-This diagram represents the classical Object-Oriented (OOP) structure used in 
-the benchmark. The 'Client' (main function) manages a heterogeneous 
-collection of 'Base' pointers, interleaved with 'DerivedA' and 'DerivedB' 
-instances. This setup is designed to trigger hardware branch mispredictions 
-within the CPU's Branch Target Buffer (BTB) when the virtual function 
-'virt()' is called on a shuffled vector. Unlike the Data-Oriented approach 
-in Example 02, this design prioritizes abstraction over memory locality, 
-resulting in the measured performance bottleneck.
+This diagram illustrates the classical Object-Oriented (OOP) hierarchy used to 
+profile the cost of dynamic dispatch. While this structure represents the 
+gold standard for code maintainability and intuitive domain modeling, the 
+benchmark reveals its sensitivity to data organization. 
+
+The 'Client' manages a heterogeneous collection of pointers where 'DerivedA' 
+and 'DerivedB' instances are interleaved. This specific setup is intended 
+to prove that the hardware Branch Target Buffer (BTB) handles polymorphism 
+with near-zero overhead when access is predictable, but suffers massive 
+mispredictions when the layout is shuffled (chaotic). Ultimately, this 
+design is not "slow" by definition, but it prioritizes abstraction over 
+memory locality—a trade-off that, as Donald Knuth suggested, should only 
+be abandoned for the complexity of DOD when empirical data proves a 
+critical bottleneck.
 
 **Author:** Mario Galindo Queralt, Ph.D.

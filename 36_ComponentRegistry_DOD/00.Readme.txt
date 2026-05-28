@@ -19,10 +19,25 @@ traditional OOP structures.
 A complete Entity-Component-System (ECS) architecture. It uses C++ template mapping to ensure
 data locality, sequential processing, and zero-overhead component management.
 
-## Why this shift is necessary
-Modern CPUs are much faster than RAM. The primary bottleneck in high-performance software (like
-Game Engines or Simulations) is no longer the raw instruction count, but the "Memory
-Wall". Data-Oriented Design aligns the software architecture with the hardware's branch
-prediction and caching mechanisms.
+## Choosing the Right Paradigm: Balance & Realism
+In software engineering, there is no "silver bullet." While this folder highlights the massive
+performance gains of DOD, it is vital to understand the trade-offs:
+
+1. **The Case for OOP**: When application data is well-ordered and access patterns are
+predictable, classical OOP with polymorphism is a perfect choice. It is intuitive, easy to
+maintain, and the CPU's hardware (Branch Target Buffer) handles virtual calls with near-zero
+overhead.
+2. **The Case for DOD**: When your domain forces a chaotic or massive data layout where pointers
+are interleaved and unpredictable, OOP performance collapses. In these scenarios, shifting to DOD
+is the only way to overcome the "Memory Wall."
+
+## Engineering Guidance
+As Donald Knuth famously stated, **"premature optimization is the root of all evil."** 
+
+The ultimate guide for choosing between these paradigms should not be dogma, but a deep
+understanding of hardware behavior coupled with rigorous profiling. An architect should default
+to the clarity and maintainability of OOP, and only transition to the structural complexity of
+DOD when empirical measurements prove that hardware bottlenecks have become unacceptable for the
+project's requirements.
 
 ---
