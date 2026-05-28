@@ -82,14 +82,16 @@ int main()
       // Measure Concrete Call
       volatile size_t total_concrete = 0;
       auto start = std::chrono::steady_clock::now();
-      for (size_t i = 0; i < num_iterations; i++) total_concrete += b->concrete();
+      for(size_t i = 0; i < num_iterations; i++)
+         total_concrete += b->concrete();
       auto end = std::chrono::steady_clock::now();
       auto t_concrete = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
       // Measure Virtual Call
       volatile size_t total_virt = 0;
       start = std::chrono::steady_clock::now();
-      for (size_t i = 0; i < num_iterations; i++) total_virt += b->virt();
+      for(size_t i = 0; i < num_iterations; i++)
+         total_virt += b->virt();
       end = std::chrono::steady_clock::now();
       auto t_virtual = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
@@ -110,7 +112,7 @@ int main()
       std::vector<Base*> chaotic_objects;
       chaotic_objects.reserve(num_objects);
 
-      for (size_t i = 0; i < num_objects / 2; ++i)
+      for(size_t i = 0; i < num_objects / 2; ++i)
       {
          chaotic_objects.push_back(new DerivedA());
          chaotic_objects.push_back(new DerivedB());
@@ -124,18 +126,18 @@ int main()
       // Measure Concrete Call (Sequential pointer access, but same method)
       volatile size_t total_concrete = 0;
       auto start = std::chrono::steady_clock::now();
-      for (size_t pass = 0; pass < num_passes; ++pass)
-         for (size_t i = 0; i < num_objects; ++i) total_concrete += chaotic_objects[i]->concrete();
-      
+      for(size_t pass = 0; pass < num_passes; ++pass)
+         for(size_t i = 0; i < num_objects; ++i)
+            total_concrete += chaotic_objects[i]->concrete();
       auto end = std::chrono::steady_clock::now();
       auto t_concrete = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
       // Measure Virtual Call (Sequential pointer access, but chaotic vtable jumps)
       volatile size_t total_virt = 0;
       start = std::chrono::steady_clock::now();
-      for (size_t pass = 0; pass < num_passes; ++pass)
-         for (size_t i = 0; i < num_objects; ++i) total_virt += chaotic_objects[i]->virt();
-      
+      for(size_t pass = 0; pass < num_passes; ++pass)
+         for(size_t i = 0; i < num_objects; ++i)
+            total_virt += chaotic_objects[i]->virt();
       end = std::chrono::steady_clock::now();
       auto t_virtual = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
@@ -144,7 +146,7 @@ int main()
       std::cout << " Delta Overhead   : " << (t_virtual - t_concrete)
                 << " ms (MASSIVE PENALTY!)\n" << std::endl;
 
-      for (auto obj : chaotic_objects) delete obj;
+      for(auto obj : chaotic_objects) delete obj;
    }
 
    std::cout << "=== ANALYSIS COMPLETED ===" << std::endl;
