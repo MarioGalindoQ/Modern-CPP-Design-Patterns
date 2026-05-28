@@ -67,8 +67,22 @@ int main()
    const size_t num_iterations = 1000000000;
    const size_t num_objects    = 10000;
    const size_t num_passes     = 100000;
+   const size_t num_warm_cpu   = 10;
 
    std::cout << "=== POLYMORPHIC BOTTLENECK ANALYSIS ===\n" << std::endl;
+
+   // Wakeup the cpu for a fine time measurement
+   for(size_t iWarm = 0; iWarm < num_warm_cpu; iWarm++)
+   {
+      DerivedA* derived = new DerivedA();
+      Base* b = derived;
+
+      volatile size_t total_concrete = 0;
+      for(size_t i = 0; i < num_iterations; i++)
+         total_concrete += b->concrete();
+
+      delete derived;
+   }
 
    //--------------------------------------------------------------------------
    // TEST 1: PREDICTABLE MEMORY ACCESS (Single Object Loop)
@@ -99,7 +113,7 @@ int main()
       std::cout << " Virtual function : " << t_virtual << " ms" << std::endl;
       std::cout << " Delta Overhead   : " << (t_virtual - t_concrete)
                 << " ms (Minimal)\n" << std::endl;
-      
+
       delete derived;
    }
 
