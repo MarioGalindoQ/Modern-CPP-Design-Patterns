@@ -10,20 +10,22 @@ from "Objects that have data and methods" to "Data buckets processed by speciali
 Traditional Object-Oriented Design (OOD) usually involves a list of 'GameObjects', each
 containing a list of pointers to their components. When the system calls 'update()' on every
 object, several performance bottlenecks occur:
-1. **Memory Fragmentation**: The CPU has to jump to different, non-contiguous memory locations to
-find each component.
+1. **Memory Fragmentation**: The CPU has to jump to different, non-contiguous memory locations
+to find each component.
 2. **Cache Pollution**: Unrelated data (like names or AI states) is loaded into the cache during
 unrelated calculations (like physics), wasting precious space.
 3. **Cache Misses**: These jumps force the CPU to wait for the relatively slow RAM, wasting
 thousands of clock cycles per frame.
 
-## The Solution: Data-Oriented Design (DOD)
+> **Note**: The actual hardware cost of these bottlenecks is measured and analyzed in [Example
+    01: OOP Polymorphic Bottleneck](../01_OOP_Polymorphic_Bottleneck).
 
+## The Solution: Data-Oriented Design (DOD)
 DOD reorganizes the application's memory to match the way modern CPUs actually work:
 - **Contiguous Storage**: Components of the same type are stored in dedicated "buckets"
     (`std::vector`).
-- **Type-to-Storage Mapping**: We use C++ templates to map each unique 'ComponentType' to its own
-    static vector. This resolution happens at compile-time (Zero-Overhead).
+- **Type-to-Storage Mapping**: We use C++ templates to map each unique 'ComponentType' to its
+    own static vector. This resolution happens at compile-time (Zero-Overhead).
 - **Linear Processing**: Systems (Physics, AI) process these buckets sequentially. When the CPU
     loads one component, it automatically prefetches the next ones, ensuring "Cache Hits" and
     maximum performance.
@@ -31,16 +33,16 @@ DOD reorganizes the application's memory to match the way modern CPUs actually w
 ## Our Example: A Dynamic Tactical Simulation
 We simulate a tactical world involving 'Mario', an 'Enemy Guard', and an 'Aggressive Drone' over
 a 5-frame timeline:
-
 1. **Registry (Meyers Singleton)**: A central "World Container" that manages unique entity IDs
 and static component buckets.
-2. **Data Normalization**: We separate heavy metadata ('Label' components) from lean mathematical
-data ('Position' and 'Velocity' structs) to maximize cache line utility.
+2. **Data Normalization**: We separate heavy metadata ('Label' components) from lean
+mathematical data ('Position' and 'Velocity' structs) to maximize cache line utility.
 3. **Specialized Systems**: 
-   - **PhysicsSystem**: Processes Physics only for living entities.
-   - **AISystem**: Handles decision-making and logic reports.
-   - **ScenarioSystem**: Acts as a "Director", mutating data over time (e.g., Drone attacks ->
-       Mario defends -> Drone dies).
+   - **PhysicsSystem**: Processes movement only for living entities by iterating through
+    contiguous memory.
+   - **AISystem**: Handles decision-making and logic reports based on AI states.
+   - **ScenarioSystem**: Acts as a "Director", mutating data over time to simulate a live
+       environment (e.g., Drone attacks -> Mario defends -> Drone dies).
 
 ## Technical Highlights
 - **Static Template Buckets**: Utilizes `static inline` storage inside template methods to
@@ -51,8 +53,9 @@ data ('Position' and 'Velocity' structs) to maximize cache line utility.
     with maximum efficiency.
 
 ## Cross-References
-- **Pattern 01 (Builder)**: A Fluent Static Builder is used to guarantee "Parallel Array Alignment",
-  ensuring that every entity is simultaneously initialized across all component data buckets.
+- **Pattern 01 (Builder)**: A Fluent Static Builder is used to guarantee "Parallel Array
+    Alignment", ensuring that every entity is simultaneously initialized across all component
+    data buckets.
 - **Pattern 05 (Singleton)**: The Registry uses a Meyers Singleton to ensure a consistent "World
     State".
 - **Pattern 13 (Flyweight)**: The 'Label' component mimics the sharing of identity data to keep

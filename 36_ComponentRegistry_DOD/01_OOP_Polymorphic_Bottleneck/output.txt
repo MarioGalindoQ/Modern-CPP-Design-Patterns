@@ -1,0 +1,8 @@
+--- [TEST 1] PREDICTABLE MEMORY ACCESS (Single Object Loop) ---
+Concrete function: 369ms
+Virtual function : 370ms
+Delta Overhead   : 1ms (Should be close to 0)
+--- [TEST 2] CHAOTIC MEMORY ACCESS (Shuffled Layout) ---
+Concrete function: 308ms
+Virtual function : 5155ms
+Delta Overhead   : 4847ms (Massive performance penalty!)

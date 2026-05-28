@@ -1,0 +1,28 @@
+# COMPONENT REGISTRY / DATA-ORIENTED DESIGN (ECS)
+**Author:** Mario Galindo Queralt, Ph.D.
+
+## Intent
+To manage massive collections of entities by prioritizing memory layout and CPU cache
+efficiency. This folder contrasts the performance limitations of classical OOP with the
+high-speed alternative: Data-Oriented Design (DOD).
+
+## Directory Structure
+
+### [01_OOP_Polymorphic_Bottleneck/](./01_OOP_Polymorphic_Bottleneck)
+**The Problem Analysis.** 
+A scientific micro-benchmark that profiles the hardware cost of dynamic dispatch. It demonstrates
+how "Chaotic Memory Access" and branch mispredictions can lead to a 2000%+ performance penalty in
+traditional OOP structures.
+
+### [02_DOD_Component_Registry/](./02_DOD_Component_Registry)
+**The Solution Implementation.**
+A complete Entity-Component-System (ECS) architecture. It uses C++ template mapping to ensure
+data locality, sequential processing, and zero-overhead component management.
+
+## Why this shift is necessary
+Modern CPUs are much faster than RAM. The primary bottleneck in high-performance software (like
+Game Engines or Simulations) is no longer the raw instruction count, but the "Memory
+Wall". Data-Oriented Design aligns the software architecture with the hardware's branch
+prediction and caching mechanisms.
+
+---
