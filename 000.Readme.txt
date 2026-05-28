@@ -37,7 +37,7 @@ logic, but also high-level engineering concerns such as:
    - 4:CA - Copy Assignment
    - 5:MA - Move Assignment
    - 6:De - Destructor
-   - 7:PC - Particular Constructor
+   - 7:PC - Parametric Constructor
 
 For more information about the author's "Rule of Seven", refer to the `004_Rule_of_Seven.txt`
 file.

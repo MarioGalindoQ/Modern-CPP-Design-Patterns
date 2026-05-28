@@ -39,7 +39,7 @@ public:
    Book(Book&&)                 = default;     // 3 MC: Move Constructor
    ~Book()                      = default;     // 6 De: Destructor
 
-   Book(std::string title, std::string author) // 7 PC: Particular Constructor 
+   Book(std::string title, std::string author) // 7 PC: Parametric Constructor 
       : title_{std::move(title)}, author_{std::move(author)} { }
 
    std::string getTitle()  const { return title_; }

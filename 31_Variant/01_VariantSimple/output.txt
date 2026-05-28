@@ -10,7 +10,7 @@ size of std::string: 32
 size of var_t:       40
 
 --------------------------- Fill the stack:
------ Logger 7 PC: Particular Constructor: I am a Logger
+----- Logger 7 PC: Parametric Constructor: I am a Logger
 ----- Logger 3 MC: Move Constructor: I am a Logger
 ----- Logger 6 De: Destructor: 
 

@@ -66,7 +66,7 @@ struct Logger
 
    explicit Logger(std::string s) : s{std::move(s)}
    {
-      std::cout << "----- Logger 7 PC: Particular Constructor: " << this->s << '\n';
+      std::cout << "----- Logger 7 PC: Parametric Constructor: " << this->s << '\n';
    }
 };
 

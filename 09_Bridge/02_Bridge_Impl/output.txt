@@ -4,7 +4,7 @@
  1 DC: Default constructor
 
  7 PC: Employee(std::string name, std::string id):
- 7 PC: Particular constructor
+ 7 PC: Parametric Constructor
 
  2 CC: Employee(Employee const& other):
  2 CC: Copy constructor

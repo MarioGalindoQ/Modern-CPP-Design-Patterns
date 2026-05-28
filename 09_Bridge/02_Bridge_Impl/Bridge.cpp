@@ -35,7 +35,7 @@ class Employee
 {
 public:
    Employee();                                     // 1 DC: Default constructor
-   Employee(std::string name, std::string id);     // 7 PC: Particular Constructor
+   Employee(std::string name, std::string id);     // 7 PC: Parametric Constructor
 
    // In Pimpl with unique_ptr, we must manually define Copy logic
    // because unique_ptr is move-only.
@@ -102,11 +102,11 @@ Employee::Employee() : pimpl{std::make_unique<Impl>()}
    std::cout << " 1 DC: Default constructor\n";
 }
 
-// 7 PC: Particular constructor
+// 7 PC: Parametric Constructor
 Employee::Employee(std::string name, std::string id)
    : pimpl{std::make_unique<Impl>(std::move(name), std::move(id))}
 {
-   std::cout << " 7 PC: Particular constructor\n";
+   std::cout << " 7 PC: Parametric Constructor\n";
 }
 
 // 2 CC: Copy constructor (Deep Copy)

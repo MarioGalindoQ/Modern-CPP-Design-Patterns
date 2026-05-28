@@ -21,7 +21,7 @@ ID | MNEMONIC | FUNCTION NAME          | TECHNICAL SIGNATURE
 4  | CA       | Copy Assignment        | Class& operator=(const Class& other);
 5  | MA       | Move Assignment        | Class& operator=(Class&& other) noexcept;
 6  | De       | Destructor             | ~Class();
-7  | PC       | Particular Constructor | Class(Type param1, param2...);
+7  | PC       | Parametric Constructor | Class(Type param1, param2...);
 
 2. OPERATIONAL PROTOCOLS: RULE OF ZERO VS. FIVE
 -----------------------------------------------
@@ -51,7 +51,7 @@ ID | MNEMONIC | FUNCTION NAME          | TECHNICAL SIGNATURE
   This allows STL containers (std::vector) to perform fast-path reallocations 
   instead of expensive and slow copies.
 - BUILDER PATTERN INTEGRITY: When using Builders, ID 1:DC must be set to 
-  '= delete'. This forces the use of the Builder or a Particular Constructor (7:PC), 
+  '= delete'. This forces the use of the Builder or a Parametric Constructor (7:PC), 
   preventing the instantiation of unconfigured or invalid objects.
 - VIRTUAL SAFETY: For any Base Class in an inheritance hierarchy, ID 6:De 
   must be declared 'virtual ~Class() = default;'.
