@@ -2,54 +2,54 @@
  * ============================================================================
  * File: Component.cpp
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- DESIGN OVERVIEW:
- * This program demonstrates an advanced Entity-Component-System (ECS) 
- * architecture built on Data-Oriented Design (DOD) principles. It represents 
- * a shift from traditional Object-Oriented programming to a model that 
+ * This program demonstrates an advanced Entity-Component-System (ECS)
+ * architecture built on Data-Oriented Design (DOD) principles. It represents
+ * a shift from traditional Object-Oriented programming to a model that
  * prioritizes memory layout and CPU cache efficiency.
- * 
+ *
  * --- STATIC TYPE-TO-STORAGE MAPPING:
- * Instead of using inheritance-based lists or dynamic maps of pointers, this 
- * architecture utilizes C++ templates to map each unique 'ComponentType' 
+ * Instead of using inheritance-based lists or dynamic maps of pointers, this
+ * architecture utilizes C++ templates to map each unique 'ComponentType'
  * to its own 'static std::vector'. This provides:
- * 1. Zero-Overhead: Component retrieval is resolved at compile-time, 
+ * 1. Zero-Overhead: Component retrieval is resolved at compile-time,
  *    eliminating runtime lookups and virtual function (vtable) overhead.
- * 2. Type Safety: The system is intrinsically type-safe; the compiler 
+ * 2. Type Safety: The system is intrinsically type-safe; the compiler
  *    guarantees that you always receive the exact vector type requested.
- * 
+ *
  * --- ENTITY IDENTITY & UNIQUENESS:
- * Entities are not objects, but simple 'uint32_t' identifiers. The Registry 
- * (acting as the World Container) manages an internal counter through 
- * 'createEntity()' to guarantee that every entity receives a strictly 
+ * Entities are not objects, but simple 'uint32_t' identifiers. The Registry
+ * (acting as the World Container) manages an internal counter through
+ * 'createEntity()' to guarantee that every entity receives a strictly
  * unique ID, preventing identity collisions in the global data buckets.
- * 
+ *
  * --- PERFORMANCE & CACHE LOCALITY:
  * Components are stored in contiguous memory blocks. This is vital because:
- * 1. Cache Locality: Systems (like Physics or AI) process these arrays 
- *    sequentially. The CPU can effectively prefetch data, drastically 
+ * 1. Cache Locality: Systems (like Physics or AI) process these arrays
+ *    sequentially. The CPU can effectively prefetch data, drastically
  *    reducing 'Cache Misses'.
- * 2. Data Normalization: Mathematical components (Position, Velocity) are 
- *    kept "lean" (small PODs) to fit more elements into a single CPU cache 
- *    line. Human-readable names or metadata are relegated to a separate 
+ * 2. Data Normalization: Mathematical components (Position, Velocity) are
+ *    kept "lean" (small PODs) to fit more elements into a single CPU cache
+ *    line. Human-readable names or metadata are relegated to a separate
  *    'Label' component, processed only when necessary (e.g., during logging).
- * 
+ *
  * --- PARALLEL ARRAY BUILDER:
- * To ensure data integrity, we utilize a Static Builder pattern (Pattern 01). 
- * This builder guarantees "Parallel Array Alignment": every time an entity 
- * is built, a new entry is pushed into EVERY component vector simultaneously. 
- * This allows Systems to use a shared index 'i' to access related data across 
+ * To ensure data integrity, we utilize a Static Builder pattern (Pattern 01).
+ * This builder guarantees "Parallel Array Alignment": every time an entity
+ * is built, a new entry is pushed into EVERY component vector simultaneously.
+ * This allows Systems to use a shared index 'i' to access related data across
  * different buckets in O(1) time without searching for IDs.
- * 
+ *
  * --- SINGLETON ARCHITECTURE:
- * The 'Registry' is implemented as a Meyers Singleton. This centralizes 
- * identity management and data storage, ensuring a single, consistent 
- * "World State" across the entire application. It prevents data 
+ * The 'Registry' is implemented as a Meyers Singleton. This centralizes
+ * identity management and data storage, ensuring a single, consistent
+ * "World State" across the entire application. It prevents data
  * fragmentation and provides a global access point for specialized Systems.
- * 
+ *
  * --- DYNAMIC STATE SIMULATION:
- * In DOD, objects don't "decide" to change state. Instead, logic systems or 
- * game controllers mutate the data in the vectors. Behavioural changes are 
+ * In DOD, objects don't "decide" to change state. Instead, logic systems or
+ * game controllers mutate the data in the vectors. Behavioural changes are
  * the side effect of updated values being processed in the next cycle.
  * ============================================================================
  */
@@ -74,13 +74,11 @@ class Registry // A Meyers' Singleton class
 private:
    uint32_t nextEntityId_{1};
 
-   Registry() = default;
-
-   Registry(const Registry&)            = delete;
-   Registry& operator=(const Registry&) = delete;
+   Registry()                = default; // 1:DC - Default Constructor
+   Registry(const Registry&) = delete;  // 2:CC - Copy Constructor
 
    // Internal storage: one static vector per unique component type.
-   // We use this second template to ensure that even if getComponents is called 
+   // We use this second template to ensure that even if getComponents is called
    // with references or const types, they all map to the same physical vector.
    template<class ComponentType>
    std::vector<ComponentType>& getInternalVector()
@@ -90,6 +88,8 @@ private:
    }
 
 public:
+
+   // Registry is a Singleton
    static Registry& getInstance()
    {
       static Registry instance;
@@ -108,7 +108,7 @@ public:
       // Private constructor: ensures only Registry can start the building process.
       // This protects the integrity of the nextEntityId_ counter.
       explicit EntityBuilder(uint32_t id) : id_{id} { }
-      
+
       // We grant friendship to the outer class
       friend class Registry;
 
@@ -137,16 +137,19 @@ public:
       return EntityBuilder{nextEntityId_++};
    }
 
-   template<class ComponentType>
-   void addComponent(ComponentType&& component)
-   {
-      getComponents<ComponentType>().push_back(std::forward<ComponentType>(component));
-   }
-
+   // This is the only way to get Componets
    template<class ComponentType>
    std::vector<std::decay_t<ComponentType>>& getComponents()
    {
       return getInternalVector<std::decay_t<ComponentType>>();
+   }
+
+private:
+   // Only Builder can add a Component
+   template<class ComponentType>
+   void addComponent(ComponentType&& component)
+   {
+      getComponents<ComponentType>().push_back(std::forward<ComponentType>(component));
    }
 };
 
@@ -163,8 +166,8 @@ public:
       auto& labels   = world.getComponents<Label>();
 
       // Data mutation logic based on aligned indices
-      // In a real simulation, this system would analyze the environment 
-      // (proximity, line of sight, health) to trigger state changes. 
+      // In a real simulation, this system would analyze the environment
+      // (proximity, line of sight, health) to trigger state changes.
       // For this example, we simulate these triggers based on the frame timeline.
       for(size_t i = 0; i < labels.size(); ++i)
       {
@@ -197,7 +200,7 @@ public:
       auto& labels     = world.getComponents<Label>();
 
       std::cout << " [System] Updating Physics...\n";
-      
+
       // Using shared index 'i' for O(1) access to parallel arrays
       for(size_t i = 0; i < positions.size(); ++i)
       {
@@ -205,7 +208,7 @@ public:
 
          positions[i].x += velocities[i].vx;
          positions[i].y += velocities[i].vy;
-         
+
          std::cout << "  -> [" << labels[i].name << "] moved to ("
                    << positions[i].x << ", " << positions[i].y << ")\n";
       }
@@ -213,10 +216,10 @@ public:
 };
 
 /**
- * AISystem along with ScenarioSystem, manages the intelligence for 
- * decision-making regarding game events. In a complex application, these 
- * systems can be implemented using Artificial Intelligence (AI) algorithms 
- * (e.g., Finite State Machines, Behavior Trees, or Neural Networks) to 
+ * AISystem along with ScenarioSystem, manages the intelligence for
+ * decision-making regarding game events. In a complex application, these
+ * systems can be implemented using Artificial Intelligence (AI) algorithms
+ * (e.g., Finite State Machines, Behavior Trees, or Neural Networks) to
  * analyze data buckets and determine tactical actions.
  */
 

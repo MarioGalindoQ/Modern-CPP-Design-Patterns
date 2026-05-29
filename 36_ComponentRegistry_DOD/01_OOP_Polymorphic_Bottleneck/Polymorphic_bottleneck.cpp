@@ -13,21 +13,21 @@
  * Classical C++ polymorphism relies on runtime vtable lookups. However, modern
  * CPU architectures mitigate this overhead via the Branch Target Buffer (BTB).
  * This program isolates two distinct scenarios to prove a fundamental rule:
- * 1. Predictable Execution: When a virtual function is invoked sequentially 
- *    on a stable memory address, the hardware branch predictor caches the 
+ * 1. Predictable Execution: When a virtual function is invoked sequentially
+ *    on a stable memory address, the hardware branch predictor caches the
  *    destination, yielding near zero-overhead performance.
- * 2. Chaotic Execution: When pointers to heterogeneous types are interleaved 
- *    randomly, the hardware predictor falls into a permanent state of 
- *    misprediction, forcing massive CPU pipeline flushes. Additionally, 
+ * 2. Chaotic Execution: When pointers to heterogeneous types are interleaved
+ *    randomly, the hardware predictor falls into a permanent state of
+ *    misprediction, forcing massive CPU pipeline flushes. Additionally,
  *    shuffled pointer access triggers frequent 'Cache Misses'.
  *
  * --- COMPILER TIMING SAFEGUARDS:
- * High-level optimization flags (-O3) tend to pre-calculate or eliminate 
- * loops that accumulate constant values at compile-time. To ensure honest 
+ * High-level optimization flags (-O3) tend to pre-calculate or eliminate
+ * loops that accumulate constant values at compile-time. To ensure honest
  * hardware profiling without assembly-level trickery, this implementation:
- * 1. Employs 'volatile' type qualifiers on accumulators to enforce strict 
+ * 1. Employs 'volatile' type qualifiers on accumulators to enforce strict
  *    read/write operations on memory per iteration.
- * 2. All functions return the same constant (7) to ensure the ALU performs 
+ * 2. All functions return the same constant (7) to ensure the ALU performs
  *    the exact same mathematical workload in every test case.
  * ============================================================================
  */
@@ -67,11 +67,12 @@ int main()
    const size_t num_iterations = 1000000000;
    const size_t num_objects    = 10000;
    const size_t num_passes     = 100000;
-   const size_t num_warm_cpu   = 10;
+   const size_t num_warm_cpu   = 20;
 
    std::cout << "=== POLYMORPHIC BOTTLENECK ANALYSIS ===\n" << std::endl;
 
-   // Wakeup the cpu for a fine time measurement
+   // Warm the cpu for a fine time measurement
+   std::cout << "--- Warming up the CPU ---\n" << std::endl;
    for(size_t iWarm = 0; iWarm < num_warm_cpu; iWarm++)
    {
       DerivedA* derived = new DerivedA();
