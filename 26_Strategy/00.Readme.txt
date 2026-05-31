@@ -23,7 +23,7 @@ This folder illustrates three distinct approaches to the Strategy pattern,
 all centered around the sorting and printing of data:
 
 1. **01_Simple_Strategy/:**
-## Focuses on the core pattern a 'Sort' strategy used by a Context. It 
+Focuses on the core pattern a 'Sort' strategy used by a Context. It 
 highlights how to decouple the algorithm from the client using simple 
 polymorphism and smart pointers.
 
