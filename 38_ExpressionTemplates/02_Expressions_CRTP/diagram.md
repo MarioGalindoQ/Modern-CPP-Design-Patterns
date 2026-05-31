@@ -34,6 +34,10 @@ classDiagram
    VecExpression~Derived~ <|-- VecSum~L, R~
    VecExpression~Derived~ <|-- VecScale~E~
 
+   Client *-- "n" Vector
+   Client ..> VecSum : via operator+
+   Client ..> VecScale : via operator*
+
    %% Composition of the Static AST (References to operands)
    VecSum *-- L : lhs_
    VecSum *-- R : rhs_
@@ -41,10 +45,6 @@ classDiagram
 
    %% The Vector assignment triggers the loop fusion
    Vector ..> VecExpression : evaluates
-
-   Client *-- "n" Vector
-   Client ..> VecSum : via operator+
-   Client ..> VecScale : via operator*
 ```
 
 ### Design Note:
