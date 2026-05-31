@@ -40,17 +40,18 @@ III. BEHAVIORAL PATTERNS (The "How" of Object Interaction)
 27_TemplateMethod        : Defines an algorithm's skeleton, deferring steps to subclasses.
 28_Visitor               : Adds new operations to a structure without modifying its classes.
 
-IV. MODERN C++: ARCHITECTURE, CONCURRENCY & PERFORMANCE
+IV. MODERN C++: ARCHITECTURE, CONCURRENCY & PERFORMANCE PATTERNS
 ----------------------------------------------------------------------------
-29_Framework         : Architectural skeleton following the "Hollywood Principle".
-30_NullObject        : Provides a "do-nothing" object to eliminate explicit null checks.
-31_Variant           : Type-safe unions for non-intrusive polymorphism and modern dispatch.
-32_CRTP              : Static polymorphism using the Curiously Recurring Template Pattern.
-33_Deducing_This     : Modern C++23 alternative to CRTP for static polymorphism.
-34_ErrorHandling     : Manages operation outcomes via the 'Result' pattern (std::expected).
-35_ThreadPool        : Manages a set of persistent worker threads to execute tasks concurrently.
-36_ComponentRegistry : High-performance data management using Data-Oriented Design (DOD).
-37_TypeErasure       : Open, non-intrusive polymorphism through value wrappers.
+29_Framework           : Architectural skeleton following the "Hollywood Principle".
+30_NullObject          : Provides a "do-nothing" object to eliminate explicit null checks.
+31_Variant             : Type-safe unions for non-intrusive polymorphism and modern dispatch.
+32_CRTP                : Static polymorphism using the Curiously Recurring Template Pattern.
+33_Deducing_This       : Modern C++23 alternative to CRTP for static polymorphism.
+34_ErrorHandling       : Manages operation outcomes via the 'Result' pattern (std::expected).
+35_ThreadPool          : Manages a set of persistent worker threads to execute tasks concurrently.
+36_ComponentRegistry   : High-performance data management using Data-Oriented Design (DOD).
+37_TypeErasure         : Open, non-intrusive polymorphism through value wrappers.
+38_ExpressionTemplates : Fuses mathematical expressions into optimized loops via compile-time AST trees.
 
 **Author:** Mario Galindo Queralt, Ph.D.
 

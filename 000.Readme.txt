@@ -3,9 +3,9 @@
 
 ![C++ Standard](https://img.shields.io/badge/C%2B%2B-14%2F17%2F20%2F23-blue?style=for-the-badge&logo=c%2B%2B)
 ![License](https://img.shields.io/badge/License-Free%20Use-green?style=for-the-badge)
-![Patterns](https://img.shields.io/badge/Patterns-37-orange?style=for-the-badge)
+![Patterns](https://img.shields.io/badge/Patterns-38-orange?style=for-the-badge)
 
-Welcome to a comprehensive educational repository of **37 Design Patterns and C++ Idioms**. This
+Welcome to a comprehensive educational repository of **38 Design Patterns and C++ Idioms**. This
 project represents a bridge between classic software architecture (the *Gang of Four* legacy with
 C++98/11) and Modern C++ best practices (with C++14/17/20/23).
 
@@ -44,14 +44,15 @@ file.
 
 ## --- What this Repository Covers ---
 The following patterns and techniques are implemented with production-grade logic:
-* **Creational:** Singleton, Factory Method, Abstract Factory, Builder, Prototype, Lazy
+* **Creational:** Builder, Factory Method, Abstract Factory, Prototype, Singleton, Lazy
     Initialization, Named Constructors.
-* **Structural:** Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy, Mixins,
-    Registry, Module Loader.
+* **Structural:** Adapter, Bridge, Composite, Decorator, Facade, Flyweight, Proxy, Mixin,
+    Register, Module Loader.
 * **Behavioral:** Chain of Responsibility, Command, Interpreter, Iterator, Mediator, Memento,
-    Observer, State, Strategy, Template Method, Visitor.
-* **Modern C++ Idioms:** Type Erasure, Deducing This (C++23), std::variant dispatch, std::expected
-    Error Handling, Thread Pools, Component Registry (DOD).
+    Observer, Finite State Machine, Strategy, Template Method, Visitor.
+* **Modern C++ (Architecture, Concurrency & Performance):** Framework, Null Object, std::variant
+    Dispatch, CRTP, Deducing This (C++23), Error Handling (std::expected), Thread Pools, Component
+    Registry (DOD), Type Erasure, Expression Templates (Loop Fusion).
 
 ## --- Why This Helps ---
 * **Job Interviews:** Review C++ idioms and patterns before technical evaluations.
