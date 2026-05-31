@@ -36,9 +36,9 @@ classDiagram
    VecExpression <|-- VecScale~E~
 
    %% Composition of the AST
-   VecSum *-- "1" L
-   VecSum *-- "1" R
-   VecScale *-- "1" E
+   VecSum *-- L
+   VecSum *-- R
+   VecScale *-- E
 
    %% Client interaction
    Client *-- "n" Vector
