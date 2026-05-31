@@ -33,6 +33,7 @@
 #include <utility>
 
 // CALIBRATION CONSTANTS:
+// Try to get approximately 5 seconds of execution time or use up all your memory.
 // 1.2 billion elements require ~8.94 GB of RAM per vector.
 const size_t VECTOR_SIZE = 1'200'000'000;
 
@@ -63,7 +64,7 @@ public:
    {
       Vector result(lhs.size());
       for(size_t i = 0; i < lhs.size(); ++i) result[i] = lhs[i] + rhs[i];
-      return result;
+      return result; // Copy Elision - NRVO (Named Return Value Optimization)
    }
 
    // Rvalue + Lvalue (Recycle LHS)
@@ -80,10 +81,11 @@ public:
       return std::move(rhs);
    }
 
-   // Rvalue + Rvalue (Recycle LHS - Resolves Ambiguity)
+   // Rvalue + Rvalue (Recycle LHS - Release RHS)
    friend Vector operator+(Vector&& lhs, Vector&& rhs)
    {
       for(size_t i = 0; i < lhs.size(); ++i) lhs.data_[i] += rhs.data_[i];
+      rhs.data_ = std::vector<double>(); // Realese rhs memory
       return std::move(lhs);
    }
 
@@ -94,7 +96,7 @@ public:
    {
       Vector result(vec.size());
       for(size_t i = 0; i < vec.size(); ++i) result[i] = factor * vec[i];
-      return result;
+      return result; // Copy Elision - NRVO (Named Return Value Optimization)
    }
 
    // Factor * Rvalue (Recycle Vector)
