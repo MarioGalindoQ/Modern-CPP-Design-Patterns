@@ -1,0 +1,71 @@
+# EXPRESSION TEMPLATES (ARCHITECTURAL / PERFORMANCE)
+**Author:** Mario Galindo Queralt, Ph.D.
+
+## Intent
+To represent mathematical expressions as a tree of objects at compile-time, deferring the actual
+computation until the result is assigned to a container. This allows the compiler to perform "Loop
+Fusion", executing a complex expression in a single pass over the data without creating temporary
+objects.
+
+## The Problem: The "Naive" Overloading and the Memory Wall
+In traditional C++ development, mathematical operator overloading (e.g., R = A + 2*B + 3*C) is
+intuitive but extremely inefficient for large data sets:
+
+1. Intermediate Temporaries: Every sub-expression (2*B, A + 2*B) creates a full-sized temporary
+vector on the heap. With 1.2 billion elements (~9GB per vector), this quickly exhausts physical
+RAM.
+2. Multiple Passes: The CPU must iterate through the data multiple times—once for each
+operator—forcing repeated transfers between RAM and Cache.
+3. The Memory Wall: Modern CPUs are much faster than RAM. Traditional overloading exacerbates this
+bottleneck by forcing the CPU to wait for data to arrive from memory multiple times, making it
+impossible to reach the theoretical performance of the hardware.
+
+## The Solution: Lazy Evaluation and Loop Fusion
+Expression Templates solve this by changing the return type of operators. Instead of returning a
+'Vector', they return a lightweight Proxy Object (a node in an Abstract Syntax Tree).
+
+- Lazy Evaluation: No calculation is performed when the expression is defined. The proxies only
+  store references to the operands.
+- Loop Fusion: The actual computation happens inside the assignment operator (operator=) of the
+  target vector. The entire expression tree is collapsed into a single 'for' loop, ensuring that
+  each data element is loaded into the CPU cache only once.
+
+## Our Examples
+This directory illustrates the evolution of this technique, from the baseline problem to the
+state-of-the-art C++23 solution:
+
+1. 01_Traditional/
+   A professional implementation of the traditional approach using Move Semantics (Rule of Seven)
+   to recycle buffers. It serves as the benchmark to measure the "Memory Wall" penalty.
+
+2. 02_Expressions_CRTP/
+   The classic implementation using the Curiously Recurring Template Pattern (CRTP). It
+   demonstrates how to build a compile-time AST with zero heap allocations during evaluation.
+
+3. 03_Expressions_Deducing_This/
+   The modern evolution using C++23 "Deducing This". It achieves the same performance as CRTP but
+   with significantly cleaner and more maintainable code.
+
+## OO Principles Applied (from 002_OO_Principles.txt)
+- SRP (Single Responsibility): Each node (VecSum, VecScale) has the sole responsibility of
+  representing a specific mathematical operation.
+- OCP (Open/Closed): The system is open for extension; new operations (like Dot Product or
+  Subtraction) can be added as new classes without modifying the 'Vector' class.
+- DIP (Dependency Inversion): The 'Vector' assignment operator depends on the 'VecExpression'
+  abstraction, not on concrete operation types.
+- CQS (Command-Query Separation): Expression nodes are pure "Queries" (they return data via
+  operator[] without side effects), while the 'Vector' assignment is a "Command" that mutates the
+  target state.
+
+## Cross-References to Other Patterns
+- Pattern 14 (Proxy): Every node in an Expression Template (VecSum, VecScale) is a Proxy Object
+  that represents a pending computation rather than a finished result.
+- Pattern 10 (Composite): The expression tree is a static version of the Composite pattern, where
+  nodes can be combined into complex hierarchical structures.
+- Pattern 20 (Interpreter): Expression Templates act as a high-performance, compile-time version
+  of the Interpreter pattern, building a static Abstract Syntax Tree (AST) instead of a dynamic
+  one.
+- Pattern 32 (CRTP): The core engine used in example 02 to achieve static polymorphism.
+- Pattern 33 (Deducing This): The modern C++23 alternative to CRTP used in example 03.
+
+---

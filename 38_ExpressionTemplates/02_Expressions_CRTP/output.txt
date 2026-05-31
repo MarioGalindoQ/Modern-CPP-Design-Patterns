@@ -1,0 +1,10 @@
+=== EXPRESSION TEMPLATES: CRTP & LOOP FUSION ===
+
+ [1/4] Initializing vectors of size: 1200000000...
+ [2/4] Warming up CPU (Target: ~5 seconds)...
+ [3/4] Executing: R = A + 2.0 * B + 3.0 * C ...
+ [4/4] Verification - R[0]: 14 (Expected: 14)
+
+ Elapsed time: 1.33653 seconds.
+
+=== SIMULATION COMPLETED ===
