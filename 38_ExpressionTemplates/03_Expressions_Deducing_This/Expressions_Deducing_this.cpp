@@ -2,39 +2,39 @@
  * ============================================================================
  * File: Expressions_Deducing_this.cpp
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- DESIGN OVERVIEW:
- * This program implements the "Expression Templates" pattern using the 
- * modern C++23 "Deducing This" feature (Explicit Object Parameters). It 
- * represents the state-of-the-art evolution of high-performance mathematical 
+ * This program implements the "Expression Templates" pattern using the
+ * modern C++23 "Deducing This" feature (Explicit Object Parameters). It
+ * represents the state-of-the-art evolution of high-performance mathematical
  * DSLs (Domain Specific Languages) in C++.
- * 
+ *
  * --- THE UNIFIED INTERFACE ADVANTAGE:
- * Unlike more complex implementations where operators (+, *) must be 
- * redefined inside every node type (Vector, VecSum, VecScale), we introduce 
- * a non-template base class: 'VecExpression'. 
- * 
+ * Unlike more complex implementations where operators (+, *) must be
+ * redefined inside every node type (Vector, VecSum, VecScale), we introduce
+ * a non-template base class: 'VecExpression'.
+ *
  * By having all expression nodes inherit from this single interface:
- * 1. Code Reusability (DRY): Mathematical operators are defined once as 
- *    global templates. Because they target 'VecExpression', they 
+ * 1. Code Reusability (DRY): Mathematical operators are defined once as
+ *    global templates. Because they target 'VecExpression', they
  *    automatically work for any current or future node in the tree.
- * 2. Static Contract: It enforces a uniform interface (size and operator[]) 
+ * 2. Static Contract: It enforces a uniform interface (size and operator[])
  *    across the entire hierarchy without the overhead of virtual functions.
- * 
+ *
  * --- DEDUCING THIS (C++23) vs. CRTP:
- * This version eliminates the "Curiously Recurring" template syntax. By using 
- * 'this auto&& self' in the base class methods, the compiler automatically 
- * deduces the concrete derived type (Vector, VecSum, etc.) at the call site. 
- * This removes the need for 'static_cast' and makes the code significantly 
+ * This version eliminates the "Curiously Recurring" template syntax. By using
+ * 'this auto&& self' in the base class methods, the compiler automatically
+ * deduces the concrete derived type (Vector, VecSum, etc.) at the call site.
+ * This removes the need for 'static_cast' and makes the code significantly
  * more readable while maintaining identical zero-overhead performance.
- * 
+ *
  * --- PERFORMANCE & LOOP FUSION:
- * The traditional "Naive" approach creates costly temporary vectors for 
+ * The traditional "Naive" approach creates costly temporary vectors for
  * every sub-expression. This implementation:
- * 1. Eliminates Temporaries: Operations return lightweight proxies that 
+ * 1. Eliminates Temporaries: Operations return lightweight proxies that
  *    act as an Abstract Syntax Tree (AST).
- * 2. Single-Pass Execution: The entire calculation is collapsed into one 
- *    continuous loop inside the assignment operator, maximizing CPU cache 
+ * 2. Single-Pass Execution: The entire calculation is collapsed into one
+ *    continuous loop inside the assignment operator, maximizing CPU cache
  *    locality and overcoming the "Memory Wall" bottleneck.
  * ============================================================================
  */
@@ -43,9 +43,8 @@
 #include <vector>
 #include <chrono>
 #include <cmath>
-#include <cassert>
 
-// CALIBRATION CONSTANTS (Identical to previous versions)
+// CALIBRATION CONSTANTS (Identical to Traditional.cpp for a fair benchmark)
 const size_t VECTOR_SIZE       = 1'200'000'000;
 const size_t WARMUP_ITERATIONS = 3'000'000'000;
 
@@ -72,17 +71,16 @@ public:
 
    size_t size() const { return data_.size(); }
    double operator[](size_t i) const { return data_[i]; }
-   double& operator[](size_t i) { return data_[i]; }
+   //double& operator[](size_t i) { return data_[i]; }
 
    // Lazy Evaluation Assignment Operator
-   // This is where the "Loop Fusion" occurs. 
+   // This is where the "Loop Fusion" occurs.
    // It accepts any expression node and evaluates it in a single pass.
    template <class Expression>
    Vector& operator=(const Expression& expr)
    {
-      assert(size() == expr.size());
-      for (size_t i = 0; i < data_.size(); ++i)
-         data_[i] = expr[i]; 
+      for(size_t i = 0; i < data_.size(); ++i)
+         data_[i] = expr[i]; // Loop fusion happens right here
       return *this;
    }
 };
@@ -92,14 +90,14 @@ template <class LHS_Expr, class RHS_Expr>
 class VecSum : public VecExpression
 {
 private:
-   const LHS_Expr& l_;
-   const RHS_Expr& r_;
+   const LHS_Expr& lhs_;
+   const RHS_Expr& rhs_;
 
 public:
-   VecSum(const LHS_Expr& lhs, const RHS_Expr& rhs) : l_(lhs), r_(rhs) { }
+   VecSum(const LHS_Expr& lhs, const RHS_Expr& rhs) : lhs_(lhs), rhs_(rhs) { }
 
-   size_t size() const { return l_.size(); }
-   double operator[](size_t i) const { return l_[i] + r_[i]; }
+   size_t size() const { return lhs_.size(); }
+   double operator[](size_t i) const { return lhs_[i] + rhs_[i]; }
 };
 
 //--------------------------------------------------------- 4. VecScale Node:
@@ -107,29 +105,29 @@ template <class RHS_Expr>
 class VecScale : public VecExpression
 {
 private:
-   double          scalar_;
-   const RHS_Expr& v_;
+   double          factor_; // The scaling factor
+   const RHS_Expr& expr_;   // Reference to the expression being scaled
 
 public:
-   VecScale(double s, const RHS_Expr& vec) : scalar_(s), v_(vec) { }
+   VecScale(double factor, const RHS_Expr& expr) : factor_(factor), expr_(expr) { }
 
-   size_t size() const { return v_.size(); }
-   double operator[](size_t i) const { return scalar_ * v_[i]; }
+   size_t size() const { return expr_.size(); }
+   double operator[](size_t i) const { return factor_ * expr_[i]; }
 };
 
 //--------------------------------------------------------- 5. Operator Overloads:
 // These functions build the Abstract Syntax Tree (AST) at compile-time.
 
 template <class LHS_Expr, class RHS_Expr>
-auto operator+(const LHS_Expr& a, const RHS_Expr& b)
+auto operator+(const LHS_Expr& lhs, const RHS_Expr& rhs)
 {
-   return VecSum<LHS_Expr, RHS_Expr>(a, b);
+   return VecSum<LHS_Expr, RHS_Expr>(lhs, rhs);
 }
 
 template <class Expression>
-auto operator*(double scalar, const Expression& vec)
+auto operator*(double factor, const Expression& expr)
 {
-   return VecScale<Expression>(scalar, vec);
+   return VecScale<Expression>(factor, expr);
 }
 
 //--------------------------------------------------------- Main Simulation:
@@ -147,21 +145,23 @@ int main()
    // 2. CPU WARM-UP PHASE
    std::cout << " [2/4] Warming up CPU (Target: ~5 seconds)..." << std::endl;
    volatile double warm = 0.0;
-   for (size_t i = 0; i < WARMUP_ITERATIONS; ++i)
+   for(size_t i = 0; i < WARMUP_ITERATIONS; ++i)
       warm += std::sqrt(static_cast<double>(i));
 
    // 3. BENCHMARK MEASUREMENT
-   std::cout << " [3/4] Executing: R = A + 2.0 * B + 3.0 * C ..." << std::endl;
+   std::cout << " [3/4] Executing: R = 2.0 * ( A + 3.0 * B + 4.0 * C ) ..." << std::endl;
    auto start = std::chrono::high_resolution_clock::now();
 
    /**
     * THE MAGIC OF FUSED EVALUATION:
-    * 
+    *
     * Unlike the traditional approach, no temporary vectors are created.
     * The compiler builds a static AST and executes a single loop.
-    * 
+    *
     * Visually, the tree being evaluated looks like this:
-    * 
+    *
+    *                VecScale (2.0 * ( A + 3.0 * B + 4.0 * C ))
+    *                   |
     *                VecSum (Outer Addition)
     *               /       \
     *         VecSum         VecScale (3.0 * C)
@@ -169,12 +169,12 @@ int main()
     *    Vector     VecScale (2.0 * B)
     *     (A)
     *
-    * When assigned to R, the operator= triggers a single, fused, highly 
-    * optimized loop: R[i] = A[i] + (2.0 * B[i]) + (3.0 * C[i])
+    * When assigned to R, the operator= triggers a single, fused, highly
+    * optimized loop: R[i] = 2.0 * ( A[i] + (3.0 * B[i]) + (4.0 * C[i]) )
     *
     * Zero temporary vectors are allocated on the heap during evaluation.
     */
-   R = A + 2.0 * B + 3.0 * C;
+   R = 2.0 * ( A + 3.0 * B + 4.0 * C );
 
    auto end = std::chrono::high_resolution_clock::now();
    std::chrono::duration<double> elapsed = end - start;

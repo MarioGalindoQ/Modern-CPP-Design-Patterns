@@ -8,7 +8,7 @@ Fusion", executing a complex expression in a single pass over the data without c
 objects.
 
 ## The Problem: The "Naive" Overloading and the Memory Wall
-In traditional C++ development, mathematical operator overloading (e.g., R = A + 2*B + 3*C) is
+In traditional C++ development, mathematical operator overloading (e.g., R = 2*(A + 3*B + 4*C) is
 intuitive but extremely inefficient for large data sets:
 
 1. **Intermediate Temporaries:** Every sub-expression (2*B, A + 2*B) creates a full-sized temporary
@@ -35,7 +35,7 @@ This directory illustrates the evolution of this technique, from the baseline pr
 state-of-the-art C++23 solution:
 
 1. **01_Traditional/:**
-   A professional implementation of the traditional approach using Move Semantics (Rule of Seven)
+   A professional implementation of the traditional approach using Move Semantics
    to recycle buffers. It serves as the benchmark to measure the "Memory Wall" penalty.
 
 2. **02_Expressions_CRTP/:**

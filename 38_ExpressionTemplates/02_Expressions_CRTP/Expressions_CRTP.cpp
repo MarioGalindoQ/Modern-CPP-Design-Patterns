@@ -24,7 +24,6 @@
 #include <vector>
 #include <chrono>
 #include <cmath>
-#include <cassert>
 
 // CALIBRATION CONSTANTS (Identical to Traditional.cpp for a fair benchmark)
 const size_t VECTOR_SIZE       = 1'200'000'000;
@@ -37,6 +36,7 @@ template <class Derived>
 class VecExpression
 {
 public:
+   // Derived could be a Vector, a VecSum or a VecScale
    size_t size() const { return static_cast<const Derived&>(*this).size(); }
    double operator[](size_t i) const { return static_cast<const Derived&>(*this)[i]; }
 };
@@ -55,25 +55,15 @@ public:
    size_t size() const { return data_.size(); }
 
    double operator[](size_t i) const { return data_[i]; }
-   double& operator[](size_t i) { return data_[i]; }
-
-   // Lazy Evaluation Expression Constructor
-   // This constructor accepts ANY abstract expression tree and evaluates it
-   // in a single, continuous, highly optimized loop.
-   template <class Expression>
-   Vector(const VecExpression<Expression>& expr) : data_(expr.size())
-   {
-      for (size_t i = 0; i < expr.size(); ++i)
-         data_[i] = expr[i];
-   }
+   //double& operator[](size_t i) { return data_[i]; }
 
    // Lazy Evaluation Assignment Operator
-   // Triggers the actual evaluation of the expression tree directly into the target memory.
+   // This is where the "Loop Fusion" occurs.
+   // It accepts any expression node and evaluates it in a single pass.
    template <class Expression>
    Vector& operator=(const VecExpression<Expression>& expr)
    {
-      assert(size() == expr.size());
-      for (size_t i = 0; i < expr.size(); ++i)
+      for(size_t i = 0; i < expr.size(); ++i)
          data_[i] = expr[i]; // Loop fusion happens right here
       return *this;
    }
@@ -85,16 +75,16 @@ template <class LHS_Expr, class RHS_Expr>
 class VecSum : public VecExpression<VecSum<LHS_Expr, RHS_Expr>>
 {
 private:
-   const LHS_Expr& l_; // Reference to the left-hand side expression operand
-   const RHS_Expr& r_; // Reference to the right-hand side expression operand
+   const LHS_Expr& lhs_; // Reference to the left-hand side expression operand
+   const RHS_Expr& rhs_; // Reference to the right-hand side expression operand
 
 public:
-   VecSum(const LHS_Expr& lhs, const RHS_Expr& rhs) : l_(lhs), r_(rhs) { }
+   VecSum(const LHS_Expr& lhs, const RHS_Expr& rhs) : lhs_(lhs), rhs_(rhs) { }
 
-   size_t size() const { return l_.size(); }
+   size_t size() const { return lhs_.size(); }
 
    // Inline element access: propagates index requests down the expression tree
-   double operator[](size_t i) const { return l_[i] + r_[i]; }
+   double operator[](size_t i) const { return lhs_[i] + rhs_[i]; }
 };
 
 //--------------------------------------------------------- 4. Expression Node for Scaling:
@@ -103,16 +93,16 @@ template <class Expression>
 class VecScale : public VecExpression<VecScale<Expression>>
 {
 private:
-   double           scalar_; // The scaling factor
-   const Expression& v_;     // Reference to the expression being scaled
+   double            factor_; // The scaling factor
+   const Expression& expr_;   // Reference to the expression being scaled
 
 public:
-   VecScale(double s, const Expression& vec) : scalar_(s), v_(vec) { }
+   VecScale(double factor, const Expression& expr) : factor_(factor), expr_(expr) { }
 
-   size_t size() const { return v_.size(); }
+   size_t size() const { return expr_.size(); }
 
    // Inline element access: performs scalar multiplication on the fly
-   double operator[](size_t i) const { return scalar_ * v_[i]; }
+   double operator[](size_t i) const { return factor_ * expr_[i]; }
 };
 
 //--------------------------------------------------------- 5. Operator Overloads:
@@ -120,17 +110,17 @@ public:
 // They simply deduce and assemble the type structure of the calculation tree.
 
 // Non-member operator+ for two arbitrary expressions
-template <class L, class R>
-VecSum<L, R> operator+(const VecExpression<L>& a, const VecExpression<R>& b)
+template <class LHS_Expr, class RHS_Expr>
+VecSum<LHS_Expr, RHS_Expr> operator+(const VecExpression<LHS_Expr>& lhs, const VecExpression<RHS_Expr>& rhs)
 {
-   return VecSum<L, R>(static_cast<const L&>(a), static_cast<const R&>(b));
+   return VecSum<LHS_Expr, RHS_Expr>(static_cast<const LHS_Expr&>(lhs), static_cast<const RHS_Expr&>(rhs));
 }
 
-// Non-member operator* for a scalar multiplying an arbitrary expression
-template <class E>
-VecScale<E> operator*(double scalar, const VecExpression<E>& vec)
+// Non-member operator* for a scalar factor multiplying an arbitrary expression
+template <class Expression>
+VecScale<Expression> operator*(double factor, const VecExpression<Expression>& expression)
 {
-   return VecScale<E>(scalar, static_cast<const E&>(vec));
+   return VecScale<Expression>(factor, static_cast<const Expression&>(expression));
 }
 
 //--------------------------------------------------------- Main Simulation:
@@ -148,40 +138,42 @@ int main()
    // 2. CPU WARM-UP PHASE
    std::cout << " [2/4] Warming up CPU (Target: ~5 seconds)..." << std::endl;
    volatile double warm = 0.0;
-   for (size_t i = 0; i < WARMUP_ITERATIONS; ++i)
+   for(size_t i = 0; i < WARMUP_ITERATIONS; ++i)
       warm += std::sqrt(static_cast<double>(i));
 
    // 3. BENCHMARK MEASUREMENT
-   std::cout << " [3/4] Executing: R = A + 2.0 * B + 3.0 * C ..." << std::endl;
+   std::cout << " [3/4] Executing: R = 2.0 * ( A + 3.0 * B + 4.0 * C ) ..." << std::endl;
    auto start = std::chrono::high_resolution_clock::now();
 
    /**
     * THE EXPRESSION TEMPLATE MAGIC:
-    * 
+    *
     * The compiler deduces the exact type structure of the operation as:
     * VecSum<VecSum<Vector, VecScale<Vector>>, VecScale<Vector>>
-    * 
+    *
     * Visually, the compiled static AST looks like this:
-    * 
+    *
+    *                VecScale (2.0 * ( A + 3.0 * B + 4.0 * C ))
+    *                  |
     *                VecSum (Outer Addition)
     *               /       \
-    *         VecSum         VecScale (3.0 * C)
+    *         VecSum         VecScale (4.0 * C)
     *        /      \
-    *    Vector     VecScale (2.0 * B)
+    *    Vector     VecScale (3.0 * B)
     *     (A)
-    * 
-    * When assigned to R, the operator= triggers a single, fused, highly 
-    * optimized loop: R[i] = A[i] + (2.0 * B[i]) + (3.0 * C[i])
+    *
+    * When assigned to R, the operator= triggers a single, fused, highly
+    * optimized loop: R[i] = 2.0 * ( A[i] + (3.0 * B[i]) + (4.0 * C[i]) )
     *
     * Zero temporary vectors are allocated on the heap during evaluation.
     */
-   R = A + 2.0 * B + 3.0 * C;
+   R = 2.0 * ( A + 3.0 * B + 4.0 * C );
 
    auto end = std::chrono::high_resolution_clock::now();
    std::chrono::duration<double> elapsed = end - start;
 
    // 4. RESULTS REPORT AND VERIFICATION
-   std::cout << " [4/4] Verification - R[0]: " << R[0] << " (Expected: 14)\n";
+   std::cout << " [4/4] Verification - R[0]: " << R[0] << " (Expected: 38)\n";
    std::cout << "\n Elapsed time: " << elapsed.count() << " seconds.\n";
 
    std::cout << "\n=== SIMULATION COMPLETED ===" << std::endl;
