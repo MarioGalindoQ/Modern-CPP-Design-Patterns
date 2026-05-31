@@ -29,7 +29,7 @@ classDiagram
       +main()
    }
 
-   Client *-- "nnnnnnnnn" Vector
+   Client *-- Vector
    Client ..> VecSum : via operator+
    Client ..> VecScale : via operator*
 
