@@ -80,7 +80,7 @@ public:
    Vector& operator=(const Expression& expr)
    {
       for(size_t i = 0; i < data_.size(); ++i)
-         data_[i] = expr[i]; // Loop fusion happens right here
+         data_[i] = expr[i]; // data_[i] = 2.0 * ( A[i] + (3.0 * B[i]) + (4.0 * C[i]) )
       return *this;
    }
 };
@@ -160,14 +160,13 @@ int main()
     *
     * Visually, the tree being evaluated looks like this:
     *
-    *                VecScale (2.0 * ( A + 3.0 * B + 4.0 * C ))
+    *                VecScale(2*(A + 3*B + 4*C))
     *                   |
-    *                VecSum (Outer Addition)
+    *                VecSum(A + 3*B + 4*C))
     *               /       \
-    *         VecSum         VecScale (3.0 * C)
+    *         VecSum(A+2*B)  VecScale(4*C)
     *        /      \
-    *    Vector     VecScale (2.0 * B)
-    *     (A)
+    *    Vector(A)   VecScale(3*B)
     *
     * When assigned to R, the operator= triggers a single, fused, highly
     * optimized loop: R[i] = 2.0 * ( A[i] + (3.0 * B[i]) + (4.0 * C[i]) )
@@ -180,7 +179,7 @@ int main()
    std::chrono::duration<double> elapsed = end - start;
 
    // 4. RESULTS REPORT AND VERIFICATION
-   std::cout << " [4/4] Verification - R[0]: " << R[0] << " (Expected: 14)\n";
+   std::cout << " [4/4] Verification - R[0]: " << R[0] << " (Expected: 38)\n";
    std::cout << "\n Elapsed time: " << elapsed.count() << " seconds.\n";
 
    std::cout << "\n=== SIMULATION COMPLETED ===" << std::endl;

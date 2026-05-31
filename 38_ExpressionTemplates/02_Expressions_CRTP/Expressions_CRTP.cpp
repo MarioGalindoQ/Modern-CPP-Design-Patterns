@@ -2,20 +2,20 @@
  * ============================================================================
  * File: Expressions_CRTP.cpp
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- DESIGN OVERVIEW:
- * This program demonstrates the "Expression Templates" pattern using the 
- * Curiously Recurring Template Pattern (CRTP). It solves the massive memory 
- * and speed bottlenecks of the traditional approach by using "Lazy Evaluation" 
+ * This program demonstrates the "Expression Templates" pattern using the
+ * Curiously Recurring Template Pattern (CRTP). It solves the massive memory
+ * and speed bottlenecks of the traditional approach by using "Lazy Evaluation"
  * and "Loop Fusion".
- * 
+ *
  * --- THE ARCHITECTURAL MAGIC:
- * 1. Expression Proxy: Operators (+, *) no longer perform immediate calculations. 
- *    Instead, they return lightweight proxy objects (representing the Abstract 
+ * 1. Expression Proxy: Operators (+, *) no longer perform immediate calculations.
+ *    Instead, they return lightweight proxy objects (representing the Abstract
  *    Syntax Tree) at compile-time with zero allocations.
- * 2. Loop Fusion: The entire mathematical expression is fused into a single, 
+ * 2. Loop Fusion: The entire mathematical expression is fused into a single,
  *    contiguous 'for' loop inside the assignment operator of the 'Vector' class.
- * 3. Zero-Allocation: No intermediate temporary Vector objects (like 8.94 GB 
+ * 3. Zero-Allocation: No intermediate temporary Vector objects (like 8.94 GB
  *    buffers) are created on the heap during the evaluation of the expression.
  * ============================================================================
  */
@@ -64,7 +64,7 @@ public:
    Vector& operator=(const VecExpression<Expression>& expr)
    {
       for(size_t i = 0; i < expr.size(); ++i)
-         data_[i] = expr[i]; // Loop fusion happens right here
+         data_[i] = expr[i]; // data_[i] = 2.0 * ( A[i] + (3.0 * B[i]) + (4.0 * C[i]) )
       return *this;
    }
 };
@@ -149,18 +149,17 @@ int main()
     * THE EXPRESSION TEMPLATE MAGIC:
     *
     * The compiler deduces the exact type structure of the operation as:
-    * VecSum<VecSum<Vector, VecScale<Vector>>, VecScale<Vector>>
+    * VecScale<VecSum<VecSum<Vector, VecScale<Vector>>, VecScale<Vector>>>
     *
     * Visually, the compiled static AST looks like this:
     *
-    *                VecScale (2.0 * ( A + 3.0 * B + 4.0 * C ))
+    *                VecScale(2 * (A + 3*B + 4*C))
     *                  |
-    *                VecSum (Outer Addition)
+    *                VecSum(A + 3*B + 4*C)
     *               /       \
-    *         VecSum         VecScale (4.0 * C)
+    *         VecSum(A+3*B)  VecScale(4*C)
     *        /      \
-    *    Vector     VecScale (3.0 * B)
-    *     (A)
+    *    Vector(A)   VecScale(3*B)
     *
     * When assigned to R, the operator= triggers a single, fused, highly
     * optimized loop: R[i] = 2.0 * ( A[i] + (3.0 * B[i]) + (4.0 * C[i]) )
