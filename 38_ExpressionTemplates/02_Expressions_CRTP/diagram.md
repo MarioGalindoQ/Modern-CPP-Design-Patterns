@@ -29,10 +29,6 @@ classDiagram
       +main()
    }
 
-   Client *-- "n" Vector
-   Client ..> VecSum : via operator+
-   Client ..> VecScale : via operator*
-
    %% Static Inheritance (CRTP)
    VecExpression~Derived~ <|-- Vector
    VecExpression~Derived~ <|-- VecSum~L, R~
@@ -45,6 +41,10 @@ classDiagram
 
    %% The Vector assignment triggers the loop fusion
    Vector ..> VecExpression : evaluates
+
+   Client *-- "n" Vector
+   Client ..> VecSum : via operator+
+   Client ..> VecScale : via operator*
 ```
 
 ### Design Note:
