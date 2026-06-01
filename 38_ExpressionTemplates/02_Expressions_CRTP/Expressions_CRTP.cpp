@@ -9,6 +9,13 @@
  * and speed bottlenecks of the traditional approach by using "Lazy Evaluation"
  * and "Loop Fusion".
  *
+ * --- CRTP MECHANICS:
+ * The base class 'VecExpression<Derived>' is a template that receives the 
+ * concrete type of its child. Methods like 'size()' and 'operator[]' 
+ * utilize 'static_cast<const Derived&>(*this)' to delegate the call 
+ * to the specific implementation (Vector, VecSum, or VecScale) at 
+ * compile-time, bypassing the virtual table.
+ *
  * --- THE ARCHITECTURAL MAGIC:
  * 1. Expression Proxy: Operators (+, *) no longer perform immediate calculations.
  *    Instead, they return lightweight proxy objects (representing the Abstract
@@ -36,7 +43,8 @@ template <class Derived>
 class VecExpression
 {
 public:
-   // Derived could be a Vector, a VecSum or a VecScale
+   // Static Polymorphism: Derived can be a Vector, a VecSum or a VecScale.
+   // CRTP requires an explicit static_cast to access the derived members.
    auto size() const { return static_cast<const Derived&>(*this).size(); }
    auto operator[](size_t i) const { return static_cast<const Derived&>(*this)[i]; }
 };

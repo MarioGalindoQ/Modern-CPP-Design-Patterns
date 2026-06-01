@@ -49,11 +49,12 @@ const size_t VECTOR_SIZE       = 1'200'000'000;
 const size_t WARMUP_ITERATIONS = 3'000'000'000;
 
 //--------------------------------------------------------- 1. Base Class:
-// C++23 Base: Uses Explicit Object Parameters to deduce the derived type.
+// C++23 Base: Simple, readable, and non-template.
 class VecExpression
 {
 public:
    // 'this auto&& self' deduces if we are a Vector, a VecSum, or a VecScale.
+   // No static_cast required.
    auto size(this auto&& self) { return self.size(); }
    auto operator[](this auto&& self, size_t i) { return self[i]; }
 };
