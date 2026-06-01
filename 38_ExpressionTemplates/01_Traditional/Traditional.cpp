@@ -85,7 +85,7 @@ public:
    friend Vector operator+(Vector&& lhs, Vector&& rhs)
    {
       for(size_t i = 0; i < lhs.size(); ++i) lhs.data_[i] += rhs.data_[i];
-      rhs.data_ = std::vector<double>(); // Realese rhs memory
+      rhs = Vector(0); // Realese rhs memory using default move assigment
       return std::move(lhs);
    }
 

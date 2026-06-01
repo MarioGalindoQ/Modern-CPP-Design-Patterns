@@ -5,6 +5,6 @@
  [3/4] Executing: R = 2.0 * ( A + 3.0 * B + 4.0 * C ) ...
  [4/4] Verification - R[0]: 38 (Expected: 38)
 
- Elapsed time: 5.60493 seconds.
+ Elapsed time: 5.59561 seconds.
 
 === SIMULATION COMPLETED ===
