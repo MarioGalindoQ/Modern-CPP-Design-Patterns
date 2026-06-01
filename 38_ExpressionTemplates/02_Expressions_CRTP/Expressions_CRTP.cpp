@@ -37,8 +37,8 @@ class VecExpression
 {
 public:
    // Derived could be a Vector, a VecSum or a VecScale
-   size_t size() const { return static_cast<const Derived&>(*this).size(); }
-   double operator[](size_t i) const { return static_cast<const Derived&>(*this)[i]; }
+   auto size() const { return static_cast<const Derived&>(*this).size(); }
+   auto operator[](size_t i) const { return static_cast<const Derived&>(*this)[i]; }
 };
 
 //--------------------------------------------------------- 2. Vector Container:
@@ -53,7 +53,6 @@ public:
    Vector(size_t size, double value) : data_(size, value) { }
 
    size_t size() const { return data_.size(); }
-
    double operator[](size_t i) const { return data_[i]; }
    //double& operator[](size_t i) { return data_[i]; }
 
@@ -61,7 +60,7 @@ public:
    // This is where the "Loop Fusion" occurs.
    // It accepts any expression node and evaluates it in a single pass.
    template <class Expression>
-   Vector& operator=(const VecExpression<Expression>& expr)
+   Vector& operator=(const Expression& expr)
    {
       for(size_t i = 0; i < expr.size(); ++i)
          data_[i] = expr[i]; // data_[i] = 2.0 * ( A[i] + (3.0 * B[i]) + (4.0 * C[i]) )
@@ -69,7 +68,7 @@ public:
    }
 };
 
-//--------------------------------------------------------- 3. Expression Node for Addition:
+//--------------------------------------------------------- 3. VecSum Node:
 // Represents a delayed sum of two independent expressions.
 template <class LHS_Expr, class RHS_Expr>
 class VecSum : public VecExpression<VecSum<LHS_Expr, RHS_Expr>>
@@ -87,7 +86,7 @@ public:
    double operator[](size_t i) const { return lhs_[i] + rhs_[i]; }
 };
 
-//--------------------------------------------------------- 4. Expression Node for Scaling:
+//--------------------------------------------------------- 4. VecScale Node:
 // Represents a delayed multiplication of a scalar value and an expression.
 template <class Expression>
 class VecScale : public VecExpression<VecScale<Expression>>
@@ -107,20 +106,20 @@ public:
 
 //--------------------------------------------------------- 5. Operator Overloads:
 // These operators DO NOT execute any loops or allocate heap memory.
-// They simply deduce and assemble the type structure of the calculation tree.
+// They simply deduce and assemble the Abstract Syntax Tree (AST) at compile-time.
 
 // Non-member operator+ for two arbitrary expressions
 template <class LHS_Expr, class RHS_Expr>
-VecSum<LHS_Expr, RHS_Expr> operator+(const VecExpression<LHS_Expr>& lhs, const VecExpression<RHS_Expr>& rhs)
+auto operator+(const LHS_Expr& lhs, const RHS_Expr& rhs)
 {
-   return VecSum<LHS_Expr, RHS_Expr>(static_cast<const LHS_Expr&>(lhs), static_cast<const RHS_Expr&>(rhs));
+   return VecSum<LHS_Expr, RHS_Expr>(lhs, rhs);
 }
 
 // Non-member operator* for a scalar factor multiplying an arbitrary expression
 template <class Expression>
-VecScale<Expression> operator*(double factor, const VecExpression<Expression>& expression)
+auto operator*(double factor, const Expression& expr)
 {
-   return VecScale<Expression>(factor, static_cast<const Expression&>(expression));
+   return VecScale<Expression>(factor, expr);
 }
 
 //--------------------------------------------------------- Main Simulation:
@@ -148,13 +147,13 @@ int main()
    /**
     * THE EXPRESSION TEMPLATE MAGIC:
     *
-    * The compiler deduces the exact type structure of the operation as:
-    * VecScale<VecSum<VecSum<Vector, VecScale<Vector>>, VecScale<Vector>>>
+    * Unlike the traditional approach, no temporary vectors are created.
+    * The compiler builds a static AST and executes a single loop.
     *
     * Visually, the compiled static AST looks like this:
     *
-    *                VecScale(2 * (A + 3*B + 4*C))
-    *                  |
+    *                VecScale(2*(A + 3*B + 4*C))
+    *                   |
     *                VecSum(A + 3*B + 4*C)
     *               /       \
     *         VecSum(A+3*B)  VecScale(4*C)

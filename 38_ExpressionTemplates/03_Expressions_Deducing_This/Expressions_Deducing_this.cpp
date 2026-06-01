@@ -79,51 +79,60 @@ public:
    template <class Expression>
    Vector& operator=(const Expression& expr)
    {
-      for(size_t i = 0; i < data_.size(); ++i)
+      for(size_t i = 0; i < expr.size(); ++i)
          data_[i] = expr[i]; // data_[i] = 2.0 * ( A[i] + (3.0 * B[i]) + (4.0 * C[i]) )
       return *this;
    }
 };
 
 //--------------------------------------------------------- 3. VecSum Node:
+// Represents a delayed sum of two independent expressions.
 template <class LHS_Expr, class RHS_Expr>
 class VecSum : public VecExpression
 {
 private:
-   const LHS_Expr& lhs_;
-   const RHS_Expr& rhs_;
+   const LHS_Expr& lhs_; // Reference to the left-hand side expression operand
+   const RHS_Expr& rhs_; // Reference to the right-hand side expression operand
 
 public:
    VecSum(const LHS_Expr& lhs, const RHS_Expr& rhs) : lhs_(lhs), rhs_(rhs) { }
 
    size_t size() const { return lhs_.size(); }
+
+   // Inline element access: propagates index requests down the expression tree
    double operator[](size_t i) const { return lhs_[i] + rhs_[i]; }
 };
 
 //--------------------------------------------------------- 4. VecScale Node:
-template <class RHS_Expr>
+// Represents a delayed multiplication of a scalar value and an expression.
+template <class Expression>
 class VecScale : public VecExpression
 {
 private:
-   double          factor_; // The scaling factor
-   const RHS_Expr& expr_;   // Reference to the expression being scaled
+   double            factor_; // The scaling factor
+   const Expression& expr_;   // Reference to the expression being scaled
 
 public:
-   VecScale(double factor, const RHS_Expr& expr) : factor_(factor), expr_(expr) { }
+   VecScale(double factor, const Expression& expr) : factor_(factor), expr_(expr) { }
 
    size_t size() const { return expr_.size(); }
+
+   // Inline element access: performs scalar multiplication on the fly
    double operator[](size_t i) const { return factor_ * expr_[i]; }
 };
 
 //--------------------------------------------------------- 5. Operator Overloads:
-// These functions build the Abstract Syntax Tree (AST) at compile-time.
+// These operators DO NOT execute any loops or allocate heap memory.
+// They simply deduce and assemble the Abstract Syntax Tree (AST) at compile-time.
 
+// Non-member operator+ for two arbitrary expressions
 template <class LHS_Expr, class RHS_Expr>
 auto operator+(const LHS_Expr& lhs, const RHS_Expr& rhs)
 {
    return VecSum<LHS_Expr, RHS_Expr>(lhs, rhs);
 }
 
+// Non-member operator* for a scalar factor multiplying an arbitrary expression
 template <class Expression>
 auto operator*(double factor, const Expression& expr)
 {
@@ -135,7 +144,7 @@ int main()
 {
    std::cout << "=== EXPRESSION TEMPLATES: DEDUCING THIS (C++23) ===\n" << std::endl;
 
-   // 1. DATA INITIALIZATION
+   // 1. DATA INITIALIZATION (Identical sequence to traditional version)
    std::cout << " [1/4] Initializing vectors of size: " << VECTOR_SIZE << "...\n";
    Vector A(VECTOR_SIZE, 1.0);
    Vector B(VECTOR_SIZE, 2.0);
@@ -153,18 +162,18 @@ int main()
    auto start = std::chrono::high_resolution_clock::now();
 
    /**
-    * THE MAGIC OF FUSED EVALUATION:
+    * THE EXPRESSION TEMPLATE MAGIC:
     *
     * Unlike the traditional approach, no temporary vectors are created.
     * The compiler builds a static AST and executes a single loop.
     *
-    * Visually, the tree being evaluated looks like this:
+    * Visually, the compiled static AST looks like this:
     *
     *                VecScale(2*(A + 3*B + 4*C))
     *                   |
-    *                VecSum(A + 3*B + 4*C))
+    *                VecSum(A + 3*B + 4*C)
     *               /       \
-    *         VecSum(A+2*B)  VecScale(4*C)
+    *         VecSum(A+3*B)  VecScale(4*C)
     *        /      \
     *    Vector(A)   VecScale(3*B)
     *
