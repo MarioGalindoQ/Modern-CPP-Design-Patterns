@@ -122,7 +122,8 @@ int main()
    // 2. CPU WARM-UP PHASE
    std::cout << " [2/4] Warming up CPU (Target: ~5 seconds)..." << std::endl;
    volatile double warm = 0.0;
-   for(size_t i = 0; i < WARMUP_ITERATIONS; ++i) warm += std::sqrt(static_cast<double>(i));
+   for(size_t i = 0; i < WARMUP_ITERATIONS; ++i)
+      warm += std::sqrt(static_cast<double>(i));
 
    // 3. BENCHMARK MEASUREMENT
    std::cout << " [3/4] Executing: R = 2.0 * ( A + 3.0 * B + 4.0 * C ) ..." << std::endl;
