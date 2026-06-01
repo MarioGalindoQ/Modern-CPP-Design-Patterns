@@ -38,8 +38,8 @@ compile-time Abstract Syntax Tree).
     ensuring that each data element is loaded into the CPU cache only once.
 
 - **Inlining & Machine Code Parity:** Since the AST is resolved at compile-time, the compiler can
-    apply aggressive **Inlining**. The generated machine code for 'R = A + 2*B + 3*C' becomes
-    identical to a hand-written loop: `R[i] = A[i] + (2.0 * B[i]) + (3.0 * C[i])`.
+    apply aggressive **Inlining**. The generated machine code for `R = A + 2*B + 3*C` becomes
+    identical to a hand-written loop: `R[i] = A[i] + (2.0*B[i]) + (3.0*C[i])`.
 
 ## Our Examples
 This directory illustrates the evolution of this technique, from the baseline problem to the
