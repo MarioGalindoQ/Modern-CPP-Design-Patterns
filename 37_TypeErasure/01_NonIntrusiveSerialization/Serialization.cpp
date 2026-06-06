@@ -85,8 +85,8 @@ private:
    {
    public:
       virtual ~StorageInterface() = default;
-      virtual void serialize_v(std::ostream& os) const = 0;
-      virtual std::unique_ptr<StorageInterface> clone_v() const = 0;
+      virtual void serialize(std::ostream& os)          const = 0;
+      virtual std::unique_ptr<StorageInterface> clone() const = 0;
    };
 
    // Only accepts types that satisfy the 'Serializable' contract.
@@ -100,14 +100,14 @@ private:
       explicit Model(BusinessType&& value) : data_{std::move(value)} { }
       explicit Model(const BusinessType& value) : data_{value} { }
 
-      void serialize_v(std::ostream& os) const override
+      void serialize(std::ostream& os) const override
       {
          data_.serialize(os);
       }
 
-      std::unique_ptr<StorageInterface> clone_v() const override
+      std::unique_ptr<StorageInterface> clone() const override
       {
-         return std::unique_ptr<Model<BusinessType>>(new Model<BusinessType>(data_));
+         return std::unique_ptr< Model<BusinessType> >(new Model<BusinessType>(data_));
       }
    };
 
@@ -116,61 +116,61 @@ private:
 public:
    // --- APPLYING THE RULE OF SEVEN ---
 
-   // [1] Default Constructor: Disabled.
+   // 1:DC - Default Constructor: Disabled.
    SerializableEntity() = delete;
 
-   // [7] Conversion Constructor (Constrained with Concept):
-   // Only accepts types that satisfy the 'Serializable' contract.
-   template <Serializable BusinessType>
-   SerializableEntity(BusinessType&& object)
-      : pimpl_{std::make_unique<Model<std::decay_t<BusinessType>>>(std::forward<BusinessType>(object))}
-   {
-      std::cout << " [Rule of Seven] (7) Conversion Constructor triggered via StorageInterface.\n";
-   }
-
-   // [2] Copy Constructor: Deep copy via virtual clone_v()
+   // 2:CC - Copy Constructor: Deep copy via virtual clone()
    SerializableEntity(const SerializableEntity& other)
-      : pimpl_{other.pimpl_ ? other.pimpl_->clone_v() : nullptr}
+      : pimpl_{other.pimpl_ ? other.pimpl_->clone() : nullptr}
    {
-      std::cout << " [Rule of Seven] (2) Copy Constructor (Deep Copy).\n";
+      std::cout << " [Rule of Seven] 2:CC - Copy Constructor (Deep Copy).\n";
    }
 
-   // [3] Copy Assignment: Copy-and-Swap idiom for strong exception safety
+   // 3:MC - Move Constructor: Zero-cost pointer transfer
+   SerializableEntity(SerializableEntity&& other) noexcept : pimpl_{std::move(other.pimpl_)}
+   {
+      std::cout << " [Rule of Seven] 3:MC - Move Constructor.\n";
+   }
+
+   // 4:CA - Copy Assignment: Copy-and-Swap idiom for strong exception safety
    SerializableEntity& operator=(const SerializableEntity& other)
    {
-      std::cout << " [Rule of Seven] (3) Copy Assignment.\n";
-      if (this != &other)
+      std::cout << " [Rule of Seven] 4:CA - Copy Assignment.\n";
+      if(this != &other)
       {
-         SerializableEntity temp(other);
+         SerializableEntity temp(other); // 2:CC
          std::swap(pimpl_, temp.pimpl_);
       }
       return *this;
    }
 
-   // [4] Move Constructor: Zero-cost pointer transfer
-   SerializableEntity(SerializableEntity&& other) noexcept : pimpl_{std::move(other.pimpl_)}
-   {
-      std::cout << " [Rule of Seven] (4) Move Constructor.\n";
-   }
-
-   // [5] Move Assignment: Efficient ownership transfer
+   // 5:MA - Move Assignment: Efficient ownership transfer
    SerializableEntity& operator=(SerializableEntity&& other) noexcept
    {
-      std::cout << " [Rule of Seven] (5) Move Assignment.\n";
-      if (this != &other) pimpl_ = std::move(other.pimpl_);
+      std::cout << " [Rule of Seven] 5:MA - Move Assignment.\n";
+      if(this != &other) pimpl_ = std::move(other.pimpl_);
       return *this;
    }
 
-   // [6] Destructor
+   // 6:De - Destructor
    ~SerializableEntity()
    {
-      if (pimpl_) std::cout << " [Rule of Seven] (6) Destructor (Internal pimpl released).\n";
+      if(pimpl_) std::cout << " [Rule of Seven] 6:De - Destructor (Internal pimpl released).\n";
+   }
+
+   // 7:PC - Parametric Constructor (Constrained with Concept):
+   // Only accepts types that satisfy the 'Serializable' contract.
+   template <Serializable BusinessType>
+   SerializableEntity(BusinessType&& object)
+      : pimpl_{std::make_unique< Model<std::decay_t<BusinessType>> >(std::forward<BusinessType>(object))}
+   {
+      std::cout << " [Rule of Seven] 7:PC - Parametric Constructor triggered via StorageInterface.\n";
    }
 
    // --- Public Interface ---
    void save(std::ostream& os) const
    {
-      if (pimpl_) pimpl_->serialize_v(os);
+      if(pimpl_) pimpl_->serialize(os);
    }
 };
 
@@ -186,11 +186,11 @@ int main()
    archive.push_back(NetworkConfig{8080});
    archive.push_back(User{"Bjarne"});
 
-   std::cout << "\n--- PHASE 2: Demonstrating Deep Copy (Rule 2) ---\n";
+   std::cout << "\n--- PHASE 2: Demonstrating Deep Copy (Rule 2:CC) ---\n";
    auto archive_backup = archive;
 
    std::cout << "\n--- PHASE 3: Processing the Archive ---\n";
-   for (const auto& entity : archive)
+   for(const auto& entity : archive)
    {
       std::cout << " -> Serializing: ";
       entity.save(std::cout);
@@ -198,7 +198,7 @@ int main()
    }
 
    std::cout << "\n--- PHASE 4: Processing the Backup ---\n";
-   for (const auto& entity : archive_backup)
+   for(const auto& entity : archive_backup)
    {
       std::cout << " -> Backup Data: ";
       entity.save(std::cout);

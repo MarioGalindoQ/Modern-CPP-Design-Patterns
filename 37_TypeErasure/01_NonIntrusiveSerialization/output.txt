@@ -1,20 +1,20 @@
 === TYPE ERASURE: NON-INTRUSIVE SERIALIZATION (C++20) ===
 
 --- PHASE 1: Adding objects to the archive ---
- [Rule of Seven] (7) Conversion Constructor triggered via StorageInterface.
- [Rule of Seven] (4) Move Constructor.
- [Rule of Seven] (7) Conversion Constructor triggered via StorageInterface.
- [Rule of Seven] (4) Move Constructor.
- [Rule of Seven] (4) Move Constructor.
- [Rule of Seven] (7) Conversion Constructor triggered via StorageInterface.
- [Rule of Seven] (4) Move Constructor.
- [Rule of Seven] (4) Move Constructor.
- [Rule of Seven] (4) Move Constructor.
+ [Rule of Seven] 7:PC - Parametric Constructor triggered via StorageInterface.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 7:PC - Parametric Constructor triggered via StorageInterface.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 7:PC - Parametric Constructor triggered via StorageInterface.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 3:MC - Move Constructor.
 
---- PHASE 2: Demonstrating Deep Copy (Rule 2) ---
- [Rule of Seven] (2) Copy Constructor (Deep Copy).
- [Rule of Seven] (2) Copy Constructor (Deep Copy).
- [Rule of Seven] (2) Copy Constructor (Deep Copy).
+--- PHASE 2: Demonstrating Deep Copy (Rule 2:CC) ---
+ [Rule of Seven] 2:CC - Copy Constructor (Deep Copy).
+ [Rule of Seven] 2:CC - Copy Constructor (Deep Copy).
+ [Rule of Seven] 2:CC - Copy Constructor (Deep Copy).
 
 --- PHASE 3: Processing the Archive ---
  -> Serializing: { "user": "Mario" }
@@ -27,9 +27,9 @@
  -> Backup Data: { "user": "Bjarne" }
 
 === SIMULATION COMPLETED ===
- [Rule of Seven] (6) Destructor (Internal pimpl released).
- [Rule of Seven] (6) Destructor (Internal pimpl released).
- [Rule of Seven] (6) Destructor (Internal pimpl released).
- [Rule of Seven] (6) Destructor (Internal pimpl released).
- [Rule of Seven] (6) Destructor (Internal pimpl released).
- [Rule of Seven] (6) Destructor (Internal pimpl released).
+ [Rule of Seven] 6:De - Destructor (Internal pimpl released).
+ [Rule of Seven] 6:De - Destructor (Internal pimpl released).
+ [Rule of Seven] 6:De - Destructor (Internal pimpl released).
+ [Rule of Seven] 6:De - Destructor (Internal pimpl released).
+ [Rule of Seven] 6:De - Destructor (Internal pimpl released).
+ [Rule of Seven] 6:De - Destructor (Internal pimpl released).
