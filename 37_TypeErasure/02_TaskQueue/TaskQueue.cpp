@@ -46,8 +46,8 @@ private:
    {
    public:
       virtual ~StorageInterface() = default;
-      virtual void execute_v() = 0;
-      virtual std::unique_ptr<StorageInterface> clone_v() const = 0;
+      virtual void execute()                                  = 0;
+      virtual std::unique_ptr<StorageInterface> clone() const = 0;
    };
 
    template <Callable TaskType>
@@ -60,12 +60,12 @@ private:
       explicit Model(TaskType&& value) : function_{std::move(value)} { }
       explicit Model(const TaskType& value) : function_{value} { }
 
-      void execute_v() override
+      void execute() override
       {
          function_();
       }
 
-      std::unique_ptr<StorageInterface> clone_v() const override
+      std::unique_ptr<StorageInterface> clone() const override
       {
          return std::unique_ptr<Model<TaskType>>(new Model<TaskType>(function_));
       }
@@ -76,29 +76,27 @@ private:
 public:
    // --- APPLYING THE RULE OF SEVEN ---
 
-   // [1] Default Constructor: Disabled.
+   // 1:DC -  Default Constructor: Disabled.
    AnyTask() = delete;
 
-   // [7] Conversion Constructor (Template): Captures any Callable type.
-   template <Callable TaskType>
-   AnyTask(TaskType&& object)
-      : pimpl_{std::make_unique<Model<std::decay_t<TaskType>>>(std::forward<TaskType>(object))}
-   {
-      std::cout << " [Rule of Seven] (7) Task captured via StorageInterface.\n";
-   }
-
-   // [2] Copy Constructor: Deep copy for duplicating tasks
+   // 2:CC - Copy Constructor: Deep copy for duplicating tasks
    AnyTask(const AnyTask& other)
-      : pimpl_{other.pimpl_ ? other.pimpl_->clone_v() : nullptr}
+      : pimpl_{other.pimpl_ ? other.pimpl_->clone() : nullptr}
    {
-      std::cout << " [Rule of Seven] (2) Task Deep Copy.\n";
+      std::cout << " [Rule of Seven] 2:CC - Deep Copy Constructor.\n";
    }
 
-   // [3] Copy Assignment
+   // 3:MC - Move Constructor
+   AnyTask(AnyTask&& other) noexcept : pimpl_{std::move(other.pimpl_)}
+   {
+      std::cout << " [Rule of Seven] 3:MC - Move Constructor.\n";
+   }
+
+   // 4:CA - Copy Assignment
    AnyTask& operator=(const AnyTask& other)
    {
-      std::cout << " [Rule of Seven] (3) Task Copy Assignment.\n";
-      if (this != &other)
+      std::cout << " [Rule of Seven] 4:CA - Copy Assignment.\n";
+      if(this != &other)
       {
          AnyTask temp(other);
          std::swap(pimpl_, temp.pimpl_);
@@ -106,30 +104,32 @@ public:
       return *this;
    }
 
-   // [4] Move Constructor
-   AnyTask(AnyTask&& other) noexcept : pimpl_{std::move(other.pimpl_)} 
-   {
-      std::cout << " [Rule of Seven] (4) Task Move Constructor.\n"; 
-   }
-
-   // [5] Move Assignment
+   // 5:MA - Move Assignment
    AnyTask& operator=(AnyTask&& other) noexcept
    {
-      std::cout << " [Rule of Seven] (5) Task Move Assignment.\n";
-      if (this != &other) pimpl_ = std::move(other.pimpl_);
+      std::cout << " [Rule of Seven] 5:MA - Move Assignment.\n";
+      if(this != &other) pimpl_ = std::move(other.pimpl_);
       return *this;
    }
 
-   // [6] Destructor
+   // 6:De - Destructor
    ~AnyTask()
    {
-      if (pimpl_) std::cout << " [Rule of Seven] (6) Task released.\n";
+      if(pimpl_) std::cout << " [Rule of Seven] 6:De - Destructor - Task released.\n";
+   }
+
+   // 7:PC - Parametric Constructor (Template): Captures any Callable type.
+   template <Callable TaskType>
+   AnyTask(TaskType&& object)
+      : pimpl_{std::make_unique<Model<std::decay_t<TaskType>>>(std::forward<TaskType>(object))}
+   {
+      std::cout << " [Rule of Seven] 7:PC - Parametric Constructor - Task captured via StorageInterface.\n";
    }
 
    // --- Public Interface ---
-   void run()
+   void execute()
    {
-      if (pimpl_) pimpl_->execute_v();
+      if(pimpl_) pimpl_->execute();
    }
 };
 
@@ -155,7 +155,8 @@ int main()
 
    // Task A: A lambda with capture
    std::string secret = "Data_42";
-   taskQueue.push_back([secret]() {
+   taskQueue.push_back([secret]()
+   {
       std::cout << " -> [Lambda] Accessing captured state: " << secret << "\n";
    });
 
@@ -163,7 +164,8 @@ int main()
    taskQueue.push_back(LogWorker{"Alpha"});
 
    // Task C: Another lambda
-   taskQueue.push_back([]() {
+   taskQueue.push_back([]()
+   {
       std::cout << " -> [Lambda] Performing a quick calculation: " << 10 + 20 << "\n";
    });
 
@@ -171,10 +173,10 @@ int main()
    auto backupQueue = taskQueue;
 
    std::cout << "\n--- PHASE 3: Executing the Primary Queue ---\n";
-   for (auto& task : taskQueue) task.run();
+   for(auto& task : taskQueue) task.execute();
 
    std::cout << "\n--- PHASE 4: Executing the Backup Queue ---\n";
-   for (auto& task : backupQueue) task.run();
+   for(auto& task : backupQueue) task.execute();
 
    std::cout << "\n=== SIMULATION COMPLETED ===\n";
 }

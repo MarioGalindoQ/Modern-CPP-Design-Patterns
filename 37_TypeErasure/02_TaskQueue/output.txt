@@ -1,20 +1,20 @@
 === TYPE ERASURE: ASYNCHRONOUS TASK QUEUE ===
 
 --- PHASE 1: Loading heterogeneous tasks ---
- [Rule of Seven] (7) Task captured via StorageInterface.
- [Rule of Seven] (4) Task Move Constructor.
- [Rule of Seven] (7) Task captured via StorageInterface.
- [Rule of Seven] (4) Task Move Constructor.
- [Rule of Seven] (4) Task Move Constructor.
- [Rule of Seven] (7) Task captured via StorageInterface.
- [Rule of Seven] (4) Task Move Constructor.
- [Rule of Seven] (4) Task Move Constructor.
- [Rule of Seven] (4) Task Move Constructor.
+ [Rule of Seven] 7:PC - Parametric Constructor - Task captured via StorageInterface.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 7:PC - Parametric Constructor - Task captured via StorageInterface.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 7:PC - Parametric Constructor - Task captured via StorageInterface.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 3:MC - Move Constructor.
+ [Rule of Seven] 3:MC - Move Constructor.
 
 --- PHASE 2: Duplicating the Queue (Deep Copy) ---
- [Rule of Seven] (2) Task Deep Copy.
- [Rule of Seven] (2) Task Deep Copy.
- [Rule of Seven] (2) Task Deep Copy.
+ [Rule of Seven] 2:CC - Deep Copy Constructor.
+ [Rule of Seven] 2:CC - Deep Copy Constructor.
+ [Rule of Seven] 2:CC - Deep Copy Constructor.
 
 --- PHASE 3: Executing the Primary Queue ---
  -> [Lambda] Accessing captured state: Data_42
@@ -27,9 +27,9 @@
  -> [Lambda] Performing a quick calculation: 30
 
 === SIMULATION COMPLETED ===
- [Rule of Seven] (6) Task released.
- [Rule of Seven] (6) Task released.
- [Rule of Seven] (6) Task released.
- [Rule of Seven] (6) Task released.
- [Rule of Seven] (6) Task released.
- [Rule of Seven] (6) Task released.
+ [Rule of Seven] 6:De - Destructor - Task released.
+ [Rule of Seven] 6:De - Destructor - Task released.
+ [Rule of Seven] 6:De - Destructor - Task released.
+ [Rule of Seven] 6:De - Destructor - Task released.
+ [Rule of Seven] 6:De - Destructor - Task released.
+ [Rule of Seven] 6:De - Destructor - Task released.
