@@ -26,7 +26,7 @@ private:
 public:
    ~Fred()
    {
-      std::cout << " [Cleanup] Fred destroyed (Memory freed automatically).\n";
+      std::cout << " [Cleanup] Fred " << i_ << " destroyed (Memory freed automatically).\n";
    }
 
    // Named constructors returning safe smart pointers:
@@ -46,6 +46,11 @@ public:
       return std::unique_ptr<Fred>(new Fred(other));
    }
 
+   static std::unique_ptr<Fred> create(const std::unique_ptr<Fred>& other)
+   {
+      return std::unique_ptr<Fred>(new Fred(*other));
+   }
+
    void talk() const
    {
       std::cout << "  -> Fred talking: i = " << i_ << '\n';
@@ -60,15 +65,21 @@ int main()
    // If we try: Fred p; 
    // The compiler will throw an error (constructor is private).
 
-   std::cout << "Creating Fred dynamically...\n";
-   std::unique_ptr<Fred> p = Fred::create(5);
+   std::cout << "Creating Freds dynamically...\n";
 
-   p->talk();
+   std::unique_ptr<Fred> f1 = Fred::create(1);
+   f1->talk();
 
-   std::cout << "\nCreating a copy of Fred...\n";
-   std::unique_ptr<Fred> pCopy = Fred::create(*p);
+   auto f2 = Fred::create(2);
+   f2->talk();
 
-   pCopy->talk();
+   std::cout << "\nCreating copies of Fred...\n";
+
+   std::unique_ptr<Fred> f1Copy = Fred::create(*f1);
+   f1Copy->talk();
+
+   auto f2Copy = Fred::create(f2);
+   f2Copy->talk();
 
    std::cout << "\n=== END OF MAIN (Smart pointers will trigger cleanup) ===\n";
 }
