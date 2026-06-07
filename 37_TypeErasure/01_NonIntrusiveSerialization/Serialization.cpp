@@ -100,11 +100,18 @@ private:
       explicit Model(BusinessType&& value) : data_{std::move(value)} { }
       explicit Model(const BusinessType& value) : data_{value} { }
 
+      // --- Domain Operation (Internal/Contractual) ---
+      // Delegates directly to the business class. The wrapped type must natively 
+      // implement this method to satisfy the compile-time 'Serializable' concept.
       void serialize(std::ostream& os) const override
       {
          data_.serialize(os);
       }
 
+      // --- Extraneous Extension (External/Non-Intrusive) ---
+      // This is an external capability injected solely by the Type Erasure wrapper.
+      // The business classes are completely unaware of 'clone()', demonstrating how 
+      // this pattern allows adding new polymorphic behaviors without altering the original classes.
       std::unique_ptr<StorageInterface> clone() const override
       {
          return std::unique_ptr< Model<BusinessType> >(new Model<BusinessType>(data_));

@@ -61,14 +61,21 @@ private:
       explicit Model(TaskType&& value) : function_{std::move(value)} { }
       explicit Model(const TaskType& value) : function_{value} { }
 
+      // --- Domain Operation (Internal/Contractual) ---
+      // Delegates directly to the business class. The wrapped type must natively 
+      // implement this method to satisfy the compile-time 'Serializable' concept.
       void execute() override
       {
          function_();
       }
 
+      // --- Extraneous Extension (External/Non-Intrusive) ---
+      // This is an external capability injected solely by the Type Erasure wrapper.
+      // The business classes are completely unaware of 'clone()', demonstrating how 
+      // this pattern allows adding new polymorphic behaviors without altering the original classes.
       std::unique_ptr<StorageInterface> clone() const override
       {
-         return std::unique_ptr<Model<TaskType>>(new Model<TaskType>(function_));
+         return std::unique_ptr< Model<TaskType> >(new Model<TaskType>(function_));
       }
    };
 

@@ -28,6 +28,16 @@ required behavior through virtual methods.
 3. **The Model<T>**: An internal template that implements the StorageInterface for any specific
 type 'T' that satisfies the expected contract.
 
+### External Behavior Injection (Non-Intrusive Extension)
+A key architectural benefit of Type Erasure is the ability to inject new, external 
+polymorphic behaviors without modifying the original source code of the business classes:
+- **Domain Capabilities**: The wrapper delegates directly to the existing API of the 
+  wrapped object (e.g., calling `.serialize()`).
+- **External/Infrastructural Capabilities**: The wrapper can implement new virtual 
+  methods (such as the virtual `clone()` required for deep copies) on behalf of the 
+  business classes. The original classes remain completely unaware of these requirements, 
+  proving that we can extend their behavior non-intrusively.
+
 ## The "Rule of Seven" and Lifecycle Management
 Because Type Erasure relies on a bridge to a hidden implementation via an opaque pointer (usually
 unique_ptr<StorageInterface>), it serves as the ultimate test for the **Rule of Seven**. To ensure
