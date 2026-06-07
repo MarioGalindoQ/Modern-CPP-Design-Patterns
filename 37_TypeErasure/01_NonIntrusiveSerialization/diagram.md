@@ -53,7 +53,7 @@ classDiagram
    Model~BusinessType~ ..> NetworkConfig : instantiated with
 
    %% Client interacts with the Wrapper
-   Client ..> SerializableEntity : manages archive
+   Client ..> SerializableEntity : std::vector~SerializableEntity~
 ```
 
 ### Design Note:
