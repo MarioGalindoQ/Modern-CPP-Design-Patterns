@@ -53,7 +53,7 @@ classDiagram
    Model~BusinessType~ ..> NetworkConfig : instantiated with
 
    %% Client interacts with the Wrapper
-   Client ..> SerializableEntity : vector~SerializableEntity~
+   Client ..> SerializableEntity : vector<SerializableEntity>
 ```
 
 ### Design Note:
