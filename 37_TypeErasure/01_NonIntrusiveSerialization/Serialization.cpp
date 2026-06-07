@@ -89,7 +89,7 @@ private:
       virtual std::unique_ptr<StorageInterface> clone() const = 0;
    };
 
-   // Only accepts types that satisfy the 'Serializable' contract.
+   // Only accepts types that satisfy the 'Serializable' concept.
    template <Serializable BusinessType>
    class Model final : public StorageInterface
    {
@@ -158,8 +158,8 @@ public:
       if(pimpl_) std::cout << " [Rule of Seven] 6:De - Destructor (Internal pimpl released).\n";
    }
 
-   // 7:PC - Parametric Constructor (Constrained with Concept):
-   // Only accepts types that satisfy the 'Serializable' contract.
+   // 7:PC - Parametric Constructor (Template): Captures any Serializable type.
+   // Only accepts types that satisfy the 'Serializable' concept.
    template <Serializable BusinessType>
    SerializableEntity(BusinessType&& object)
       : pimpl_{std::make_unique< Model<std::decay_t<BusinessType>> >(std::forward<BusinessType>(object))}

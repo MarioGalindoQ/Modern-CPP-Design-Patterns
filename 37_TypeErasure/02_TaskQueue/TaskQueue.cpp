@@ -5,7 +5,7 @@
  *
  * --- DESIGN OVERVIEW:
  * This program demonstrates Type Erasure applied to an execution pipeline.
- * We create an 'AnyTask' wrapper that can store and execute any "Callable"
+ * We create an 'AnyTaskEntity' wrapper that can store and execute any "Callable"
  * object (lambdas, functors, or function pointers) without a shared
  * inheritance hierarchy.
  *
@@ -14,7 +14,7 @@
  * an 'operator()' can be wrapped as a task.
  *
  * --- THE RULE OF SEVEN:
- * 'AnyTask' manages its internal 'StorageInterface' via unique_ptr,
+ * 'AnyTaskEntity' manages its internal 'StorageInterface' via unique_ptr,
  * implementing the full lifecycle to allow tasks to be stored in
  * standard containers, moved between queues, or duplicated.
  * ============================================================================
@@ -37,7 +37,7 @@ concept Callable = requires(T& object)
 };
 
 //--------------------------------------------------------- 1. Type erasure container:
-class AnyTask
+class AnyTaskEntity
 {
 private:
    // --- Internal Infrastructure ---
@@ -50,6 +50,7 @@ private:
       virtual std::unique_ptr<StorageInterface> clone() const = 0;
    };
 
+   // Only accepts types that satisfy the 'Callable' concept.
    template <Callable TaskType>
    class Model final : public StorageInterface
    {
@@ -77,35 +78,35 @@ public:
    // --- APPLYING THE RULE OF SEVEN ---
 
    // 1:DC -  Default Constructor: Disabled.
-   AnyTask() = delete;
+   AnyTaskEntity() = delete;
 
    // 2:CC - Copy Constructor: Deep copy for duplicating tasks
-   AnyTask(const AnyTask& other)
+   AnyTaskEntity(const AnyTaskEntity& other)
       : pimpl_{other.pimpl_ ? other.pimpl_->clone() : nullptr}
    {
       std::cout << " [Rule of Seven] 2:CC - Deep Copy Constructor.\n";
    }
 
    // 3:MC - Move Constructor
-   AnyTask(AnyTask&& other) noexcept : pimpl_{std::move(other.pimpl_)}
+   AnyTaskEntity(AnyTaskEntity&& other) noexcept : pimpl_{std::move(other.pimpl_)}
    {
       std::cout << " [Rule of Seven] 3:MC - Move Constructor.\n";
    }
 
    // 4:CA - Copy Assignment
-   AnyTask& operator=(const AnyTask& other)
+   AnyTaskEntity& operator=(const AnyTaskEntity& other)
    {
       std::cout << " [Rule of Seven] 4:CA - Copy Assignment.\n";
       if(this != &other)
       {
-         AnyTask temp(other);
+         AnyTaskEntity temp(other);
          std::swap(pimpl_, temp.pimpl_);
       }
       return *this;
    }
 
    // 5:MA - Move Assignment
-   AnyTask& operator=(AnyTask&& other) noexcept
+   AnyTaskEntity& operator=(AnyTaskEntity&& other) noexcept
    {
       std::cout << " [Rule of Seven] 5:MA - Move Assignment.\n";
       if(this != &other) pimpl_ = std::move(other.pimpl_);
@@ -113,15 +114,16 @@ public:
    }
 
    // 6:De - Destructor
-   ~AnyTask()
+   ~AnyTaskEntity()
    {
       if(pimpl_) std::cout << " [Rule of Seven] 6:De - Destructor - Task released.\n";
    }
 
    // 7:PC - Parametric Constructor (Template): Captures any Callable type.
+   // Only accepts types that satisfy the 'Callable' concept.
    template <Callable TaskType>
-   AnyTask(TaskType&& object)
-      : pimpl_{std::make_unique<Model<std::decay_t<TaskType>>>(std::forward<TaskType>(object))}
+   AnyTaskEntity(TaskType&& object)
+      : pimpl_{std::make_unique< Model<std::decay_t<TaskType>> >(std::forward<TaskType>(object))}
    {
       std::cout << " [Rule of Seven] 7:PC - Parametric Constructor - Task captured via StorageInterface.\n";
    }
@@ -149,7 +151,7 @@ int main()
 {
    std::cout << "=== TYPE ERASURE: ASYNCHRONOUS TASK QUEUE ===\n" << std::endl;
 
-   std::vector<AnyTask> taskQueue;
+   std::vector<AnyTaskEntity> taskQueue;
 
    std::cout << "--- PHASE 1: Loading heterogeneous tasks ---\n";
 

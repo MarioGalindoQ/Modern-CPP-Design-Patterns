@@ -2,10 +2,10 @@
 
 ```mermaid
 classDiagram
-   class AnyTask {
+   class AnyTaskEntity {
       -unique_ptr~StorageInterface~ pimpl_
-      +AnyTask(TaskType&&)
-      +AnyTask(const AnyTask&)
+      +AnyTaskEntity(TaskType&&)
+      +AnyTaskEntity(const AnyTaskEntity&)
       +run()
    }
 
@@ -36,7 +36,7 @@ classDiagram
    }
 
    %% The Wrapper owns the internal StorageInterface
-   AnyTask *-- "1" StorageInterface : pimpl_
+   AnyTaskEntity *-- "1" StorageInterface : pimpl_
 
    %% The Model implements the StorageInterface
    Model~TaskType~ --|> StorageInterface : Is_a
@@ -49,18 +49,18 @@ classDiagram
    Model~TaskType~ ..> Lambda : instantiated with
 
    %% The Client manages the task queue by value
-   Client *-- "n" AnyTask : taskQueue
+   Client *-- "n" AnyTaskEntity : taskQueue
 ```
 
 ### Design Note:
 This diagram shows the Type Erasure pattern applied to a task execution 
-system. The 'AnyTask' class acts as a value-based container that erases 
+system. The 'AnyTaskEntity' class acts as a value-based container that erases 
 the specific type of any callable object (like a Lambda or a custom 
 functor class). 
 1. The 'StorageInterface' provides the virtual polymorphic interface.
 2. The 'Model' template bridges the gap by wrapping the specific type.
 3. The 'Client' can store these heterogeneous tasks in a single 
-   'std::vector<AnyTask>' without using pointers or inheritance, 
+   'std::vector<AnyTaskEntity>' without using pointers or inheritance, 
    ensuring high cohesion and safe memory management through the 
    'Rule of Seven'.
 

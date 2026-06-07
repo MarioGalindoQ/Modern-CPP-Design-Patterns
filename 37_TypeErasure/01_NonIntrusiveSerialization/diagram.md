@@ -65,5 +65,11 @@ dynamic polymorphism (virtual functions) and static polymorphism
 (templates). This allows 'User' and 'NetworkConfig' to remain 100% 
 independent and non-intrusive, as they do not need to inherit from 
 any base class to be stored and processed by the system.
+1. The 'StorageInterface' provides the virtual polymorphic interface.
+2. The 'Model' template bridges the gap by wrapping the specific type.
+3. The 'Client' can store these heterogeneous tasks in a single 
+   'std::vector<SerializableEntity>' without using pointers or inheritance, 
+   ensuring high cohesion and safe memory management through the 
+   'Rule of Seven'.
 
 **Author:** Mario Galindo Queralt, Ph.D.
