@@ -48,13 +48,13 @@ the wrapper behaves as a true "Value" (and not just a pointer), we must implemen
 
 ## Our Examples
 
-### 01_NonIntrusiveSerialization/
+### 01_Serialization/
 Demonstrates how to build an "Archive" of objects that can be saved to a stream.
 - **Scenario**: Classes like 'User' and 'NetworkConfig' have NO common base.
 - **Key Feature**: Uses **C++20 Concepts** to verify the presence of a '.serialize()' method at
     the container's entry point.
 - **Value**: Highlights how to add capabilities to existing classes without touching their source
-    code.
+    code (`clone()`).
 
 ### 02_TaskQueue/
 Demonstrates a high-performance execution pipeline for heterogeneous tasks.
