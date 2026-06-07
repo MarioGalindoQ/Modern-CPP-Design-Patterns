@@ -1,4 +1,4 @@
-# Type Erasure Pattern (Non-Intrusive Serialization)
+# Type Erasure Pattern (Serialization)
 
 ```mermaid
 classDiagram
