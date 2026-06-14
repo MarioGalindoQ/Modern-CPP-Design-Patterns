@@ -73,7 +73,7 @@ Demonstrates a high-performance execution pipeline for heterogeneous tasks.
 - **Static Safety**: When combined with C++20 Concepts, errors are caught at compile-time with
     clear, actionable messages.
 
-## OO Principles Applied
+## OO Principles Applied (from 002_OO_Principles.txt)
 - **OCP (Open/Closed Principle)**: The wrapper is open for extension (any type satisfying the
     concept can be wrapped) but closed for modification, preventing the risk of regression bugs
     when new business types are introduced.
