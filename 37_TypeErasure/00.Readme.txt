@@ -11,8 +11,8 @@ In software architecture, developers often face a dilemma when trying to store d
 in a single container:
 
 1. **Traditional OOP (GoF)**: Requires all classes to inherit from a base interface (e.g., class
-Dog : public Animal).
-   - *The Issue*: It is **Intrusive**. You cannot easily use classes from external libraries or
+   Dog : public Animal).
+- *The Issue*: It is **Intrusive**. You cannot easily use classes from external libraries or
       legacy code that you cannot modify.
 2. **Type-safe Unions (std::variant)**:
    - *The Issue*: It is **Closed**. You must know every possible type at compile-time. Adding a
@@ -22,11 +22,11 @@ Dog : public Animal).
 Type Erasure bridges the gap by creating a "Value Wrapper" that hides implementation details. It
 consists of three distinct layers:
 1. **The Wrapper**: The public-facing class that the user interacts with. It behaves like a
-value-type and does not use inheritance in its public API.
+   value-type and does not use inheritance in its public API.
 2. **The StorageInterface (Concept)**: A private, internal abstract interface that defines the
-required behavior through virtual methods.
+   required behavior through virtual methods.
 3. **The Model<T>**: An internal template that implements the StorageInterface for any specific
-type 'T' that satisfies the expected contract.
+   type 'T' that satisfies the expected contract.
 
 ### External Behavior Injection (Non-Intrusive Extension)
 A key architectural benefit of Type Erasure is the ability to inject new, external 
@@ -72,5 +72,34 @@ Demonstrates a high-performance execution pipeline for heterogeneous tasks.
     while retaining full polymorphic behavior.
 - **Static Safety**: When combined with C++20 Concepts, errors are caught at compile-time with
     clear, actionable messages.
+
+## OO Principles Applied
+- **OCP (Open/Closed Principle)**: The wrapper is open for extension (any type satisfying the
+    concept can be wrapped) but closed for modification, preventing the risk of regression bugs
+    when new business types are introduced.
+- **CoI (Composition Over Inheritance)**: We achieve dynamic polymorphism and code reuse
+    horizontally via value composition (holding an internal, opaque bridge pointer) rather than
+    forcing an intrusive hierarchical base class.
+- **SRP (Single Responsibility)**: Business classes (e.g., `User`) focus purely on their
+    domain-specific properties, while the Type Erasure wrapper handles the infrastructural
+    lifecycle and virtual dispatch logic.
+- **DIP (Dependency Inversion Principle)**: Client code depends entirely on the clean, value-based
+    wrapper abstraction rather than concrete, low-level implementations.
+- **SoC (Separation of Concerns)**: Keeps serialization dispatch and deep-copying mechanics
+    (`clone()`) completely isolated from the core data and behavior of the business entities.
+
+## Relations with Other Patterns
+- **Pattern 31 (Variant)**: Contrast. While `std::variant` offers **Closed Polymorphism** (all
+    types must be defined as a fixed list at compile-time), Type Erasure provides **Open
+    Polymorphism** (types can be added non-intrusively from external libraries).
+- **Pattern 14 (Proxy)**: The public wrapper class acts as a value-based proxy, routing client
+    requests to the underlying concrete implementations while shielding users from manual pointer
+    management.
+- **Pattern 36 (Component Registry / DOD)**: Alternative Paradigm. A DOD-style registry manages
+    heterogeneous objects by keeping them concrete and segregating them into highly optimized,
+    homogeneous columns (`std::vector<T>`) to bypass dynamic dispatch. While Type Erasure is ideal
+    for highly sparse collections with few instances per type where exact chronological insertion
+    order is required, DOD is a superior alternative when you have massive sets of objects grouped
+    into a few recurring types, and their exact sequence order can be bypassed.
 
 ---
