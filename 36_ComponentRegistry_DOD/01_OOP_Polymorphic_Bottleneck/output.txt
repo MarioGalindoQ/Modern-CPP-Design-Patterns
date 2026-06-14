@@ -1,15 +1,17 @@
 === POLYMORPHIC BOTTLENECK ANALYSIS ===
 
+--- [TEST 1] PREDICTABLE ACCESS (Orderly Object) ---
 --- Warming up the CPU ---
 
---- [TEST 1] PREDICTABLE ACCESS (Single Object) ---
- Concrete function: 221 ms
- Virtual function : 350 ms
- Delta Overhead   : 129 ms (Minimal)
+ Concrete function: 224 ms
+ Virtual function : 1802 ms
+ Delta Overhead   : 1578 ms (Predictable Virtual Overhead!)
 
 --- [TEST 2] CHAOTIC ACCESS (Shuffled Layout) ---
+--- Warming up the CPU ---
+
  Concrete function: 223 ms
- Virtual function : 4800 ms
- Delta Overhead   : 4577 ms (MASSIVE PENALTY!)
+ Virtual function : 5163 ms
+ Delta Overhead   : 4940 ms (MASSIVE PENALTY!)
 
 === ANALYSIS COMPLETED ===

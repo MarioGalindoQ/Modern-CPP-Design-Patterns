@@ -96,7 +96,7 @@ public:
       return instance;
    }
 
-   // Implementation of the Inertnal Static Builder for Entity Creation
+   // Implementation of the Inernal Static Builder for Entity Creation
    class EntityBuilder
    {
    private:
@@ -120,6 +120,12 @@ public:
 
       // The build method ensures all parallel arrays are updated at once.
       // This alignment is what allows O(1) access by index in the systems.
+      //
+      // DESIGN NOTE: To preserve perfect array alignment, every entity gets a slot
+      // in every vector. If an entity does not require a specific component (e.g., 
+      // a static obstacle needing no AI or Velocity), we push a default "Null Object" 
+      // or "Sentinel" component representing an inactive state. This avoids the 
+      // structural complexity of sparse-set arrays while keeping memory access O(1).
       uint32_t build()
       {
          auto& world = Registry::getInstance();
@@ -137,7 +143,7 @@ public:
       return EntityBuilder{nextEntityId_++};
    }
 
-   // This is the only way to get Componets
+   // This is the only way to get Components
    template<class ComponentType>
    std::vector<std::decay_t<ComponentType>>& getComponents()
    {

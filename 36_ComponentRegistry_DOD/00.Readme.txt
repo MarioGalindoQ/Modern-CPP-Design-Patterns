@@ -27,8 +27,8 @@ performance gains of DOD, it is vital to understand the trade-offs:
 
 1. **The Case for OOP**: When application data is few or well-ordered and access patterns are
 predictable, classical OOP with polymorphism is a perfect choice. It is intuitive, easy to
-maintain, and the CPU's hardware (Branch Target Buffer) handles virtual calls with near-zero
-overhead.
+maintain, and the CPU's hardware (Branch Target Buffer) handles virtual calls predictably,
+avoiding branch misprediction stalls.
 2. **The Case for DOD**: When your domain forces a chaotic or massive data layout where pointers
 are interleaved and unpredictable, OOP performance collapses. In these scenarios, shifting to DOD
 is the only way to overcome the "Memory Wall."

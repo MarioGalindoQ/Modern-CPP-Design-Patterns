@@ -52,6 +52,11 @@ mathematical data ('Position' and 'Velocity' structs) to maximize cache line uti
     create duplicate or incorrect storage buckets.
 - **Perfect Forwarding**: Implements `std::forward` to ensure components are added to the world
     with maximum efficiency.
+- **Parallel Array Alignment (Sentinel / Null Components)**: Rather than employing 
+  complex sparse-set lookup tables for optional components, we enforce strict 
+  parallel array alignment. Entities that do not require a certain behavior 
+  still receive a default "Null" or "Sentinel" component, preserving O(1) 
+  index-based access across all vectors with negligible memory overhead.
 
 ## Cross-References
 - **Pattern 01 (Builder)**: A Fluent Static Builder is used to guarantee "Parallel Array

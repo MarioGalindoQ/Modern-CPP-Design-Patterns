@@ -12,18 +12,19 @@ To ensure a completely honest hardware profiling setup and eliminate compiler op
 biases, both tests inside `Polymorphic_bottleneck.cpp` execute the exact same computational
 workload (1,000,000,000 total operations):
 
-1. **TEST 1 (Predictable Memory Access)**:
-   Iterates over a stable pointer reference. The hardware predictor can easily cache the virtual
-   call destination.
+1. TEST 1 (Predictable Memory Access):
+   Iterates over an array of homogeneous objects of the same type. The hardware predictor can
+   easily cache the virtual call destination, isolating the baseline cost of vtable indirection.
 
 2. **TEST 2 (Chaotic Memory Access)**:
    Iterates through an array of 10,000 **randomly shuffled** heterogeneous objects. This forces
    the hardware predictor into a state of permanent misprediction.
 
 ## Benchmark Insights
-* **Predictable Access**: Polymorphism is NOT inherently slow. When the data flow is linear, the
-      CPU's BTB handles virtual calls with near-zero overhead.
-* **Chaotic Access**: When pointers are interleaved randomly, the CPU pipeline flushes on almost
+* **Predictable Access:** When the data flow is linear, the CPU's BTB handles virtual calls with
+     minimal overhead compared to the chaotic case, although the baseline indirection cost (vtable
+     lookup) remains.
+* **Chaotic Access:** When pointers are interleaved randomly, the CPU pipeline flushes on almost
       every iteration. The result is a **Massive performance penalty** (often exceeding 2000%
       degradation).
 
