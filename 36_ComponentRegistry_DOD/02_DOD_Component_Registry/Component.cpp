@@ -123,9 +123,10 @@ public:
       //
       // DESIGN NOTE: To preserve perfect array alignment, every entity gets a slot
       // in every vector. If an entity does not require a specific component (e.g., 
-      // a static obstacle needing no AI or Velocity), we push a default "Null Object" 
-      // or "Sentinel" component representing an inactive state. This avoids the 
-      // structural complexity of sparse-set arrays while keeping memory access O(1).
+      // a static obstacle needing no AI or Velocity), it is possible to push a default
+      // "Null Object" or "Sentinel" component representing an inactive state, not
+      // implemented in this example. This technique avoids the structural complexity
+      // of sparse-set arrays while keeping memory access O(1).
       uint32_t build()
       {
          auto& world = Registry::getInstance();
