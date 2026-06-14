@@ -1,10 +1,10 @@
-# COMPONENT REGISTRY / DATA-ORIENTED DESIGN (ECS)
+# COMPONENT REGISTRY / DATA-ORIENTED DESIGN (DOD) + Entity-Component-Systems (ECS)
 **Author:** Mario Galindo Queralt, Ph.D.
 
 ## Intent
 To manage massive collections of entities by prioritizing memory layout and CPU cache
 efficiency. This folder contrasts the performance limitations of classical OOP with the
-high-speed alternative: Data-Oriented Design (DOD).
+high-speed alternative: Data-Oriented Design (DOD) plus Entity-Component-Systems (ECS).
 
 ## Directory Structure
 
