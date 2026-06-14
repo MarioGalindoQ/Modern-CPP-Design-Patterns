@@ -15,7 +15,8 @@ workload (1,000,000,000 total operations):
 1. **TEST 1 (Predictable Memory Access):**
    Iterates through a sequentially ordered array of 10,000 homogeneous objects. The hardware
    predictor can easily cache the virtual call destination, isolating the baseline cost of vtable
-   indirection.
+   indirection. While this contiguous layout mirrors the memory organization used in DOD, a true
+   DOD approach goes further by eliminating virtual calls altogether.
 
 2. **TEST 2 (Chaotic Memory Access)**:
    Iterates through an array of 10,000 **randomly shuffled** heterogeneous objects. This forces
@@ -26,7 +27,7 @@ workload (1,000,000,000 total operations):
      minimal overhead compared to the chaotic case, although the baseline indirection cost (vtable
      lookup) remains.
 * **Chaotic Access:** When pointers are interleaved randomly, the CPU pipeline flushes on almost
-      every iteration. The result is a **Massive performance penalty** (often exceeding 2000%
+      every iteration. The result is a **Massive performance penalty** (often exceeding 1000%
       degradation).
 
 ## Conclusion

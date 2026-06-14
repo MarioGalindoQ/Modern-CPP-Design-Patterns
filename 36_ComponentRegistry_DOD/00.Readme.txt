@@ -13,7 +13,7 @@ high-speed alternative: Data-Oriented Design (DOD) plus Entity-Component-Systems
 ### [01_OOP_Polymorphic_Bottleneck/](./01_OOP_Polymorphic_Bottleneck)
 **The Problem Analysis.** 
 A numeric micro-benchmark that profiles the hardware cost of dynamic dispatch. It demonstrates
-how "Chaotic Memory Access" and branch mispredictions can lead to a 2000%+ performance penalty in
+how "Chaotic Memory Access" and branch mispredictions can lead to a 1000%+ performance penalty in
 traditional OOP structures.
 
 ### [02_DOD_Component_Registry/](./02_DOD_Component_Registry)
