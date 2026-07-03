@@ -2,14 +2,14 @@
  * ============================================================================
  * File: Singleton.cpp
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- EDUCATIONAL NOTE:
- * "We use the Heap (via unique_ptr) when the Singleton is very large, when we 
- * want to use polymorphism (deciding the implementation at runtime) or when we 
- * need total control over dynamic memory. We use Meyers' Singleton for 
- * lightweight and simple Singletons due to its elegance and native thread 
+ * "We use the Heap (via unique_ptr) when the Singleton is very large, when we
+ * want to use polymorphism (deciding the implementation at runtime) or when we
+ * need total control over dynamic memory. We use Meyers' Singleton for
+ * lightweight and simple Singletons due to its elegance and native thread
  * safety."
- * 
+ *
  * --- CONFIGURATION:
  * Toggle the definition below to switch between implementations.
  * Only ONE implementation of getInstance() will be compiled at a time,
@@ -21,7 +21,7 @@
 #include <memory>
 
 // Comment or uncomment this line to switch between Meyers' and Heap version
-//#define USE_HEAP_SINGLETON 
+//#define USE_HEAP_SINGLETON
 
 class Singleton
 {
@@ -29,7 +29,7 @@ private:
    // Private constructor prevents direct instantiation.
    Singleton()
    {
-      std::cout << " [System] Singleton instance created at address: " << this << "\n"; 
+      std::cout << " [System] Singleton instance created at address: " << this << "\n";
    }
 
 public:
@@ -39,7 +39,7 @@ public:
 
    virtual ~Singleton()
    {
-      std::cout << " [System] Singleton instance destroyed.\n"; 
+      std::cout << " [System] Singleton instance destroyed.\n";
    }
 
    /**
@@ -48,7 +48,7 @@ public:
     */
    static Singleton& getInstance()
    {
-        
+
 #ifdef USE_HEAP_SINGLETON
       // APPROACH: Heap-based Singleton (Dynamic Memory)
       // Managed by std::unique_ptr for automatic cleanup.
@@ -58,7 +58,7 @@ public:
       return *instance;
 #else // APPROACH: Meyers' Singleton (Static/Data Segment)
       // Simplest, thread-safe (C++11+), and stack-efficient.
-      static Singleton instance; 
+      static Singleton instance;
       std::cout << " [Info] Using Meyers' implementation (Static Segment).\n";
       return instance;
 #endif
@@ -109,7 +109,7 @@ int main()
    }
 
    std::cout << "\n=== END OF MAIN ===\n";
-    
+
    // Cleanup happens after main() returns as the program terminates.
 }
 

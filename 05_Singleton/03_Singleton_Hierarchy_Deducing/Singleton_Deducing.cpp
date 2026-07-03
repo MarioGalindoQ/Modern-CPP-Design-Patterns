@@ -2,30 +2,30 @@
  * ============================================================================
  * File: Singleton_Deducing.cpp (Modern C++23 Version)
  * Author: Mario Galindo Queralt, Ph.D.
- * 
+ *
  * --- DESIGN OVERVIEW:
- * This program demonstrates a Singleton Hierarchy using C++23 "Deducing This" 
+ * This program demonstrates a Singleton Hierarchy using C++23 "Deducing This"
  * (Explicit Object Parameters).
- * 
+ *
  * --- THE ARCHITECTURAL PROBLEM:
- * When Singletons inherit from a common Base class (e.g., a generic Service 
- * Manager), calling a Base method traditionally returns a reference to the 
- * Base class. This breaks the "Fluent Interface" because the compiler 
- * "forgets" the derived type, preventing further calls to derived-specific 
+ * When Singletons inherit from a common Base class (e.g., a generic Service
+ * Manager), calling a Base method traditionally returns a reference to the
+ * Base class. This breaks the "Fluent Interface" because the compiler
+ * "forgets" the derived type, preventing further calls to derived-specific
  * methods in the same chain.
- * 
+ *
  * --- THE C++23 SOLUTION:
- * By using 'this auto&& self' in the Base class methods, we can capture the 
- * exact type of the calling Singleton at compile-time. This allows the Base 
- * class to return a reference to the Derived type automatically, maintaining 
+ * By using 'this auto&& self' in the Base class methods, we can capture the
+ * exact type of the calling Singleton at compile-time. This allows the Base
+ * class to return a reference to the Derived type automatically, maintaining
  * the chain without using CRTP or virtual functions.
- * 
+ *
  * --- TECHNICAL MECHANICS:
- * 1. Base Utility: 'ManagerBase' provides common logic (e.g., 'initialize') 
+ * 1. Base Utility: 'ManagerBase' provides common logic (e.g., 'initialize')
  *    to all services.
- * 2. Static Dispatch: 'self' in 'initialize(this auto&& self)' deduces 
+ * 2. Static Dispatch: 'self' in 'initialize(this auto&& self)' deduces
  *    whether it's being called by 'Logger' or 'Database'.
- * 3. Meyer's Singleton: We still use the safe, thread-safe static local 
+ * 3. Meyer's Singleton: We still use the safe, thread-safe static local
  *    instance within each derived class.
  * ============================================================================
  */
@@ -35,7 +35,7 @@
 
 //------------------------------------------------- Common Service Manager:
 /**
- * The Base class is NO LONGER a template. 
+ * The Base class is NO LONGER a template.
  * "Deducing This" handles the polymorphic return types.
  */
 class ManagerBase {
@@ -108,8 +108,8 @@ int main() {
 
    /**
     * MAGIC AT WORK:
-    * 'Logger::instance().initialize()' returns a 'Logger&' even though 
-    * 'initialize' is defined in 'ManagerBase'. 
+    * 'Logger::instance().initialize()' returns a 'Logger&' even though
+    * 'initialize' is defined in 'ManagerBase'.
     * This allows us to chain '.log()' immediately.
     */
    std::cout << "--- Testing Logger Chain ---\n";
