@@ -27,17 +27,18 @@ class Singleton
 {
 private:
    // Private constructor prevents direct instantiation.
-   Singleton()
+   Singleton() // 1:DC Default constructor
    {
       std::cout << " [System] Singleton instance created at address: " << this << "\n";
    }
 
 public:
-   // Rule of Three/Five: Delete copy constructor and assignment operator.
-   Singleton(const Singleton&) = delete;
-   Singleton& operator=(const Singleton&) = delete;
+   Singleton(const Singleton&)             = delete; // 2:CC Copy Constructor
+   Singleton(Singleton&&)                  = delete; // 3:MC Move Constructor
+   Singleton& operator=(const Singleton&)  = delete; // 4:CA Copy Assigment
+   Singleton& operator=(const Singleton&&) = delete; // 5:MA Copy Assigment
 
-   virtual ~Singleton()
+   virtual ~Singleton()                              // 6:De Destructor
    {
       std::cout << " [System] Singleton instance destroyed.\n";
    }

@@ -62,20 +62,25 @@ public:
       return inst;
    }
 
-   // --- THE RULE OF SEVEN (Singleton constraints) ---
-   Logger(const Logger&)            = delete;
-   Logger(Logger&&)                 = delete;
-   Logger& operator=(const Logger&) = delete;
-   Logger& operator=(Logger&&)      = delete;
+   // --- THE RULE OF SEVEN ---
+   Logger(const Logger&)            = delete;  // 2:CC Copy Constructor
+   Logger(Logger&&)                 = delete;  // 3:MC Move Constructor
+   Logger& operator=(const Logger&) = delete;  // 4:CA Copy Assigment
+   Logger& operator=(Logger&&)      = delete;  // 5:MA Copy Assigment
+   ~Logger()                        = default; // 6:De Destructor
 
    // Specific Logger behavior
-   Logger& log(const std::string& msg) {
+   Logger& log(const std::string& msg)         // 7:PC Parametric Constructor
+   {
       std::cout << " [Logger] Event: " << msg << "\n";
       return *this;
    }
 
 private:
-   Logger() { std::cout << " [Constructor] Logger Service Ready.\n"; }
+   Logger()                                    // 1:DC Default Constructor
+   {
+      std::cout << " [Constructor] Logger Service Ready.\n";
+   }
 };
 
 //----------------------------------------------------- Database Singleton:
@@ -87,10 +92,11 @@ public:
    }
 
    // --- THE RULE OF SEVEN ---
-   Database(const Database&)            = delete;
-   Database(Database&&)                 = delete;
-   Database& operator=(const Database&) = delete;
-   Database& operator=(Database&&)      = delete;
+   Database(const Database&)            = delete;  // 2:CC Copy Constructor
+   Database(Database&&)                 = delete;  // 3:MC Move Constructor
+   Database& operator=(const Database&) = delete;  // 4:CA Copy Assigment
+   Database& operator=(Database&&)      = delete;  // 5:MA Copy Assigment
+   ~Database()                          = default; // 6:De Destructor
 
    // Specific Database behavior
    Database& connect(const std::string& connectionString) {
@@ -99,7 +105,10 @@ public:
    }
 
 private:
-   Database() { std::cout << " [Constructor] Database Service Ready.\n"; }
+   Database()                                      // 1:DC Default Constructor
+   {
+      std::cout << " [Constructor] Database Service Ready.\n";
+   }
 };
 
 //------------------------------------------------------------------- Main:

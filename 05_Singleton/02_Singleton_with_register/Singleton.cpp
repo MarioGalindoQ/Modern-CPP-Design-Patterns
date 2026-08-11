@@ -56,16 +56,19 @@ protected:
    }
 
 public:
-   virtual ~Singleton() = default;
+   Singleton()                             = delete;  // 1:DC Default Constructor
+   Singleton(const Singleton&)             = delete;  // 2:CC Copy Constructor
+   Singleton(Singleton&&)                  = delete;  // 3:MC Move Constructor
+   Singleton& operator=(const Singleton&)  = delete;  // 4:CA Copy Assigment
+   Singleton& operator=(const Singleton&&) = delete;  // 5:MA Copy Assigment
 
-   Singleton(const std::string& name)
+   virtual ~Singleton()                    = default; // 6:De Destructor
+
+   Singleton(const std::string& name)                 // 7:PC Parametric Constructor
    {
       auto [it, success] = singletonMap.insert({name, this});
       if(!success) throw std::invalid_argument("Duplicate singleton name: " + name);
    }
-
-   Singleton(const Singleton&) = delete;
-   Singleton& operator=(const Singleton&) = delete;
 };
 
 //---------------------------------------------------------------------------- Service
