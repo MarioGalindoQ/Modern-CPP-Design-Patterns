@@ -46,13 +46,15 @@
 // 1. Abstract Products
 // ==========================================
 
-class Player {
+class Player
+{
 public:
     virtual ~Player() = default;
     virtual void spawn() const = 0;
 };
 
-class Hazard {
+class Hazard
+{
 public:
     virtual ~Hazard() = default; 
     virtual void spawn() const = 0;
@@ -62,7 +64,8 @@ public:
 // 2. Space Environment Implementation
 // ==========================================
 
-class Spaceship : public Player {
+class Spaceship : public Player
+{
 public:
     void spawn() const override {
         std::cout << " [Player] Spaceship is ready for takeoff!" << std::endl;
@@ -72,7 +75,8 @@ public:
     }
 };
 
-class Meteor : public Hazard {
+class Meteor : public Hazard
+{
 public:
     void spawn() const override {
         std::cout << " [Hazard] A Meteor is drifting in the sector!" << std::endl;
@@ -86,7 +90,8 @@ public:
 // 3. Underwater Environment Implementation
 // ==========================================
 
-class Submarine : public Player {
+class Submarine : public Player
+{
 public:
     void spawn() const override {
         std::cout << " [Player] Submarine is diving to the ocean floor!" << std::endl;
@@ -96,7 +101,8 @@ public:
     }
 };
 
-class Shark : public Hazard {
+class Shark : public Hazard
+{
 public:
     void spawn() const override {
         std::cout << " [Hazard] A Shark is approaching the area!" << std::endl;
@@ -110,7 +116,8 @@ public:
 // 4. Abstract Factory
 // ==========================================
 
-class EnvironmentFactory {
+class EnvironmentFactory
+{
 public:
     virtual ~EnvironmentFactory() = default;
     virtual std::unique_ptr<Player> createPlayer() const = 0;
@@ -121,7 +128,8 @@ public:
 // 5. Concrete Factories
 // ==========================================
 
-class SpaceEnvironment : public EnvironmentFactory {
+class SpaceEnvironment : public EnvironmentFactory
+{
 public:
     std::unique_ptr<Player> createPlayer() const override {
         return std::make_unique<Spaceship>();
@@ -134,7 +142,8 @@ public:
    }
 };
 
-class UnderwaterEnvironment : public EnvironmentFactory {
+class UnderwaterEnvironment : public EnvironmentFactory
+{
 public:
     std::unique_ptr<Player> createPlayer() const override {
         return std::make_unique<Submarine>();
@@ -151,7 +160,8 @@ public:
 // 6. Generic Game Engine Subroutine
 // ==========================================
 
-void runEnvironment(std::unique_ptr<EnvironmentFactory> factory) {
+void runEnvironment(std::unique_ptr<EnvironmentFactory> factory)
+{
     std::cout << " --- Initializing Environment Assets ---" << std::endl;
 
     // We create one player
@@ -183,7 +193,8 @@ void runEnvironment(std::unique_ptr<EnvironmentFactory> factory) {
 // 7. Main Entry Point
 // ==========================================
 
-int main() {
+int main()
+{
     std::cout << "=== VIRTUAL ENVIRONMENT SIMULATOR ===\n" << std::endl;
 
     // 1. Run Space Environment

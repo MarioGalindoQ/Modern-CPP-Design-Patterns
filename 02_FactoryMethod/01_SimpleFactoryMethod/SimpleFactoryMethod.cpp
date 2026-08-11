@@ -57,7 +57,8 @@
 // ==========================================
 // 1. Abstract Product
 // ==========================================
-class Meteor {
+class Meteor
+{
 public:
     virtual ~Meteor() = default;
     virtual void showInfo() const = 0;
@@ -66,31 +67,38 @@ public:
 // ==========================================
 // 2. Concrete Products
 // ==========================================
-class SmallMeteor : public Meteor {
+class SmallMeteor : public Meteor
+{
 public:
-    void showInfo() const override {
-        std::cout << " -> Meteor spawned [Size: Small | Speed: Slow]" << std::endl;
-    }
+   void showInfo() const override
+   {
+      std::cout << " -> Meteor spawned [Size: Small | Speed: Slow]" << std::endl;
+   }
 };
 
-class MediumMeteor : public Meteor {
+class MediumMeteor : public Meteor
+{
 public:
-    void showInfo() const override {
-        std::cout << " -> Meteor spawned [Size: Medium | Speed: Normal]" << std::endl;
-    }
+   void showInfo() const override
+   {
+      std::cout << " -> Meteor spawned [Size: Medium | Speed: Normal]" << std::endl;
+   }
 };
 
-class LargeMeteor : public Meteor {
+class LargeMeteor : public Meteor
+{
 public:
-    void showInfo() const override {
-        std::cout << " -> Meteor spawned [Size: Large | Speed: Fast]" << std::endl;
-    }
+   void showInfo() const override
+   {
+      std::cout << " -> Meteor spawned [Size: Large | Speed: Fast]" << std::endl;
+   }
 };
 
 // ==========================================
 // 3. The Simple Factory (Concrete Class)
 // ==========================================
-class MeteorFactory {
+class MeteorFactory
+{
 private:
     int currentLevel;
 
@@ -98,25 +106,28 @@ public:
     MeteorFactory() : currentLevel(1) {}
 
     // Method to update the internal state of the factory
-    void setLevel(int level) {
-        currentLevel = level;
-    }
+   void setLevel(int level)
+   {
+      currentLevel = level;
+   }
 
-    // The creation method uses hardcoded logic (a switch) to decide what to build.
-    // WARNING: Adding Level 4 requires modifying this exact method (Violates OCP).
-    std::unique_ptr<Meteor> createMeteor() const {
-        switch (currentLevel) {
-            case 1:
-                return std::make_unique<SmallMeteor>();
-            case 2:
-                return std::make_unique<MediumMeteor>();
-            case 3:
-                return std::make_unique<LargeMeteor>();
-            default:
-                std::cout << " [Warning] Unknown level! Defaulting to Small Meteor.\n";
-                return std::make_unique<SmallMeteor>();
-        }
-    }
+   // The creation method uses hardcoded logic (a switch) to decide what to build.
+   // WARNING: Adding Level 4 requires modifying this exact method (Violates OCP).
+   std::unique_ptr<Meteor> createMeteor() const
+   {
+      switch (currentLevel)
+      {
+      case 1:
+         return std::make_unique<SmallMeteor>();
+      case 2:
+         return std::make_unique<MediumMeteor>();
+      case 3:
+         return std::make_unique<LargeMeteor>();
+      default:
+         std::cout << " [Warning] Unknown level! Defaulting to Small Meteor.\n";
+         return std::make_unique<SmallMeteor>();
+      }
+   }
 };
 
 // ==========================================
@@ -125,45 +136,47 @@ public:
 // In this version, the function takes a constant reference to the single factory.
 // It doesn't take ownership (no std::unique_ptr or std::move needed for the factory), 
 // because the exact same factory object will be reused for all levels.
-void playLevel(const MeteorFactory& factory) {
-    std::cout << " [Game Engine] Spawning meteors for this level...\n";
+void playLevel(const MeteorFactory& factory)
+{
+   std::cout << " [Game Engine] Spawning meteors for this level...\n";
 
-    // We use the '.' operator because 'factory' is a reference to the object.
-    std::unique_ptr<Meteor> m1 = factory.createMeteor();
-    std::unique_ptr<Meteor> m2 = factory.createMeteor();
+   // We use the '.' operator because 'factory' is a reference to the object.
+   std::unique_ptr<Meteor> m1 = factory.createMeteor();
+   std::unique_ptr<Meteor> m2 = factory.createMeteor();
 
-    m1->showInfo();
-    m2->showInfo();
+   m1->showInfo();
+   m2->showInfo();
 
-    std::cout << " [Game Engine] Level Cleared!\n\n";
+   std::cout << " [Game Engine] Level Cleared!\n\n";
 }
 
 // ==========================================
 // 5. Main Flow
 // ==========================================
-int main() {
-    std::cout << "=== SPACE METEOR DEFENSE (SIMPLE FACTORY) ===\n\n";
+int main()
+{
+   std::cout << "=== SPACE METEOR DEFENSE (SIMPLE FACTORY) ===\n\n";
+   
+   // We instantiate exactly ONE factory object for the entire game session.
+   MeteorFactory gameFactory;
+   
+   // --- LEVEL 1 ---
+   std::cout << "--- STARTING LEVEL 1 ---\n";
+   gameFactory.setLevel(1);
+   playLevel(gameFactory); // Passing the factory by reference
+   
+   // --- LEVEL 2 ---
+   std::cout << "--- STARTING LEVEL 2 ---\n";
+   // We just tell the SAME factory that the level has changed.
+   gameFactory.setLevel(2);
+   playLevel(gameFactory); 
+   
+   // --- LEVEL 3 ---
+   std::cout << "--- STARTING LEVEL 3 ---\n";
+   gameFactory.setLevel(3);
+   playLevel(gameFactory);
 
-    // We instantiate exactly ONE factory object for the entire game session.
-    MeteorFactory gameFactory;
-
-    // --- LEVEL 1 ---
-    std::cout << "--- STARTING LEVEL 1 ---\n";
-    gameFactory.setLevel(1);
-    playLevel(gameFactory); // Passing the factory by reference
-
-    // --- LEVEL 2 ---
-    std::cout << "--- STARTING LEVEL 2 ---\n";
-    // We just tell the SAME factory that the level has changed.
-    gameFactory.setLevel(2);
-    playLevel(gameFactory); 
-
-    // --- LEVEL 3 ---
-    std::cout << "--- STARTING LEVEL 3 ---\n";
-    gameFactory.setLevel(3);
-    playLevel(gameFactory);
-
-    std::cout << "=== CONGRATULATIONS! YOU WIN! ===\n";
+   std::cout << "=== CONGRATULATIONS! YOU WIN! ===\n";
 }
 
 //================================================================================ END

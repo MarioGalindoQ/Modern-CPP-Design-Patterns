@@ -49,7 +49,8 @@
  * LazyComponent Mixin:
  * Provides the machinery to ensure an object is loaded exactly once.
  */
-class LazyComponent {
+class LazyComponent
+{
 private:
    bool initialized_{false};
 
@@ -58,7 +59,8 @@ protected:
     * Using Deducing This to access the derived class's private members.
     * This method is called internally by the derived class's public API.
     */
-   void ensure_initialized(this auto&& self) {
+   void ensure_initialized(this auto&& self)
+   {
       if(!self.initialized_) {
          std::cout << " [Mixin] Lazy check: Resource not loaded. Initializing now...\n";
          self.load_resources(); // Static dispatch to Derived::load_resources
@@ -68,7 +70,8 @@ protected:
 };
 
 //---------------------------------------------------------- Business Layer:
-class HeavyResource : public LazyComponent {
+class HeavyResource : public LazyComponent
+{
    // Allows the Mixin to call private load_resources()
    friend class LazyComponent;
 
@@ -86,7 +89,8 @@ private:
    }
 
 public:
-   explicit HeavyResource(std::string name) : name_{std::move(name)} {
+   explicit HeavyResource(std::string name) : name_{std::move(name)}
+   {
       std::cout << " [System] HeavyResource created (dormant): " << name_ <<
                    " (Resource NOT loaded yet)\n";
    }
@@ -94,12 +98,14 @@ public:
    /**
     * Public API: Transparently handles initialization.
     */
-   void process() {
+   void process()
+   {
       ensure_initialized(); // Internal check
       std::cout << " [System] Processing data: " << data_value_ << " in " << name_ << "\n";
    }
 
-   void update(int new_val) {
+   void update(int new_val)
+   {
       ensure_initialized(); // Internal check
       data_value_ = new_val;
       std::cout << " [System] Data updated to: " << data_value_ << " in " << name_ << "\n";
@@ -107,7 +113,8 @@ public:
 };
 
 //--------------------------------------------------------- Main Simulation:
-int main() {
+int main()
+{
    std::cout << "=== MODERN LAZY INITIALIZATION: DEDUCING THIS (TRANSPARENT) ===\n" << std::endl;
 
    std::cout << "--- PHASE 1: Object Creation ---\n";

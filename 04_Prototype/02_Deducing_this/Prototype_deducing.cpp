@@ -36,7 +36,8 @@
 #include <string>
 
 //--------------------------------------------------------- Prototype Mixin:
-class SmartCloneable {
+class SmartCloneable
+{
 public:
    virtual ~SmartCloneable() = default;
 
@@ -53,10 +54,12 @@ public:
 };
 
 //--------------------------------------------------------- Base Interface:
-class Base : public SmartCloneable {
+class Base : public SmartCloneable
+{
 public:
    // Pure Interface: No data, only contract.
-   virtual ~Base() {
+   virtual ~Base()
+   {
       std::cout << " [Cleanup] Interface Base destroyed.\n";
    }
 
@@ -75,11 +78,13 @@ public:
    Derived() = default;
    Derived(const Derived& other) : Base(other) {}
 
-   ~Derived() override {
+   ~Derived() override
+   {
       std::cout << " [Cleanup] Concrete Derived destroyed.\n";
    }
 
-   void print() const override {
+   void print() const override
+   {
       std::cout << " -> Object type: Concrete Derived\n";
    }
 
@@ -87,13 +92,15 @@ public:
     * Implementation using the Mixin's static logic.
     * Returns a unique_ptr<Derived> which is then upcasted to unique_ptr<Base>.
     */
-   std::unique_ptr<Base> clone_polymorphic() const override {
+   std::unique_ptr<Base> clone_polymorphic() const override
+   {
       return this->clone();
    }
 };
 
 //------------------------------------------------------------------- Main:
-int main() {
+int main()
+{
    std::cout << "=== PROTOTYPE PATTERN SIMULATION: C++23 DEDUCING THIS ===\n";
 
    {
